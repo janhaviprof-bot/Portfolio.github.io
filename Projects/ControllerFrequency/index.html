@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Frequency-Domain Inverted Pendulum Control</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/me.jpg" alt="" /></span>
+							<h1 id="title">Janhavi Gaikwad</h1>
+							<p>Aerospoace & Systerms Engineer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#top" id="top-link"><span class="">Introduction</span></a></li>
+								<li><a href="#ProblemStatement" id="ProblemStatement-link"><span class="">Problem Statement</span></a></li>
+								<li><a href="#Approach" id="Approach-link"><span class="">Approach</span></a></li>
+								<li><a href="#Results" id="Results-link"><span class="">Results</span></a></li>
+								<li><a href="#DesignComparison" id="DesignComparison-link"><span class="">Design Comparison</span></a></li>
+								<li><a href="#Learnings" id="Learnings-link"><span class="">Learnings</span></a></li>
+							</ul>
+						</nav>
+					
+
+				</div>
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="icon fa-folder-open" target="_blank" title="Portfolio"><span class="label">Portfolio</span></a></li>
+							<li><a href="#" class="icon solid fa-envelope" title="janhavi.prof@gmail.com" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!'))"><span class="label">Email</span></a></li>
+                            <!--<li><a href="resume.pdf" class="icon solid fa-file" download title="Resume"><span class="label">Resume</span></a></li>-->
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt"><strong>Inverted Pendulum Controller Design (Frequency domain)</strong></h2>
+								<p>Designed and implemented frequency domain controller<br />
+								for inverted pendulum system.</p>
+							</header>
+
+							<!--<footer>
+								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+							</footer>-->
+
+						</div>
+					</section>
+
+				<!-- ProblemStatement -->
+					<section id="ProblemStatement" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Problem Statement</h2>
+							</header>
+
+							<p style="text-align: justify;">The goal of this project was to design a feedback controller in frequency domain to stabilize 
+								an inverted pendulum mounted on a motorized cart, an inherently unstable system. The controller 
+								must maintain the pendulum in the upright position through the horizontal movement of the cart. 
+								Additionally, the system should remain stable and maintain upright position under mild external 
+								disturbances.</p>
+
+						</div>
+					</section>
+
+				<!-- Approach -->
+					<section id="Approach" class="three" style="background-color: #ffffff; color: #000000;">
+						<div class="container">
+
+							<header>
+								<h2>Approach</h2>
+							</header>
+
+							<!--<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>-->
+
+							<ul>
+								<li style="text-align: left;">Started with the linearized inverted pendulum model provided and converted it into a transfer function suitable for the frequency domain analysis.</li>
+								<a href="#" class="image featured"><img src="images/eq1.png" alt="" /></a>
+								<li style="text-align: left;">Used MATLAB SISO Design Tool to design a frequency domain controller ensuring the system met the stability requirements</li>
+								<li style="text-align: left;">Tuned controller parameter iteratively in the SISO tool to achieve desired performance requirements by achieving phase margin of ≥ 45°, settling time < 2 s, and overshoot < 10%</li>
+								<a href="#" class="image featured"><img src="images/eq2.png" alt="" /></a>
+								<li style="text-align: left;">Implemented the designed controller on the lab setup to validate performance verifying that pendulum maintained performance in the presence of disturbances.</li>
+								<a href="#" class="image featured"><img src="images/blockdiag.png" alt="" /></a>
+							</ul>
+
+						</div>
+					</section>
+                <!-- Results -->
+					<section id="Results" class="three">
+						<div class="container">
+
+							<header>
+								<h2>Results</h2>
+							</header>
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Analytical Response</p>
+							<ul style="text-align: left;">
+								<li>
+                                <strong style="text-decoration: underline;">Open-Loop Bode Plot:</strong><br>
+									<p >The system exhibits a phase margin of ~8.57° and a gain margin of 1.55 dB at the phase crossover frequency, indicating stability and that gain reduction would lead to instability.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/bode1.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Controller Bode Plot:</strong><br>
+									<p >The plant G(s) has negative sign (negative gain). To make overall loop act as a standard negative feedback system, controller gain had to be negative so that loop transfer function L(s) becomes positive.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/bode2.png" alt="" /></a>
+							</ul>
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Stability and Performance</p>
+							<ul style="text-align: left;">
+								<li>
+                                <strong style="text-decoration: underline;">Root Locus:</strong><br>
+									<p >Controller stabilize the RHP pole of the system confirming the stability of the system. (system stays in RHP for low gains)</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/rl.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Step Response:</strong><br>
+									<p >The system demonstrates rise time ~1 s, settling time ~3 s, successfully meeting all specified design requirements.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/step.png" alt="" /></a>
+							</ul>
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">System Response</p>
+							<ul style="text-align: left;">
+								<li>
+                                <strong style="text-decoration: underline;">Time vs Voltage:</strong><br>
+									<p >The control input peaks at ±8 V, remaining within safe operating limits to prevent motor surges while effectively stabilizing the pendulum.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/TvV.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Time vs Position & Time vs Angle:</strong><br>
+									<p >The pendulum stabilizes within approximately 3 s, while the cart displacement remains within ±0.06 m. The system can handle angle disturbances up to ~5°, confirming that it meets the specified performance requirements.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/AvP.png" alt="" /></a>
+							</ul>
+
+
+						</div>
+					</section>
+				<!-- Design Comparison -->
+					<section id="DesignComparison" class="four">
+						<div class="container">
+
+							<header>
+								<h2>Time vs Frequency Domain Controller Design</h2>
+							</header>
+ 							<div class="bode-images">
+								<div class="bode-image">
+								<span style="font-weight: 700;">Frequency-Domain Bode Plot</span>
+								<img src="images/fbode.png" alt="Frequency-Domain Bode Plot" />
+								</div>
+								<div class="bode-image">
+								<span style="font-weight: 700;">Time-Domain Bode Plot</span>
+								<img src="images/tbode.png" alt="Time-Domain Bode Plot" />
+								</div>
+
+								<!-- Comparison Table -->
+							<table class="bode-table">
+								<thead>
+								<tr>
+									<th>Metric</th>
+									<th>Frequency-Domain</th>
+									<th>Time-Domain</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>Phase Margin</td>
+									<td>8.57°</td>
+									<td>7.90°</td>
+								</tr>
+								<tr>
+									<td>Gain Margin</td>
+									<td>1.55 dB</td>
+									<td>1.45 dB</td>
+								</tr>
+								<tr>
+									<td>Overshoot</td>
+									<td>7%</td>
+									<td>8%</td>
+								</tr>
+								<tr>
+									<td>Settling Time</td>
+									<td>1.5 s</td>
+									<td>1.6 s</td>
+								</tr>
+								</tbody>
+							</table>
+							<p style="text-align: left;" > Time domain controller include observer dynamics which include extra high frequency poles and additional phase lag reducing bandwidth but increasing robustness.</p>
+
+							
+							</div>
+
+
+							
+
+						</div>
+					</section>
+				<!-- Learnings -->
+					<section id="Learnings" class="five">
+						<div class="container">
+
+							<header>
+								<h2>Learnings</h2>
+							</header>
+ 							<ul>
+								<li style="text-align: left;">Learned to use MATLAB SISO Tool to design and tune controllers for the inverted pendulum system.</li>
+								<li style="text-align: left;">Learned to design controllers in the frequency domain, for given performance criteria.</li>
+								<li style="text-align: left;">Learned to analyze system performance using Bode, root locus, step response plots.</li>
+								<li style="text-align: left;">Learned to balance stability and performance, handling disturbances while meeting design specifications.</li>
+								<p style="text-align:left;">
+								<strong>Tools Used : </strong>  MATLAB SISO Design Tool
+								</p>
+							</ul>
+
+							
+
+						</div>
+					</section>
+
+			</div>
+<style>
+.bode-comparison {
+  margin-top: 2rem;
+}
+
+.bode-images {
+  display: flex;
+  justify-content: space-around; /* side by side with space */
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap; /* responsive for small screens */
+}
+
+.bode-image {
+  text-align: center;
+  max-width: 45%; /* each image takes less than half */
+}
+
+.bode-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+
+.bode-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  
+}
+
+.bode-table th,
+.bode-table td {
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+}
+
+/* Header row style */
+.bode-table thead th {
+  background-color: #bbb8b8; /* dark gray for header */
+  color: #000;            /* black text */
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/* Body rows style */
+.bode-table tbody td {
+  background-color: #f0f0f0; /* same light gray for all body rows */
+  color: #000;               /* black text */
+  font-size: 1rem;
+}
+</style>
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
