@@ -1,0 +1,1431 @@
+<!DOCTYPE HTML>
+<!--
+	Story by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>MBSE for Solar Aware Route Planner</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	
+	<body class="is-preload">
+	<!-- Modern Header with icons -->
+	<header id="header" class="header">
+	<div class="inner">
+		<!-- Menu on left -->
+		<nav>
+		<ul>
+			<li><a href="#wrapper">Introduction</a></li>
+			<li><a href="#first">Tools</a></li>
+			<li><a href="#downloads">Download</a></li>
+			<li><a href="#footer">Get in Touch</a></li>
+		</ul>
+		</nav>
+
+		<!-- Icons on right -->
+		<div class="header-icons">
+		<a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="icon brands fa-linkedin" target="_blank">
+			<span class="label">LinkedIn</span>
+		</a>
+		<a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="icon fa-folder-open" target="_blank" title="Portfolio">
+			<span class="label">Portfolio</span>
+		</a>
+		<a href="#" class="icon solid fa-envelope" title="janhavi.prof@gmail.com"
+			onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!'))">
+			<span class="label">Email</span>
+		</a>
+		</div>
+	</div>
+
+	</header>
+	<!-- Hero Section / Project Title -->
+	<div class="hero">
+		<h1 style="text-align: center;">Solar Aware Route Planner</h1>	
+	</div>
+	</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="divided">
+
+				<!-- Introduction -->
+					<section id="project-background" >
+						<div class="content">
+							<h1 style="text-align: center; padding: 0.5em 0;">Project Background</h1>
+							
+							<p style="text-align: justify;padding: 0 2.5em;">Drivers in urban environments are often exposed to varying levels of solar 
+								radiation during their commutes, which can lead to health conditions, discomfort, increased 
+								fatigue, and reduced overall driving efficiency. Conventional navigation systems prioritize 
+								the shortest or fastest routes but do not account for environmental factors such as sunlight 
+								exposure. The goal of this project is to develop a solar aware route planner for vehicles that 
+								minimizes sun exposure while maintaining efficient travel times. The system integrates real time 
+								solar and weather data from external data centers, calculates shadow parameters, and applies optimization 
+								techniques to generate personalized driving routes. Using systems engineering principles, the project 
+								defines functional and structural requirements, identifies potential failure modes, and ensures that 
+								the final solution is reliable, efficient, and aligned with driver comfort and safety needs.</p>
+							<p style="text-align: justify;padding: 0 2.5em;">The following report documents the design and development of solar route planner using systems engineering 
+								methodologies. It details the all system engineering tools used across project life cycle from understanding 
+								customer needs through tools like customer affinity process, functional and structural modeling using activity 
+								diagrams, FFBD, IDEF0, QFD. The report also covers risk analysis and testing of product using FMEA, VCRM etc. 
+								Overall, it documents the use of different systems engineering tools  for the design and development of user 
+								centric product.</p>
+							<ul class="actions stacked" style="text-align: center;">
+								<li><a href="#first" class="button big wide smooth-scroll-middle" >Get Started</a></li>
+							</ul>
+						</div>
+						
+					</section>
+				<h1 style="text-align: center; padding: 1em 0;">Systems Engineering Tools</h1>
+				<!-- One -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
+						<div class="content">
+							<h2 class="sub-header">1.	Customer Value Proposition </h2>
+							<p>Used to identify the most critical requirements for the solar route planner and understand how system features could meet them. It provided a holistic view of system deliverables and guided which originating requirements to focus on, forming the foundation for concept sketches and tests.</p>
+							<ul class="actions stacked">
+							<li >
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Customer Value Proposition"
+								
+								data-content="
+								<img src='images/CVP.png' alt='Customer Value Proposition' style='width:100%; margin:1em 0;' />
+								<p>The Customer Value Proposition is a systems engineering tool that defines how a product meets customer needs, and how those needs will be addressed. It links critical customer requirements to essential design features, ensuring that the system remains user focused throughout the design process. The CVP translates high priority customer needs, derived from competitor analysis and project goals in QFD, into actionable value propositions for the product.</p>
+								<p>Using the CVP, we were able to identify the most critical requirements for the solar route planner and understand how these requirements could be met through the systems features. It provided a holistic view of the system deliverables to the user. Insights from the CVP laid the foundation for subsequent tools, such as the annotated concept sketch and the tests, by clearly highlighting which features and functions were essential to deliver maximum value to the customer hence deciding which requirements from originating requirements to focus upon.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="images/CVP0.png" alt="" />
+						</div>
+					</section>
+
+				<!-- Two -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">2. Annotated Concept Sketch</h2>
+							<p>Created visual representations of structural and functional components, showing how data flows and interacts between subsystems. This clarified system interactions for a non technical audience and informed design work, including refining data requirements and generating use cases.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Annotated Concept Sketch"
+								
+								data-content="
+									<img src='images/ACS.png' alt='Annotated Concept Sketch' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Annotated Concept Sketch is a systems engineering tool that provides a high-level visual representation of a systems structure, key functions, and critical components in a single diagram. It offers a holistic view of how structural and functional elements interact with each other and with the external environment. For the solar route planner project, the annotated concept sketch combined both structural and functional components, illustrating how data centers collect weather and solar data, how the model processes this information to calculate efficient routes, and how the system guides the user along the chosen path.</p>
+									<p style='margin:0'>For this project, functional annotated concept rough sketch is created after defining initial originating requirements and later refined into the structural and functional combined sketch after CVP definition.</p>
+									<p>Using this tool, we were able to understand the key structural components of the system, understand their interactions, and determine which data is transmitted between subsystems. It helped us better define the system from users’ perspective, which helps to inform about the system to wider non-technical audience. The insights from the annotated concept sketch also guided further design work, including refining data requirements in the context diagram and generating additional use cases for the system, ensuring that all major interactions and dependencies were clearly captured for subsequent development.</p>
+
+									">
+								Learn More
+								</a>
+
+							</li>
+							</ul>
+						</div>
+						<div class="image">
+							<img src="images/ACS.png" alt="" />
+						</div>
+					</section>
+
+				<!-- Three -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">3.	Customer Affinity Process Results</h2>
+							<p>Captured user preferences, pain points, and desired features, such as an aesthetic user interface. Insights helped define initial functional requirements and originating requirements, establishing a strong foundation for user-oriented system design.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Customer Affinity Process Results"
+								data-image="images/CAP.png"
+								data-content="
+									<img src='images/CAP.png' alt='Customer Affinity Process Results' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Customer Affinity Process is a systems engineering tool used at the beginning of the project to understand customer needs, expectations, and pain points. It involves gathering and analyzing customer input to identify key areas for improvement and desired features in the system. For the solar route planner project, this process helped to capture user preferences and expectations on early stages, guiding the initial definition of system requirements. </p>
+									<p style='margin:0'>Using this tool, we were able to identify the main pain points of users, as well as additional features they expected in the system. For example, aesthetic user interface is highly recommended feature as per the results. </p>
+									<p>This allowed us to better define the initial functional requirements and potential enhancements to make the system more appealing and user focused. Insights from the Customer Affinity Process also helped in forming the initial originating requirements and use cases for the system, providing a strong foundation for subsequent design and development work for user-oriented system.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/CAP.png" alt="" />
+						</div>
+					</section>
+
+				<!-- Four -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">4.	Context Diagram</h2>
+							<p>Defined the system as a single entity and showed interactions with external systems. It clarified which components were under our control and helped define system scope, including failure scenarios like data center outages.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Context Diagram"
+								data-image="images/context_diagram.png"
+								data-content="
+									<img src='images/context_diagram.png' alt='Context Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A context diagram is used to represent the system as a single entity and shows how it interacts with external system, user and data sources. It focuses only on the system boundary and information exchanged across it. It doesn’t talk about the internal details of the system. In this project the context diagram established holistic view of how route planner model interacts with the surrounding environment. </p>
+									<p style='margin:0'>In our project, the context diagram was developed after obtaining results from the customer affinity process and after identifying the initial set of requirements. At this stage it is used to refine the understanding of data transfer of systems with external systems like data server. By creating this diagram, it became clear that which component was under our control and which were outside the system control. This helps us better define system scope, additional use cases to have a robust system. For example, although system depends upon the sun position data from the datacenter, the data center itself is not part of system as shown in figure.  </p>
+									<p>This leads to additional requirements focused on requirements related to managing failure scenarios like data center outage or data unavailability.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/context_diagram.png" alt="" />
+						</div>
+					</section>
+				<!-- Five -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">5.	Use Cases & User Story</h2>
+							<p>Enumerated user scenarios and ranked them by priority. User stories documented stakeholder conversations and system implementation, helping refine originating requirements and define expected outcomes for each use case.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Use Cases & User Story"
+								data-image="images/user_story.png"
+								data-content="
+									<img src='images/user_story.png' alt='Use Cases & User Story' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Use cases are the list of ways users will interact with the system. It is written during behavioral modelling of the system. In our workflow it is defined after context diagram where we enumerate specific scenarios the system must support user interaction and rank them by priority as Low, medium, high. While user stories capture how a given use case is implemented from stakeholders’ perspective. User stories are defined during the implementation stage of the system documenting the stakeholder conversation and design actions taken to fulfill the requirement. </p>
+									<p style='margin:0'>User cases let us understand the different user scenarios under which the solar route planner must operate. Additionally, it tells which use cases are more important. While the user stories make us understand how those use cases are implemented in our system by documenting stakeholder expectations and outcome of the implementation as shown in confirmation section of user story.  </p>
+									<p>User stories let us better define the originating requirements to make those requirements more user focused. It also helped us define the final implementation result for each use case in the later stages. The next natural step after defining use cases was to explore interactions between different use cases using use case diagrams and to convert key use case cases into use behavioral diagrams to refine operation level requirements.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/user_story.png" alt="" />
+						</div>
+					</section>
+				<!-- Six -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">6.	SysML Use Case Diagram</h2>
+							<p>Visualized interactions among use cases and users, showing priorities and dependencies. Helped define expected system behavior and identify user-critical requirements for reliable operation.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="SysML Use Case Diagram"
+								
+								data-content="
+									<img src='images/UCD.png' alt='SysML Use Case Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Use case diagram was created after defining the use case list and assigning priorities to each use case. It provides visual representation of how different use cases interact with each other and with user from functional point of view. Unlike use cases where every use case is listed in isolation, the diagram help us elaborate how one case can trigger each other. Through this diagram, we learned how major operational scenarios are connected and how system behaves in different scenarios from user perspective. The diagram better helps to define the expected system behavior from the view of functional priorities. For example, the diagram shows system attempts to use real-time data by default(includes) and switches to offline data(extended) when real time data is unavailable, clearly representing both interaction and priority.  </p>
+									<p style='margin:0'>This exercise led to further design work by giving additional functional requirements. Also, it helped identify user-critical requirements that must be satisfied for reliable systems operation. </p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/UCD1.png" alt="" />
+						</div>
+					</section>
+				<!-- Seven -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">7.	Use Case Behavioral Diagrams</h2>
+							<p>Broke high level use cases into functional flows with decision points. Reduced ambiguity in requirements, clarified interactions with subsystems, and guided the creation of the Operational Description Template (ODT).</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Use Case Behavioral Diagrams"
+								data-content="
+									<img src='images/UCBD.png' alt='Use Case Behavioral Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A use case behavioral diagram is used to elaborate high level use case by breaking it down into a functional flow across different stakeholders. While use cases capture what the system should do at high level, the UCBD translates that into sequence of action items and decision-making points. </p>
+									<p style='margin:0'>The UCBD was created after defining the use case to convert high level requirements into precise and quantifiable requirements necessary for systems operation. This tool helped us understand how system should act internally and how it should interact with external subsystems to achieve given objective. It helped better define originating requirements by reducing ambiguity. For example, the use case “user wants to add an intermediate stop during the journey” was initially broad requirement. Through UCBD, this was broken down into specific requirements such as the number of stops user can add, how stops are selected on map and how they are integrated into route planning as shown in figure. </p>
+									<p>These other requirements are generally ignored or handled in a less collaborative way which can lead to integration problems at later stages. Having this precise requirement helped reduce uncertainty. This work further led to the creation of the Operational description tree (ODT), where the interactions and interfaces identified for given UCBD.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/UCBD.png" alt="" />
+						</div>
+					</section>
+				<!-- Eight -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">8.	SysML Activity Diagram </h2>
+							<p>Represented functional flow, decisions, and interactions in SysML. Allowed easier integration into a single model and provided structured visualization to quantify high-level requirements.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="SysML Activity Diagram"
+								data-image="images/SysML_Activity_Diagram.png"
+								data-content="
+									<img src='images/SysML_Activity_Diagram.png' alt='SysML Activity Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A SysML activity diagram is essentially the same as use case behavioral diagram but expressed in SysML environment. It represents functional flow of the system, showing sequence of actions, decisions and interactions between the system and critical external actor like user display and data server as shown in figure. </p>
+									<p style='margin:0'>The activity diagram was used after defining use case diagram in SysML environment to further quantify high level requirements and define structured visual form. The overall learning and the definition is like UCBD diagram. However, the advantage of defining activity diagrams in SysML environment is that it can be integrated into the activity diagram model, allowing access with a single click in a more systematic and effortless manner.  However, a limitation is that the activity diagram must be paired with the corresponding requirements diagram to have well-phrased system requirements in same diagram, which adds extra step. </p>
+									
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/SysML_Activity_Diagram.png" alt="" />
+						</div>
+					</section>
+				<!-- Nine -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">9.	Originating Requirement Tables</h2>
+							<p>Consolidated all system requirements in a single view. Helped understand which requirements were intended to fulfill, clarified system scope, and guided further design work including risk assessment and verification planning.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Originating Requirement Tables"
+								data-image="images/ORT.png"
+								data-content="
+									<img src='images/ORT.png' alt='Originating Requirement Tables' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Originating and derived requirement tables are structured tools used to capture, organize and track all requirements of the system. The originating requirements represent needs gathered from stakeholders, customers or regulatory sources. Additionally, many detailed OR are captured during systems engineering activities. For some requirements derived requirements are defined for given originating requirement. Each requirement is assigned to unique ID to ensure traceability across project lifecycle. These tables provide a single consolidated view of all system requirements. </p>
+									<p style='margin:0'>These tables are used and defined throughout the project lifecycle to understand customer needs, guide conceptual design and support functional and behavioral modelling until the development stage. It helps us understand which requirements of system were intended to fulfill, even if some were later deprioritized. They helped me better define system by consolidating all functional attributes of system at one place and tracing them to different systems of engineering operations. Having this consolidated list also clarified scope of the system and guided further design work including detailed analysis, risk assessment and verification planning. </p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/ORT.png" alt="" />
+						</div>
+					</section>
+				<!-- Ten -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">10.	SysML Requirements Dia/Table</h2>
+							<p>Mapped activity diagram requirements to originating requirements. Enabled easy handling in SysML, graphical representation, and traceability across the system design.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="SysML Requirements Dia/Table"
+								data-image="images/Req_Diag.png"
+								data-content="
+									<img src='images/Req_Diag.png' alt='SysML Requirements Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The SysML requirements table is essentially the originating requirements expressed in the SysML environment, capturing all stakeholders and system needs in structured traceable format. While the SysML requirements diagram is a graphical presentation of the same requirements. It is generally used complimentary to SysML activity diagram to trace requirements obtained from activity diagram to originating requirement as shown in figure.  </p>
+									<p style='margin:0'>This tool was used to map the requirements derived from activity diagram, helping me trace that requirement to originating requirements. Although overall learning definition and future work was same as originating requirement. Defining requirements in the SysML environment allows easy handling of those requirements to be converted into graphical representation for other purposes while seamlessly maintaining traceability.  </p>
+									
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/Req_Diag.png" alt="" />
+						</div>
+					</section>
+				<!-- Eleven -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">11.	Concept Fragment Generation</h2>
+							<p>Explored multiple ways to fulfill each requirement. Helped identify feasible and optimal solutions while highlighting potential risks of other approaches.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Concept Fragment Generation"
+								data-image="images/CFG.png"
+								data-content="
+									<img src='images/CFG.png' alt='Concept Fragment Generation' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Concept fragment generation is a systems engineering tool used to explore multiple ways of fulfilling given requirement. Once high-level use cases are identified and converted into functional originating requirements, concept fragments serve as a brainstorming tool to systematically consider different potential solutions. </p>
+									<p style='margin:0'>Using concept fragments, we could understand all possible ways to satisfy a specific requirement and why some solutions were not considered. For example, for concept fragment table I could see different ways to update cloud coverage data in system, like updating at fixed interval or triggering updates by certain event. While we can also see some approaches were removed due to implementation complexity as shown in figure. </p>
+									<p>This gave a clear view of most feasible and optimal solution for critical requirements and helped identify potential risk associated with other approaches. Once solutions for all requirements were identified, they were combined in a concept combination table to create cohesive solution across related requirements, ensuring the overall system design is both practical and well integrated.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/CFG.png" alt="" />
+						</div>
+					</section>
+				<!-- Twelve -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">12.	Combination Table</h2>
+							<p>Merged concept fragments for related requirements to define a cohesive system design. Helped select optimal solution combinations and supported system architecture visualization.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Combination Tables "
+								data-content="
+									<img src='images/CTMB.png' alt='Combination Tables' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Combination tables are used in systems engineering to merge solutions identified in concept fragments for interdependent requirements into a single, cohesive system. After generating concept fragments for individual requirements, combination tables help systematically explore which solutions can work together, ensuring compatibility and identifying most feasible overall system design. This tool allows engineers to visualize interaction between different solutions to make informed decisions before finalizing systems architecture. </p>
+									<p style='margin:0'>Using combination table, we understand for verification of updated routes is related to recalculation of new routes. Also, which solution of route calculation can be paired with verification methodology. For example, when using a multi objective function optimization algorithm, the threshold for calculation is already updated, so verifying new route efficiency can rely on these parameters without requiring additional user input. In contrast, a machine learning based sun prediction model using only sun exposure data requires user confirmation which basically accounts for time required to reach to destination as shown in figure. </p>
+									<p>This tool helped us better define the optimal combination of solutions to fulfill related requirements and to finalize the desired option from available options we used decision matrix. Once the solution was finalized it allowed to create system architecture to visualize how these solutions integrate with total system.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/CTMB0.png" alt="" />
+						</div>
+					</section>
+				<!-- Thirteen -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">13.	Functional Flow Block Diagram</h2>
+							<p>Represented sequences and interactions of functions. Clarified decision points, parallel functions, and essential high-level operations, guiding further design work like concept fragment generation.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Functional Flow Block Diagram"
+								data-image="images/FFBD.png"
+								data-content="
+									<img src='images/FFBD.png' alt='Functional Flow Block Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A functional flow block diagram ius a systems engineering tool used to represent the sequence and interaction of function within a system. It is used for functional modeling of systems and provides a detailed view of how high-level system operations are carried out through different functions, showing the logical flow, decision points and dependencies between them. FFBD helps translate rough sketches or high-level use case ideas into structured representation of systems operation, making it easier to analyze functional requirement as an integrated system. </p>
+									<p style='margin:0'>The FFBD was used once the high-level system functions were visualized and critical functional requirements were finalized. Using this diagram, we could understand which requirements are involved in each mode of operation and how system operates between them. For example, the system attempts to use real time data by default but switches to offline data if real-time data is unavailable as shown in figure. </p>
+									<p>The diagram also helped define decision making points, parallelly operating functions and essential functions needed for high level operations. While FFBD clarifies functional flow, it doesn’t provide details about how this function will be implemented on subsystems level. This leads to further design work including concept fragment generation and combination table, to identify detailed operations within each functional block and ensure cohesive system design.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/FFBD0.png" alt="" />
+						</div>
+					</section>
+				<!-- Fourteen -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">14.	IDEF0 </h2>
+							<p>Analyzed high level functions, inputs, outputs, and controls. Clarified data flow within the system and guided subsystem allocation for a cohesive architecture.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="IDEF0"
+								data-image="images/IDEF0.png"
+								data-content="
+									<img src='images/IDEF0.png' alt='IDEF0' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>IDEF0 is a systems engineering tool used to model the major functions of a system and the data required for each function. While the function flow block diagram defines the sequence of functions and their interaction and decision-making points, IDEF0 in system architecture definition focus on understanding the inputs, outputs, controls and mechanism for each high-level function. It provides hierarchical view of function operations and the associated data flow, helping to understand how information moves through system. </p>
+									<p style='margin:0'>IDEF0 was used to analyze the data flow within the route planner model for example, the route planner model has level 2 functions such as initialize model and plan route as shown in figure. </p>
+									<p>The initialized model function creates a loaded base map with the current location, destination and stops, which is then used by plan route function to calculate the final route.  Using IDEF0 we could understand which data is essential for each high-level function, which subsystem generates data and where it is consumed next. This tool also allowed us to define the system by breaking down functional architecture into a hierarchy and identifying inputs and outputs for each operation at different levels. The information from IDEF0 guided further design work, including subsystem allocation to create a more cohesive system. Additionally, this data can be used further for interface definition in ODT. </p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/IDEF0.png" alt="" />
+						</div>
+					</section>
+				<!-- Fifteen -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">15.	Decision Matrixes</h2>
+							<p>Evaluated combinations from morphology tables against criteria like accuracy and response time. Helped select the optimal system configuration and informed design of engineering characteristics and structural requirements.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Decision Matrixes"
+								data-content="
+									<img src='images/DecisionMatrix1.png' alt='Decision Matrix' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A decision matrix is a tool used in systems engineering to evaluate and compare multiple options against a set of defined criteria to make a decision. It helps prioritize alternative based on quantitative or qualitative performance measures, ensuring that decisions are objective and traceable. The decision matrix can be used at any stage of project life cycle to select most suitable solution amongst the competing options. </p>
+									<p style='margin:0'>In this project, we got the different combination option from morphology table representing different iteration in diagram. To select desired combination from option, we evaluated the iterations against performance criteria like accuracy, response time, battery impact. By evaluating iterations against performance criteria, we could safely choose configuration who achieved optimal results across all requirements. For example, iteration 2.3 was chosen because it outperformed the other two in overall performance. As shown in figure. </p>
+									<p>The decision matrix also highlights areas where the system perform well and where improvements could have highest impact. This analysis helped me finalize the concept fragment for best performing system and led to further design work such as identifying engineering characteristics and defining structural requirements for a chosen solution.</p>
+									<img src='images/DecisionMatrix2.png' alt='Second Image' style='width:100%; margin:1em 0;' />
+
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/DecisionMatrix1.png" alt="" />
+						</div>
+					</section>
+				<!-- Sixteen -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">16.	Goal Question Metric </h2>
+							<p>Translated performance goals into measurable questions. Helped define efficient data collection methods and quantify practical performance targets like minimizing sun exposure.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Goal Question Metric"
+								data-image="images/GQM.png"
+								data-content="
+									<img src='images/GQM.png' alt='Goal Question Metric' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Goal Question Metric is a tool in systems engineering used to systematically quantify performance goals of a system. It starts with performance goals for given system and associated questions to better understand those goals which help define the quantitative value for given performance goals. Even though GQM does not directly provide values for given goals, it creates structured methodology to gather questions and data to evaluate those values so that unrealistic goals are not set during primary phase of project. </p>
+									<p style='margin:0'>In this project GQM was used after defining functional requirements to quantify system performance goals. For example, to achieve the goal of ‘minimizing sun exposure during the journey, it was necessary to understand points like how much sun exposure is harmless and what is the shadow coverage generally available in urban landscapes as mentioned in snippet. </p>
+									<p>GQM helped us understand efficient ways to collect data such as using average sun exposure rather than gathering data for every possible scenario. Using this tool, we could define the data collection method for all goal related questions. Once data was obtained, it allowed us to quantitatively define the practical performance goals.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/GQM.png" alt="" />
+						</div>
+					</section>
+				<!-- Seventeen -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">17.	Analytical Hierarchy Process</h2>
+							<p>Assigned weightage to system goals to determine relative importance. Guided focus on critical objectives like reducing sun exposure and response time, informing decision making in the design.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Analytical Hierarchy Process"
+								data-content="
+									<img src='images/AHP.png' alt='Analytical Hierarchy Process' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Analytical Hierarchy Process is a decision-making tool used to determine the relative importance of different goals in a system.  Since all goals created in GQM do not create same level of impact, AHP helps to assign all goals into high level objectives and use those objectives to assign weightage. This is useful tool in complex system where different goals like performance, reliability and safety compete with each other. </p>
+									<p style='margin:0'>In this project, AHP was used to understand the relative importance of different system goals. By using this tool, we understood which goals contribute most to overall system effectiveness. For example, reduction of sun exposure emerged as the most important goal with highest weightage of 0.182, indicating its dominant influence on system performance compared to other goals. As shown in figure. </p>
+									<p>This helped us better define which goals the system must focus on to deliver maximum impact, in our case significant portion of system performance was depended upon reducing sun exposure and minimizing response time. The resulting weights were used in the decision matrix further to do performance comparison for different concept fragments to select one with better performance.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/AHP.png" alt="" />
+						</div>
+					</section>
+				<!-- Eighteen -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">18.	QFD (House of Quality)</h2>
+							<p>Linked customer needs and system goals to engineering characteristics. Enabled comparison with competitors and highlighted critical characteristics to improve system performance.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="QFD (House of Quality)"
+								data-content="
+									<img src='images/QFD.png' alt='QFD (House of Quality)' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Quality Function Deployment, also known as house of quality, is a systems engineering tool used to translate customer needs and system goals into engineering characteristics. It provides a structured way to link goals with technical design of system. QFD also enables comparison of our system with other competitors in the market. </p>
+									<p style='margin:0'>In this project, QFD was used to assess the system from a customer perspective and compare it against competitors like Google Maps, SunQuest etc., This helped us to understand how our system was performing against the key competitors in the critical goal segments like travel time and sun exposure reduction. Additionally, it shows how these goals are linked to specific engineering characteristics. For example, reducing sun exposure is strongly related to offline storage capacity, since higher storage allows more detailed weather data to be stored, improving route prediction accuracy in offline mode. </p>
+									<p>QFD helped to better define how system goals map to engineering requirements like GPS accuracy, memory size and network interface quality, highlighting which engineering characteristics are most important for system performance. This analysis further led to design work such as defining a clear CVP based on goals and competitor data and using identified engineering characteristics as inputs for failure mode detection and risk assessment associated with design choices.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/QFD.png" alt="" />
+						</div>
+					</section>
+				<!-- Nineteen -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">19.	Sub-System Definition & Allocation</h2>
+							<p>Decomposed the system into cohesive subsystems. Reduced interface interactions, clarified responsibilities, and guided interface definition using ODT.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Sub-System Definition & Allocation"
+								data-content="
+									<img src='images/SSD.png' alt='Sub-System Definition & Allocation' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Subsystem definition and allocation is a systems engineering activity used to decompose the overall system into smaller, manageable subsystems. This is usually done after all originating requirements are defined and functional modeling tools such as FFBD and IDEF0 are created. The objective is to group related requirements in a way that minimizes interfaces and maximize cohesion across different subsystems. </p>
+									<p style='margin:0'>In this project, subsystem definition and allocation helped to understand which subsystem collectively forms the more cohesive system. For example, for subsystem definition instead of creating separate subsystems for online and offline data handling, a single data management subsystem was defined. This definition helped to reduce the number of interface interactions that could happen during data management operations. </p>
+									<p>This tool helped us define the responsibilities of each subsystem and which requirements were part of which subsystem operations. Once subsystems and their corresponding requirements were finalized , it naturally led to further design work like identifying interfaces between the different subsystems using Operational Description Tree (ODT) and further detailing those interfaces using interface matrix.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/SSD.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">20.	Operational Description Template</h2>
+							<p>Documented subsystem interactions, events, constraints, and decision points. Provided a holistic view of subsystem behavior across use cases and guided interface and state diagram creation.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Operational Description Template"
+								data-content="
+									<img src='images/ODT.png' alt='Operational Description Template' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Operational Description Template is a system engineering tool used to describe how subsystems interact during different operational scenarios. It captures the flow of information, decisions and constraints (e.g. Time) across subsystem for different use cases. ODT focuses on defining interfaces and operational behavior across subsystems. </p>
+									<p style='margin:0'>In this project, ODT was used after defining all subsystems to clearly identify the interfaces between them. It helped us understand which subsystem needs to share what information, what kind of events triggers action and where key decisions are being made. For example, during the use case of route recalculation, the data management subsystem decides whether to recalculate the route or not based on the updated weather data. It also has constraint to recalculate route within 10 sec.  </p>
+									<p>Additionally, it defines the overall system state reflective of different subsystem level operations. This tool provided holistic view of subsystem behavior across different interfaces for different use cases, including decision, constraints, states and information exchange. This led to further design work such as creating state diagrams to analyze system state transition.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/ODT.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-One -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">21.	State Diagram</h2>
+							<p>Modeled system states and transitions, including entry and exit criteria. Clarified operational behavior and informed interface matrix definition for system interactions.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="State Diagram"
+								data-content="
+									<img src='images/SD.png' alt='State Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A state diagram is a behavioral modeling tool used to represent the different states of a system and the transition between those states under various operating conditions. It shows entry and exits criteria for each state and identify which states are required for certain operations. State diagrams are typically created after system states have been identified through tools like ODT and activity diagrams. </p>
+									<p style='margin:0'>In this project, the state diagram was used to understand how the system transitions between states during different operations and to identify the essential states needed for specific functions. Using this tool, we learned how system moves across online offline, data acquisition and calculation states. For example, the diagram shows that calculation state can be entered from both online or offline data mode but for online to recalculate it needs to go through data acquisition as system has to fetch data from server. </p>
+									<p>This diagram helped to define state dependencies as well as entry and exit conditions for each state. The clarity obtained from the state diagram was used in interface matrix to define the interface interactions better.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/SD.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Two -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">22.	Interface Matrix</h2>
+							<p>Captured structural interfaces between subsystems, including constraints and data dependencies. Enabled tracking of updates, defined design constraints, and informed risk and test planning.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Interface Matrix"
+								data-content="
+									<img src='images/IM.png' alt='Interface Matrix' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>An interface matrix is a detailed systems engineering document used to capture and manage interface information between different subsystems. While ODT and sequence diagram is used to define functional interface, the interface matrix helps to define the structural interface across different subsystems. It is developed after ODT definition to clearly document by what amount the design choices in one subsystem can constrain the other. </p>
+									<p style='margin:0'>In this project, the interface matrix was used to understand the constraint and associated data needed from other subsystem teams. By referring to this document I could identify interface limitations that directly impact the system behavior. For example, the geographical radius of real-time data that the route planning system can use us constrained by data managements systems data storage capacity. Hence the geographical data storage radius has been set to 50km for our case. </p>
+									<p>The interface matrix also helped track updated interface values, due data for providing data to other subsystems and person responsible for each interface. This helps to define design constrained on our different subsystems. This information further supported risk identification and test cases definition for given subsystem making it as strong input for test and risk planning.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/IM.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Three -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">23.	Sequence Diagram (SysML)</h2>
+							<p>Showed functional interactions and data triggers between subsystems. Highlighted dependency chains and supported failure mode analysis to improve subsystem robustness.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Sequence Diagram (SysML)"
+								data-content="
+									<img src='images/SeqD.png' alt='Sequence Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A sequence diagram is used to represent the functional interaction between different subsystems for different use cases. While the interface matrix captures the detailed structural interface information, the sequence diagram focuses on the data exchange, triggers between different subsystems. It is created after the subsystem definitions and allocation to describe how subsystems collaborate to fulfill system level functions. </p>
+									<p style='margin:0'>Using the sequence diagram, I was able to understand how different subsystems interacted over time to accomplish given use case and how long each subsystem remains active during that use case. It also talks about what kind of data acts as a trigger for operation in given subsystem for example, model management sends start and end location of route to data management to fetch a data between those locations and it activates the data management system as shown in figure. </p>
+									<p>Additionally, it helped to understand the dependency chain , showing how a failure in one subsystem can impact other. These insights from sequence diagram supported further design work such as failure mode analysis allowing to identify vulnerable subsystem interaction and improve subsystem robustness by addressing potential functional failures.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/SeqD.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Four -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">24.	Behavioral Test Plan</h2>
+							<p>Defined structured tests for verifying functional behavior, including methods, facilities, and criteria. Ensured all functional requirements were tested and supported later VCRM traceability.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Behavioral Test Plan"
+								data-content="
+									<img src='images/BTP.png' alt='Behavioral Test Plan' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>A Behavioral Test Plan is a systems engineering tool used to define and organize tests for verifying the functional behavior of a system. It is generally created once subsystems are allocated and functional interfaces are defined. The test plan provides a structured approach to ensure that all functional requirements are tested, specifying the methods, facilities, entry and exit conditions, and expected outcomes for each test. </p>
+									<p style='margin:0'>Using the behavioral test plan, we were able to identify which tests need to be performed to validate the functional behavior of the system. It also helped define details such as test methods, required facilities, and the entry and exit criteria for each test. This allowed me to better understand the scope and conditions of testing, including when tests should be performed during development and the parameters that must be satisfied to pass a test. For example, all 4 tests can be performed once prototype for a model is ready as shown in figure. </p>
+									<p>Once the test plan was established, it could be traced back to individual functional requirements using the Verification and Validation Cross Reference Matrix, ensuring that every requirement is thoroughly verified before the final system release.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/BTP.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Five -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">25.	Test Methodologies for Non-Behavioral Requirements</h2>
+							<p>Established verification strategies for structural or non-functional requirements. Enabled early-stage testing and clarified required methods, facilities, and criteria.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Test Methodologies for Non-Behavioral Requirements"
+								data-image="images/TMNR.png"
+								data-content="
+									<img src='images/TMNR.png' alt='Test Methodologies for Non-Behavioral Requirements' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Test Methodologies for Non-Behavioral Requirements are systems engineering tools used to verify the structural or non-functional aspects of a system, such as performance, engineering characteristics  and interface compliance.  These methodologies define how structural requirements will be validated using appropriate verification methods, such as analysis, inspection, demonstration, or physical testing. Similar to a behavioral test plan, it also captures entry and exit conditions, required facilities, and expected outcomes for each test. </p>
+									<p style='margin:0'>Using this tool, we were able to identify which tests are necessary to satisfy structural requirements and determine the appropriate verification method for each requirement. It also provided details on test facilities, the stage of development when tests can be performed, and the criteria that must be met to pass a test. Hence giving us intuition about which tests I can perform at earlier stages for example for TP.5 and TP.6 only test model in computer is enough so it can be performed at the early stages of project life cycle. </p>
+									<p>It allowed me to better define how structural requirements are verified, ensuring clarity on test methods, conditions and timeline. Once these methodologies were established, the tests were incorporated into the Verification and Validation Cross Reference Matrix to ensure that all structural requirements are properly linked to their corresponding tests, completing the verification coverage for the system.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/TMNR.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Six -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">26.	Verification Cross Reference Matrix </h2>
+							<p>Linked requirements to test cases to ensure full verification coverage. Supported identification of risks and failures, guiding mitigation strategies through FMEA.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Verification Cross Reference Matrix"
+								data-image="images/VCRM.png"
+								data-content="
+									<img src='images/VCRM.png' alt='Verification Cross Reference Matrix' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Verification Cross Reference Matrix is a systems engineering tool used to ensure that every system requirement has corresponding test case. It provides a traceable link between requirements and their verification methods, ensuring that no requirement is left untested before the final system release. VCRM helps maintain a structured overview of the verification plan for both functional and non functional requirements. </p>
+									<p style='margin:0'>Using the VCRM in this project, I could identify which test cases correspond to which requirements and highlight any requirements that still lacked planned tests, such as requirements 8, 10, and 11 in the current example.  </p>
+									<p>This allowed us to better define which test procedures are executed for each requirement and ensure complete coverage. Once testing is completed, the data collected can be used to identify potential risks and failures in the system, assess their likelihood, and plan mitigation strategies using tools like FMEA. The VCRM therefore serves as a bridge between verification activities and risk management, supporting a robust and reliable system design.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/VCRM0.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Seven -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">27.	Severity Rating System & Likelihood Rating System</h2>
+							<p>Defined impact and probability of failures. Standardized evaluation of failure modes, guiding prioritization for mitigation in FMEA.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Severity Rating System & Likelihood Rating System"
+								data-content="
+									<img src='images/SRSLR.png' alt='Severity Rating System & Likelihood Rating System' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Severity Rating System and Likelihood Rating System are tools used in Failure Mode and Effects Analysis to quantitatively define the potential impact and probability of failures within a system. The severity rating defines how serious a failure would be if it occurs, while the likelihood rating defines how often a failure is expected to happen. These ratings provide a standardized way to assess the criticality of failures for a given system. </p>
+									<p style='margin:0'>Using these tools, I was able to understand clear definitions for severity and likelihood levels specific to our system. It is important to define the subjective severity and likelihood of a system because different systems have different acceptance to failures. For example, since solar route planner is not a very critical system failure once in a 3 month is defined as very less likelihood with value 1. </p>
+									<p>It allowed us to uniformly evaluate failure modes across the system and assign severity and likelihood values consistently. The ratings then feed directly into the FMEA process, helping prioritize which failure modes require attention and mitigation, and providing a structured basis for designing more reliable and safe system operations.</p>
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/SRSLR.png" alt="" />
+						</div>
+					</section>
+					
+				<!-- Twenty-Eight -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">28.	Risk Priority Number Table and Stoplight Graph </h2>
+							<p>Quantified and visualized failure criticality. Allowed identification and prioritization of high-risk areas, and monitored mitigation effectiveness after design changes.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Risk Priority Number Table and Stoplight Graph"
+								data-content="
+									<img src='images/RPN1.png' alt='Risk Priority Number Table' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>The Risk Priority Number table is a systems engineering tool used in FMEA to quantify the criticality of individual failure modes by multiplying their severity and likelihood ratings. This allows the team to identify which failure modes require immediate attention. Complementing this, the stoplight graph visually represents the distribution of failure causes across different criticality levels, providing a holistic view of the system risk profile at a glance. </p>
+									<p style='margin:0'>Using this tool, we were able to classify failure causes based on their criticality and determine which ones needed urgent corrective action. For example, failure modes with an RPN between 10–25 were identified as high-risk and prioritized for mitigation.  </p>
+									<p>After implementing corrective actions, the stoplight graph was updated to reassess the system, showing the impact of these mitigations. This approach allowed us to systematically define high impact failure causes and provided a clear method to classify and manage risks. The insights from the RPN table and stoplight graph were then used iteratively within the FMEA process to monitor the effectiveness of mitigation strategies and ensure continuous improvement in system reliability. Here as we can see changes in FMEA spotlight RPN diagram after the design changes.</p>
+									<img src='images/RPN2.png' alt='Second Image' style='width:100%; margin:1em 0;' />
+
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/RPN0.png" alt="" />
+						</div>
+					</section>
+				<!-- Twenty-Nine -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">29.	Failure Mode and Effect Analysis</h2>
+							<p>Identified failure modes, their causes, and criticality. Tracked corrective actions and verified design improvements, improving system reliability and robustness.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Failure Mode and Effect Analysis"
+								data-content="
+									<img src='images/FMEA.png' alt='Second Image' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Failure Mode and Effect Analysis is a tool used to identify potential failure modes in a system to analyze their causes and effects, and prioritize them based on risk. It also tracks the implementation and impact of risk mitigation strategies, providing a structured approach to enhance system reliability and safety. FMEA integrates severity, likelihood, and detection measures to guide decision-making for reducing critical failures. </p>
+									<p style='margin:0'>Using FMEA in this project, we could identify which failure mode is caused by which causes and associated criticality of each failure mode. Additionally, it helped determine which failure causes needed urgent attention and what corrective actions were effective in reducing associated risks. For example, for failure mode F.3 severity dropped from 4 to 2 after increasing the frequency of update for weather data. </p>
+									<p> This tool allowed us to better define the risk criticality associated with each failure cause, track the impact of mitigation actions, and ensure that design changes effectively reduced system vulnerabilities. Insights from FMEA then guided further design work to minimize potential failures and improve overall system robustness.</p>
+									
+
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/FMEA.png" alt="" />
+						</div>
+					</section>
+
+				<!-- Thirty -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">30.	Event Tree or Fault Tree</h2>
+							<p>Evaluated probability of system-level failures. Guided design improvements such as enhancing GPS robustness to reduce chances of non-optimal routes.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Fault Tree"
+
+								data-content="
+									<img src='images/FT1.png' alt='Second Image' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Fault Tree analysis is a systems engineering tool used to evaluate the probability of system level failures by showing the logical relationships between failures of individual subsystems to the overall system outcome. While FMEA focuses on detecting failures at the subsystem level, fault trees help identify which combinations of events or subsystem failures can lead to critical system level issues, providing a quantitative understanding of system reliability. </p>
+									<p style='margin:0'>This tool allowed us to better define the causes and probabilities of such failures at the system level. Using this tool, I was able to identify which functionalities contributed most to the probability of system level failures. For example, the highest risk of suggesting a non optimal route was traced back to weak GPS signals using the fault tree.   </p>
+									<p>Based on these insights, further design work was implemented to improve GPS robustness by adding a dead reckoning system that uses internal sensors to verify GPS data. This reduced the probability of weak GPS from 0.7 to 0.2, lowering the chance of non optimal route suggestions to 0.24, thereby improving overall system reliability.</p>
+									<img src='images/FT2.png' alt='Fault Tree' style='width:100%; margin:1em 0;' />
+								">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/FT0.png" alt="" />
+						</div>
+					</section>
+				<!-- Thirty-One -->
+					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">31.	SysML Parametric Diagram</h2>
+							<p>Modeled mathematical relationships between parameters like sun exposure and route weightage. Helped finalize optimum values for performance testing and user comfort.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="SysML Parametric Diagram"
+								
+								data-content="
+									<img src='images/PD.png' alt='Parametric Diagram' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>SysML parametric diagram is a diagram used to model mathematical constraints and relationship between different system parameters. It is developed during the detailed definition of the system to check if system is behaving as expected or not. </p>
+									<p style='margin:0'>Using this tool, I understood how different parameters of systems are mathematically related to each other. It also helped me to understand whether given methodology will give me desired route efficiency value or not. For example. In the diagram what will be the different route efficiency values I can get for different conditions of sun exposure intensity (w_ij) and weightage combination for a different route segment (d_ij).  </p>
+									<p>It helped me better define what should be the recommended weightage assigned to route distance needed to travel (w_route) and sun exposure (w_sun) experienced to get more comfortable experience to driver. It helped me finalize the optimum value of weightage I should be assigning to time and sun exposure which helped me to make standardized test for the functional behavior of the system.</p>
+
+
+									">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/PD.png" alt="" />
+						</div>
+					</section>
+				<!-- Thirty-Two -->
+					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
+						<div class="content">
+							<h2 class="sub-header">32.	Timeline </h2>
+							<p>Organized project tasks, durations, and dependencies. Enabled tracking, adjustment, and efficient distribution of responsibilities to achieve project milestones.</p>
+							<ul class="actions stacked">
+							<li>
+								<a href="javascript:void(0)"
+								class="button open-modal"
+								data-title="Timeline"
+								
+								data-content="
+									<img src='images/Timeline.png' alt='Timeline' style='width:100%; margin:1em 0;' />
+									<p style='margin:0'>Timeline is a tool used to organize project activities after all requirements are finalized and the systems functional and structural architecture is defined. It divides the work into manageable tasks. Further it assigns durations, and helps visualize the sequence of actions required for project completion. This tool ensures that all tasks are planned to meet project milestones and deadlines. </p>
+									<p style='margin:0'>Using this tool, we were able to identify the action items necessary for project completion, understand the time required for each task, and track expected deliverables. As shown in figure, </p>
+									<p>It also helped us better define and organize tasks required to achieve the project goals and distribute responsibilities across the team efficiently. Beyond planning, the timeline serves as a tracking mechanism to monitor progress, adjust schedules as needed, and ensure that the project stays on track toward successful completion.</p>
+									
+								
+									">
+								Learn More
+								</a>
+							</li>
+							</ul>
+
+						</div>
+						<div class="image">
+							<img src="images/Timeline.png" alt="" />
+						</div>
+					</section>
+					<section id="downloads" class="spotlight style1 content-align-center">
+						<div class="content">
+							<h2>Project Documentation</h2>
+							<p>Access the full project report and supporting tools appendix for an in-depth understanding of the design process, methodologies, and systems engineering tools applied in this project.</p>
+							<ul class="actions horizontal">
+								<li>
+									<a href="assets/GaikwadJ_TechprocessReport.pdf" download class="button big">TechProcess Report</a>
+								</li>
+								<li>
+									<a href="assets/GaikwadJ_ToolReport.pdf" download class="button big">Tool Report</a>
+								</li>
+								<li>
+									<a href="assets/GaikwadJ_Appendix1.pptx" download class="button big">Appendix 1</a>
+								</li>
+								<li>
+									<a href="assets/GaikwadJ_Appendix2.xlsx" download class="button big">Appendix 2</a>
+								</li>
+							</ul>
+						</div>
+					</section>
+				<!-- Footer -->
+					<footer class="wrapper style1 align-center" id="footer">
+						<div class="inner">
+							<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="icon brands fa-linkedin" target="_blank" title="LinkedIn"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="icon fa-folder-open" target="_blank" title="Portfolio"><span class="label">Portfolio</span></a></li>
+							<li><a href="#" class="icon solid fa-envelope" title="janhavi.prof@gmail.com" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!'))"><span class="label">Email</span></a></li>
+                            <!--<li><a href="resume.pdf" class="icon solid fa-file" download title="Resume"><span class="label">Resume</span></a></li>-->
+							</ul>
+							<p>&copy; 2025 Janhavi Gaikwad. | 
+							<a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" target="_blank">LinkedIn</a>
+							</p>						
+						</div>
+					</footer>
+
+			</div>
+			<!-- Reusable Modal (ADD ONCE) -->
+			<div id="globalModal" class="modal">
+				<div class="modal-content">
+
+					<span class="close">&times;</span>
+
+					<!-- Sticky title -->
+					<h2 id="modalTitle" class="modal-title"></h2>
+
+					<!-- Scrollable area: image + content -->
+					<div class="modal-body">
+					<div id="modalDescription"></div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+	<!--CSS-->
+		<style>
+			body {
+			font-size: 0.5rem;   /* increase global text size */
+			line-height: 1.65;
+			}
+
+			p {
+			font-size: 1rem;
+			}
+
+						.modal {
+			display: none;
+			position: fixed;
+			z-index: 10000;
+			inset: 0;
+			background: rgba(0,0,0,0.7);
+			}
+
+			.modal-content {
+			background: #fff;
+			margin: 5% auto;
+			padding: 2em;
+			width: 60%;
+			max-width: none;
+			height: 85vh;
+			border-radius: 8px;
+			position: relative;
+
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			}
+
+			.close {
+			position: absolute;
+			top: 15px;
+			right: 20px;
+			font-size: 28px;
+			cursor: pointer;
+			}
+
+			/* Sticky/fixed title */
+			.modal-title {
+			margin: 0 0 1em 0;
+			flex: 0 0 auto; /* don't shrink, stay visible */
+			}
+
+
+			/* Scrollable area: image + description */
+			.modal-body {
+			flex: 1;                  /* takes remaining height */
+			overflow-y: auto;         /* scrollable */
+			padding-right: 1em;
+			} 
+
+			/* IMAGE in its original size */
+			.modal-image {
+			display: block;
+			width: auto;                 /* original width */
+			max-width: none;             /* prevent scaling */
+			height: auto;                /* original height */
+			margin-bottom: 1em;
+			}
+
+			/* Optional: scrollbar style */
+			.modal-body::-webkit-scrollbar {
+			width: 6px;
+			}
+			.modal-body::-webkit-scrollbar-thumb {
+			background: #bbb;
+			border-radius: 4px;
+			}
+
+
+
+			/* Header */
+			.header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				z-index: 1000;
+				transition: background 0.3s, box-shadow 0.3s;
+				background: rgba(0, 0, 0, 0.6); /* semi-transparent for contrast */
+				color: #fff;
+			}
+
+			/* Inner container (menu + icons) */
+			.header .inner {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				padding: 1em 2em;
+			}
+
+			/* Menu */
+			.header nav ul {
+				list-style: none;
+				display: flex;
+				gap: 2em;
+				margin: 0;
+				padding: 0;
+			}
+
+			.header nav ul li a {
+				text-decoration: none;
+				color: #fff;
+				font-weight: 600;
+				font-size: 1rem;
+				transition: color 0.2s;
+			}
+
+			.header nav ul li a:hover {
+				color: #00bfff;
+			}
+
+			/* Icons on right */
+			.header-icons {
+				display: flex;
+				gap: 1em;
+			}
+
+			.header-icons a {
+				font-size: 1.2rem;
+				color: #fff;
+				transition: color 0.2s;
+			}
+
+			.header-icons a:hover {
+				color: #00bfff;
+			}
+
+			/* Hero / Big title section */
+			.header .hero {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				height: 60vh; /* adjust height as needed */
+				padding-top: 5em; /* to account for fixed menu */
+				color: #fff;
+			}
+
+			.header .hero h1 {
+				font-size: 6rem; /* large title */
+				margin: 0.2em 0;
+			}
+
+			.header .hero p {
+				font-size: 1.3rem;
+				max-width: 800px;
+			}
+
+			/* Optional: semi-transparent overlay effect on background image */
+			.header::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.4);
+				z-index: 0;
+			}
+
+			/* Ensure inner content stays above overlay */
+			.header .inner, .header .hero {
+				position: relative;
+				z-index: 1;
+			}
+
+			/* Responsive */
+			@media screen and (max-width: 768px) {
+				.header .inner {
+					flex-direction: column;
+					gap: 1em;
+				}
+				.header nav ul {
+					flex-direction: column;
+					gap: 0.8em;
+					align-items: center;
+				}
+				.header .hero h1 {
+					font-size: 2rem;
+				}
+				.header .hero p {
+					font-size: 1rem;
+					padding: 0 1em;
+				}
+			}
+			/* Initially hide the menu and icons */
+			.header .inner {
+				opacity: 0;
+				transition: opacity 0.5s;
+			}
+
+			/* When scrolled, show menu and icons */
+			.header.show-menu .inner {
+				opacity: 1;
+			}
+			/* Header hidden at top */
+			.header {
+				background: transparent;       /* hide background at top */
+				transition: background 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
+				opacity: 0;                    /* fully hidden initially */
+				transform: translateY(-100%);  /* move up out of view */
+			}
+
+			/* Show header when scrolled */
+			.header.show-menu {
+				background: rgba(0,0,0,0.8);   /* or your desired color */
+				opacity: 1;
+				transform: translateY(0);
+				box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+			}
+
+			/* Hero Section */
+			.hero {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				height: 100vh; /* full screen */
+				background: linear-gradient(135deg, #1e3c72, #2a5298); /* fancy gradient */
+				color: #fff;
+				position: relative;
+				overflow: hidden;
+			}
+
+			/* Optional animated background */
+			.hero::before {
+				content: "";
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 10%);
+				animation: rotate 20s linear infinite;
+				z-index: 0;
+			}
+
+			@keyframes rotate {
+				from { transform: rotate(0deg); }
+				to { transform: rotate(360deg); }
+			}
+
+			/* Hero content */
+			.hero-content {
+				position: relative;
+				z-index: 1;
+				max-width: 900px;
+				padding: 0 2em;
+			}
+
+			/* Hero title banner*/
+			.hero h1 {
+				font-size: 6em; /* make it bigger */
+				font-weight: 900;
+				margin: 0;
+				background: linear-gradient(90deg, #ff7e5f, #feb47b); /* fancy gradient text */
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				text-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+				line-height: 1.1;
+				transition: transform 0.5s ease;
+			}
+
+			/* Optional hover effect */
+			.hero h1:hover {
+				transform: scale(1.05);
+			}
+
+			/* Responsive */
+			@media screen and (max-width: 1200px){
+				.hero h1 { font-size: 4.5em; }
+			}
+
+			@media screen and (max-width: 768px){
+				.hero h1 { font-size: 3em; }
+			}
+
+			/* Introduction section padding removal*/
+			/* Reduce padding for the Introduction section only */
+			section.banner.style1.orient-left.content-align-left.image-position-right.fullscreen {
+				padding: 2em 2em;  /* smaller top/bottom and sides */
+				height: auto;       /* remove extra fullscreen space if needed */
+			}
+
+			section.banner.style1.orient-left.content-align-left.image-position-right.fullscreen .content {
+				padding: 0;        /* remove internal content padding */
+			}
+
+			section.banner.style1.orient-left.content-align-left.image-position-right.fullscreen .content p {
+				margin-bottom: 1em;  /* tighter spacing between paragraphs */
+			}
+			.actions.horizontal {
+				display: flex;
+				justify-content: center;
+				gap: 1em; /* space between buttons */
+				flex-wrap: wrap; /* wrap on small screens */
+			}
+
+			.actions.horizontal li {
+				list-style: none;
+			}
+
+			/* Quick fix for sub-headers */
+			h2.sub-header {
+				font-size: 3em;            /* smaller than main h2 */
+				font-weight: 500;             /* semi-bold */
+				
+				display: inline-block;
+				border-bottom: 2px solid ; /* underline in cool blue */
+				padding-bottom: 4px;          /* space between text and line */
+				margin-bottom: 0.5em;
+			}
+
+			/* Alternate background for spotlight sections */
+			section.spotlight:nth-of-type(even) {
+				background-color: #f5f8fb; /* Light grey-blue for even sections */
+			}
+
+			section.spotlight:nth-of-type(odd) {
+				background-color: #f8eaea; /* White for odd sections */
+			}
+
+			/* Popup / modal header underline */
+			#modalTitle {
+				color: #003366;                /* Dark blue */
+			
+				font-weight: 200;              /* Semi-bold */
+				padding-bottom: 6px;           /* Space between text and line */
+				margin-bottom: 1em;            /* Space below header */
+				border-bottom: 2px solid #003366; /* Cool blue underline */
+				display: inline-block;         /* Line only as wide as text */
+			}
+			/* Increase size of social/portfolio/email icons */
+			ul.icons li a.icon {
+				font-size: 1.5rem; /* increase as needed, e.g., 2rem, 2.5rem, etc. */
+				transition: transform 0.2s;
+			}
+
+			/* Optional: add hover effect to make it pop */
+			ul.icons li a.icon:hover {
+				transform: scale(1.2); /* slight zoom on hover */
+			}
+			#project-background {
+				background-color: #f5f8fb; /* light blue-grey, change as you like */
+				padding: 2em;
+			}
+
+
+
+
+
+
+		</style>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+
+				const modal = document.getElementById("globalModal");
+				const modalTitle = document.getElementById("modalTitle");
+				const modalDesc = document.getElementById("modalDescription");
+				const closeBtn = document.querySelector(".close");
+
+				document.querySelectorAll(".open-modal").forEach(btn => {
+					btn.addEventListener("click", () => {
+
+					modalTitle.textContent = btn.dataset.title;
+					modalDesc.innerHTML = btn.dataset.content;
+
+					modal.style.display = "block";
+					document.body.style.overflow = "hidden"; // lock background scroll
+					});
+				});
+
+				closeBtn.addEventListener("click", closeModal);
+
+				window.addEventListener("click", (e) => {
+					if (e.target === modal) closeModal();
+				});
+
+				document.addEventListener("keydown", (e) => {
+					if (e.key === "Escape") closeModal();
+				});
+
+				function closeModal() {
+					modal.style.display = "none";
+					document.body.style.overflow = "";
+				}
+
+				});
+			</script>
+			<script>
+				// Change header style on scroll
+				window.addEventListener('scroll', () => {
+					const header = document.querySelector('.header');
+					if(window.scrollY > 50){
+						header.classList.add('scrolled');
+					} else {
+						header.classList.remove('scrolled');
+					}
+				});
+				</script>
+				<script>document.addEventListener("DOMContentLoaded", function() {
+					const header = document.getElementById("header");
+
+					window.addEventListener("scroll", () => {
+						if (window.scrollY > 50) {
+							header.classList.add("show-menu");
+						} else {
+							header.classList.remove("show-menu");
+						}
+					});
+				});
+			</script>
+	</body>
+</html>
