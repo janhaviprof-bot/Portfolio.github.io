@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Engine Spool Speed Control</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/me.jpg" alt="" /></span>
+							<h1 id="title">Janhavi Gaikwad</h1>
+							<p>Aerospoace & Systerms Engineer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#top" id="top-link"><span class="">Introduction</span></a></li>
+								<li><a href="#ProblemStatement" id="ProblemStatement-link"><span class="">Problem Statement</span></a></li>
+								<li><a href="#Approach" id="Approach-link"><span class="">Approach</span></a></li>
+								<li><a href="#Results" id="Results-link"><span class="">Results</span></a></li>
+								<li><a href="#Learnings" id="Learnings-link"><span class="">Learnings</span></a></li>
+							</ul>
+						</nav>
+					
+
+				</div>
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="icon fa-folder-open" target="_blank" title="Portfolio"><span class="label">Portfolio</span></a></li>
+							<li><a href="#" class="icon solid fa-envelope" title="janhavi.prof@gmail.com" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!'))"><span class="label">Email</span></a></li>
+                            <!--<li><a href="resume.pdf" class="icon solid fa-file" download title="Resume"><span class="label">Resume</span></a></li>-->
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt"><strong>Engine Spool Speed Control with Disturbance Rejection.</strong></h2>
+								<p>A Frequency Domain Control Design Study.</p>
+							</header>
+
+							<!--<footer>
+								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+							</footer>-->
+
+						</div>
+					</section>
+
+				<!-- ProblemStatement -->
+					<section id="ProblemStatement" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Problem Statement</h2>
+							</header>
+
+							<p style="text-align: justify;">Goal of this controller is to design a control for
+								 engine spool. The primary goal of the control is disturbance rejection by minimizing
+								  the effect of variation in inlet flow on the spool speed while also maintaining reference 
+								  tracking and stability.</p>
+
+						</div>
+					</section>
+
+				<!-- Approach -->
+					<section id="Approach" class="three" style="background-color: #ffffff; color: #000000;">
+						<div class="container">
+
+							<header>
+								<h2>Approach</h2>
+							</header>
+
+							<!--<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>-->
+
+							<ul>
+								<li style="text-align: left;">Started with the nonlinear rotational dynamics of the engine spool and the associated airflow dynamics.</li>
+								<a href="#" class="image featured"><img src="images/eq1.png" alt="" /></a>
+								<a href="#" class="image featured"><img src="images/eq2.png" alt="" /></a>
+								<li style="text-align: left;">Linearized the nonlinear equations about a nominal equilibrium operating point and converted the resulting model into state-space form.</li>
+								<li style="text-align: left;">Tuned controller parameter iteratively in the SISO tool to achieve desired performance requirements by achieving phase margin of ≥ 45°, settling time < 2 s, and overshoot < 10%</li>
+								<a href="#" class="image featured"><img src="images/eq3.png" alt="" /></a>
+								<li style="text-align: left;">Converted the linearized model into a transfer function representation suitable for frequency-domain analysis.</li>
+								<a href="#" class="image featured"><img src="images/eq4.png" alt="" /></a>
+								<li style="text-align: left;">Converted the linearized model into a transfer function representation suitable for frequency-domain analysis.
+									<ul>
+										<li style="text-align: left;">Tracking error < 1%.  </li>								
+										<li style="text-align: left;">Phase margin ≥ 45°.  </li>
+										<li style="text-align: left;">Gain margin ≥ 6 dB. </li>							
+										<li style="text-align: left;">Disturbance rejection ≥ 95%. </li>
+										<li style="text-align: left;">Closed-loop bandwidth > 1.5 rad/s. </li>
+									</ul>
+								</li>								
+
+								<li style="text-align: left;">Designed a frequency-domain controller in MATLAB to meet the specified stability and performance requirements.</li>	
+								<li style="text-align: left;">Analyzed the closed-loop system in MATLAB using simulation plots, including step response, disturbance response, and Bode plots, to validate controller performance.</li>
+							
+							</ul>
+
+						</div>
+					</section>
+                <!-- Results -->
+					<section id="Results" class="three">
+						<div class="container">
+
+							<header>
+								<h2>Results</h2>
+							</header>
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Stability Analysis</p>
+							<ul style="text-align: left;">
+								<li>
+                                <strong style="text-decoration: underline;">Root Locus:</strong><br>
+									<p >Root locus of the compensated open-loop system showing that all closed-loop poles remain in the left-half plane. The controller shifts dominant poles further left, improving transient response and ensuring stable operation with good damping across the operating gain range.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/rl.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Bode Plot:</strong><br>
+									<p >Frequency-domain analysis of the open-loop system with the designed controller, simulated in MATLAB. Shows a phase margin of 87.2° and infinite gain margin at a crossover frequency of 9.51 rad/s, confirming excellent robustness and stability. The system also satisfies the performance criterion of bandwidth > 1.5 rad/s.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/bode.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Nyquist Diagram:</strong><br>
+									<p >Nyquist plot of the open-loop system with the designed controller. The curve does not encircle the critical point (–1, 0), confirming closed-loop stability.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/nyquist.png" alt="" /></a>
+								
+							</ul>
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Performance Analysis</p>
+							<ul style="text-align: left;">
+								<li>
+                                <strong style="text-decoration: underline;">Step Response to Reference Input:</strong><br>
+									<p >Step response of the closed-loop spool speed, settling to the reference value of 1 at 0.8 s, confirming accurate reference tracking with zero steady-state error.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/Step.png" alt="" /></a>
+								<li>
+                                <strong style="text-decoration: underline;">Disturbance Rejection:</strong><br>
+									<p >Disturbance rejection response of the closed-loop spool speed to a step change of 1 in inlet flow, simulated in MATLAB. The output returns exactly to 0 at steady state, corresponding to 100% disturbance rejection, demonstrating that the controller perfectly maintains the desired spool speed under perturbations.</p>
+								</li>
+								<a href="#" class="image featured"><img src="images/Disturbance.png" alt="" /></a>
+							</ul>
+							
+
+
+						</div>
+					</section>
+				
+				<!-- Learnings -->
+					<section id="Learnings" class="five">
+						<div class="container">
+
+							<header>
+								<h2>Learnings</h2>
+							</header>
+ 							<ul>
+								<li style="text-align: left;">Learned how to select system equations and define the appropriate inputs and outputs to achieve the desired control objectives.</li>
+								<li style="text-align: left;">Gained experience in linearizing nonlinear system dynamics around an operating point for control design.</li>
+								<li style="text-align: left;">Learned how to define performance criteria, such as tracking accuracy, disturbance rejection, and stability margins, to meet control goals.</li> 
+								<li style="text-align: left;">Gained hands-on experience in designing a feedback controller in frequency domain to satisfy the defined performance requirements.</li> 
+								<li style="text-align: left;">Learned how to simulate the designed controller in MATLAB to quantitatively analyze and validate system performance.</li> 
+								<p style="text-align:left;">
+								<strong>Tools Used : </strong>  MATLAB 
+								</p>
+							</ul>
+
+							
+
+						</div>
+					</section>
+
+			</div>
+<style>
+.bode-comparison {
+  margin-top: 2rem;
+}
+
+.bode-images {
+  display: flex;
+  justify-content: space-around; /* side by side with space */
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap; /* responsive for small screens */
+}
+
+.bode-image {
+  text-align: center;
+  max-width: 45%; /* each image takes less than half */
+}
+
+.bode-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+
+.bode-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  
+}
+
+.bode-table th,
+.bode-table td {
+  border: 1px solid #ccc;
+  padding: 0.6rem 1rem;
+}
+
+/* Header row style */
+.bode-table thead th {
+  background-color: #bbb8b8; /* dark gray for header */
+  color: #000;            /* black text */
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/* Body rows style */
+.bode-table tbody td {
+  background-color: #f0f0f0; /* same light gray for all body rows */
+  color: #000;               /* black text */
+  font-size: 1rem;
+}
+</style>
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
