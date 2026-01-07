@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Hyperspace by HTML5 UP</title>
+		<title>Janhavi Gaikwad Portfolio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -35,6 +35,11 @@
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="inner">
 							<h1>JANHAVI GAIKWAD</h1>
+							<!-- Punch Line -->
+        
+        				<h2 class="punch-line" style="text-align: left;"><em>Leveraging systems engineering to design the aircraft of tomorrow.</em></h2>
+
+
 							<p>I am a Systems Engineering student at Cornell University with 4+ years of experience in the aviation 
 								industry, where I have performed system identification for aircraft, developed engine performance algorithms in C++, and trained hundreds of engineers in ANSYS Fluent. 
 								My journey has taught me that great engineering is about systems thinking, creating solutions that are efficient, sustainable, and impactful. I am passionate about applying systems 
@@ -49,6 +54,7 @@
 
 				<!-- One -->
 					<section id="one" class="wrapper style2 spotlights">
+						
 						<section>
 							<a href="javascript:void(0)" class="image"><img src="images/HoneywellEng.png" alt="" data-position="center center" /></a>
 							<div class="content">
@@ -153,7 +159,7 @@
 				<section id="two" class="wrapper style3 fade-up">
 					<div class="inner">
 						<h2>Projects</h2>
-						<p>Click on a project to view more details.</p>
+						
 
 						<!-- Filters -->
 						<div class="project-filters">
@@ -166,7 +172,7 @@
 						<div class="project-grid">
 							<!-- Project 1 -->
 							<div class="project-item" data-category="system">
-								<a href="https://external-link.com/project1" target="_blank">
+								<a href="Projects/SolarPlannerMBSE/index.html" target="_blank">
 									<img src="images/solarplanner.png" alt="Project 1">
 									<h3>Solar Aware Route Planner-MBSE</h3>
 								</a>
@@ -174,23 +180,23 @@
 							
 							<!-- Project 2 -->
 							<div class="project-item" data-category="technical">
-								<a href="https://external-link.com/project2" target="_blank">
-									<img src="images/routeplannert.png" alt="Project 2">
-									<h3>Solar Aware Route Planner</h3>
+								<a href="Projects/ControllerTime/index.html" target="_blank">
+									<img src="images/InvertedPendulum1.png" alt="Project 2">
+									<h3>Time-Domain Inverted Pendulum Control</h3>
 								</a>
 							</div>
 							
 							<!-- Project 3 -->
 							<div class="project-item" data-category="technical">
-								<a href="https://external-link.com/project3" target="_blank">
-									<img src="images/InvertedPendulum1.png" alt="Project 3">
-									<h3>Inverted Pendulum Control</h3>
+								<a href="Projects/ControllerFrequency/index.html" target="_blank">
+									<img src="images/InvertedPendulum2.png" alt="Project 3">
+									<h3>Frequency-Domain Inverted Pendulum Control</h3>
 								</a>
 							</div>
 
 							<!-- Project 4 -->
 							<div class="project-item" data-category="system">
-								<a href="https://external-link.com/project3" target="_blank">
+								<a href="Projects/ProjectManagement/index.html" target="_blank">
 									<img src="images/PM.png" alt="Project 3">
 									<h3>Project Management Plan for a Vertical Farming Enterprise</h3>
 								</a>
@@ -198,9 +204,9 @@
 
 							<!-- Project 5 -->
 							<div class="project-item" data-category="technical">
-								<a href="https://external-link.com/project3" target="_blank">
-									<img src="images/InvertedPendulum1.png" alt="Project 3">
-									<h3>Frequency-Domain SISO Turbine Control </h3>
+								<a href="Projects/ControllerEngine/index.html" target="_blank">
+									<img src="images/enginecontroller.jpg" alt="Project 5">
+									<h3>Engine Spool Speed Control with Disturbance Rejection</h3>
 								</a>
 							</div>
 
@@ -292,20 +298,59 @@
   background-color: rgba(0,0,0,0.7);
 }
 
+/* Modal overall background */
 .modal-content {
-  background-image: url('images/popup-default.jpg'); /* default image */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #fff;
-  margin: 10% auto; 
+  background-color: #ffffff; /* white background */
+  color: #000000;            /* default text black */
+  margin: 10% auto;
   padding: 40px;
   border-radius: 10px;
   width: 80%;
   max-width: 700px;
   text-align: left;
   position: relative;
-  backdrop-filter: brightness(0.1); /* darken background for text readability */
+  overflow-y: auto;          /* scroll if content is long */
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+/* Underline under name (longer than text) */
+#intro h1 {
+  color: #003366;          /* dark blue */
+  position: relative;       /* needed for pseudo-element */
+  display: inline-block;    
+  margin-bottom: 20px;      
+  padding-bottom: 8px;
+}
+
+/* The line */
+#intro h1::after {
+  content: "";                             /* empty content for line */
+  position: absolute;
+  left: 50%;                               /* start at center */
+  transform: translateX(-50%);             /* center the line */
+  bottom: 0;                               /* line at bottom of h1 */
+  width: 400%;                             /* line wider than text (adjust as needed) */
+  height: 3px;                             /* thickness of the line */
+  background-color: #003366;               /* same dark blue */
+  border-radius: 2px;                      /* slightly rounded ends */
+}
+
+/* Modal header color */
+.modal-body h2 {
+  
+  color: #003366; /* dark blue */
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 8px;             /* space between text and line */
+  border-bottom: 2px solid #003366; /* line under header */
+}
+
+/* Make list items inside modal black as well */
+.modal-body ul, 
+.modal-body li, 
+.modal-body p {
+  color: #000000;
+  line-height: 1.5;
+  margin-bottom: 10px;
 }
 
 .close {
@@ -322,9 +367,7 @@
   color: #ccc;
 }
 
-.modal-body h2 {
-  margin-top: 0;
-}
+
 
 /* Reduce line spacing for pop up block*/
 #experienceModal .modal-body p {
@@ -405,10 +448,15 @@
 }
 
 .project-item h3 {
-    margin-top: 0.5rem;
-    font-size: 1.1rem;
-    color: #333;
+    font-family: inherit;       /* same as other headers */
+    font-size: 1em;           /* match other section headers */
+    font-weight: 500;           /* semi-bold like other headers */
+    
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: center;
 }
+
 
 .project-item:hover {
     transform: translateY(-5px);
@@ -505,6 +553,21 @@
 .copy-text:hover::after {
   opacity: 1;
 }
+    #intro .punch-line {
+        font-size: 1.1em;        /* Smaller than name */
+        font-weight: 400;        /* Non-bold */
+        font-style: italic;      /* Italics */
+        color: #1F77C1;          /* Cool Blue Accent */
+        margin-bottom: 1em;
+        max-width: 700px;
+        text-align: center;
+    }
+ 
+
+
+/* Fancy Intro Section */
+
+
 
 
 </style>
