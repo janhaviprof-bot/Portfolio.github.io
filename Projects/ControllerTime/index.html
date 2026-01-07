@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Time-Domain Inverted Pendulum Control</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="images/me.jpg" alt="" /></span>
+							<h1 id="title">Janhavi Gaikwad</h1>
+							<p>Aerospoace & Systerms Engineer</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#top" id="top-link"><span class="">Introduction</span></a></li>
+								<li><a href="#ProblemStatement" id="ProblemStatement-link"><span class="">Problem Statement</span></a></li>
+								<li><a href="#Approach" id="Approach-link"><span class="">Approach</span></a></li>
+								<li><a href="#Results" id="Results-link"><span class="">Results</span></a></li>
+								<li><a href="#DesignComparison" id="DesignComparison-link"><span class="">Design Comparison</span></a></li>
+								<li><a href="#Learnings" id="Learnings-link"><span class="">Learnings</span></a></li>
+							</ul>
+						</nav>
+					
+
+				</div>
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="icon fa-folder-open" target="_blank" title="Portfolio"><span class="label">Portfolio</span></a></li>
+							<li><a href="#" class="icon solid fa-envelope" title="janhavi.prof@gmail.com" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!'))"><span class="label">Email</span></a></li>
+                            <!--<li><a href="resume.pdf" class="icon solid fa-file" download title="Resume"><span class="label">Resume</span></a></li>-->
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt"><strong>Inverted Pendulum Controller Design (Time Domain)</strong></h2>
+								<p>Designed and implemented time domain controller<br />
+								for inverted pendulum system.</p>
+							</header>
+
+							<!--<footer>
+								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+							</footer>-->
+
+						</div>
+					</section>
+				<!-- Mode selector -->
+				<div class="mode-switch">
+				<span class="mode active" data-mode="siso">Single Input Single Output Controller</span>
+				<span class="divider">|</span>
+				<span class="mode" data-mode="simo">Single Input Multiple Output Controller</span>
+				</div>
+ 			<!-- COMMON -->
+				<!-- ProblemStatement -->
+					<section id="ProblemStatement" class="two">
+						<div class="container">
+
+							<header>
+								<h2>Problem Statement</h2>
+							</header>
+
+							<p style="text-align: justify;">The objective of this project is to design a feedback 
+								controller in the time domain to stabilize an inverted pendulum mounted on a motorized cart, 
+								an inherently unstable nonlinear system. The controller must regulate the cart’s horizontal 
+								motion to maintain the pendulum in the upright equilibrium position. In addition to nominal 
+								stabilization, the control system is required to ensure robust performance under small angle 
+								deviations, varying initial conditions, and mild external disturbances.</p>
+
+						</div>
+					</section>
+			<!-- Seperate -->
+				<!-- Approach -->		
+					<section id="Approach" class="three">
+					<div class="container">
+						<header><h2>Approach</h2></header>
+					<!-- SISO approach content -->
+						<div class="mode-content siso active">
+							<ul>
+								<li style="text-align: left;">Began with the linearized state-space model of the inverted pendulum system about the upright equilibrium point. The system dynamics were represented using the standard form.</li>
+								<a href="#" class="image featured" style="margin:0; padding:0;"><img src="images/eq1.png" alt="" /></a>
+								<p style="text-align: left;">where, the state matrix (A) captures the coupled cart–pendulum dynamics and the input matrix (B) represents actuation through the cart motor.</p>
+								<li style="text-align: left;">Formulated a single-input single-output (SISO) control problem by constructing a virtual output from multiple measurements:</li>
+								<a href="#" class="image featured" style="margin:0; padding:0;"><img src="images/eq2.png" alt="" /></a>
+								<p style="text-align: left;">This allowed reduction of the MIMO system to an equivalent SISO representation suitable for controller design.</p>
+								<li style="text-align: left;">Defined the output matrix (C) to represent measurable states, enabling position and angle feedback for control and estimation.</li>
+								<li style="text-align: left;">Verified controllability and observability of the system to ensure feasibility of state-feedback control and state estimation.</li>
+								<li style="text-align: left;" >Designed a state-feedback controller using pole placement by selecting closed-loop eigenvalues of (A-BK)to satisfy performance requirements:
+									<ul style="margin:0; padding:0;">
+									<li>Closed-loop stability</li>
+									<li>Settling time < 2 s</li>
+									<li>Damping ratio ≥ 1/√2</li>
+									<p style="text-align: left; margin:0; padding:0;">Controller poles were placed near −5 to achieve fast and well-damped dynamics.</p>
+
+									</ul>
+								</li>
+								<li style="text-align: left;">Designed a state observer by placing estimator poles significantly faster than controller poles (around −15) to ensure rapid state convergence without degrading closed-loop performance.</li>
+								<li style="text-align: left;">Implemented the designed controller on the lab setup to validate performance verifying that pendulum maintained performance with the initial condition of 0 degree and 5 degrees.</li>
+								<li style="text-align: left;">Compared the performance of the SISO design with SIMO.</li>
+							</ul>
+							
+						</div>
+					<!-- SIMO approach content -->
+						<div class="mode-content simo">
+							<ul>
+								<li style="text-align: left;">Began with the linearized state-space model of the inverted pendulum system about the upright equilibrium point. The system dynamics were represented using the standard form.</li>
+								<a href="#" class="image featured" style="margin:0; padding:0;"><img src="images/eq1.png" alt="" /></a>
+								<p style="text-align: left;">where, the state matrix (A) captures the coupled cart–pendulum dynamics and the input matrix (B) represents actuation through the cart motor, and C selects multiple outputs for feedback.</p>
+								<li style="text-align: left;">Defined a single input multi-output system (SIMO) to use both cart position and pendulum angle measurements simultaneously for feedback control, improving regulation compared to SISO.</li>
+								<li style="text-align: left;">•	Verified controllability and observability to ensure the system could be fully controlled and all states could be estimated.</li>
+								<li style="text-align: left;" >Designed a state-feedback controller using pole placement by selecting closed-loop eigenvalues of (A-BK)to satisfy performance requirements:
+									<ul style="margin:0; padding:0;">
+									<li>Closed-loop stability</li>
+									<li>Settling time < 2 s</li>
+									<li>Damping ratio ≥ 1/√2</li>
+									<p style="text-align: left; margin:0; padding:0;">Controller poles were placed near −5 to achieve fast and well-damped dynamics.</p>
+
+									</ul>
+								</li>
+								<li style="text-align: left;">Designed a state observer by placing estimator poles significantly faster than controller poles (around −15) to ensure rapid state convergence without degrading closed-loop performance.</li>
+								<li style="text-align: left;">Implemented the designed controller on the lab setup to validate performance verifying that pendulum maintained performance with the initial condition of 0 degree and 5 degrees.</li>
+								<li style="text-align: left;">Compared the performance of the SISO design with SIMO.</li>
+							</ul>
+						
+						</div>
+					</div>
+					</section>
+					
+			<!-- Seperate -->
+				<!-- Results -->
+					<section id="Results" class="four">
+					<div class="container">
+						<header><h2>Results</h2></header>
+			<!-- SISO results -->
+						<div class="mode-content siso active">
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Analytical Response</p>
+							<ul style="text-align: left;">
+								<li>
+									<strong style="text-decoration: underline;">Initial Condition Response:</strong><br>
+										<p >The system remains stable and converges to equilibrium for angular disturbances up to 10°, demonstrating robustness to non-zero initial conditions.</p>
+									<div class="image-row">
+										<div class="image-box">
+											
+											<img src="images/initsiso1.png" alt="SISO Controller 0°" />
+											<p class="image-title">Initial angle 0°-MATLAB response</p>
+										</div>
+
+										<div class="image-box">
+											
+											<img src="images/initsiso2.png" alt="SISO Controller 5°" />
+											<p class="image-title">Initial angle 5°-MATLABresponse</p>
+										</div>
+									</div>
+								</li>
+								<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">System Response</p>
+								<ul style="text-align: left;">
+								<li>
+									<strong style="text-decoration: underline;">Time vs Position & Time vs Angle (Experimental):</strong><br>
+										<p >For both initial conditions, the pendulum maintains the upright position without sustained oscillations, 
+											while cart motion remains bounded. Unlike the smooth simulation curves, the experimental time-response exhibits 
+											small fluctuations due to unmodeled dynamics, friction and sensor noise.</p>
+									<div class="image-row">
+										<div class="image-box">
+											
+											<img src="images/expsiso1.png" alt="SISO Controller 0°" />
+											<p class="image-title">Initial angle 0°-Experimentalresponse</p>
+										</div>
+
+										<div class="image-box">
+											
+											<img src="images/expsiso2.png" alt="SISO Controller 5°" />
+											<p class="image-title">Initial angle 5°-Experimental response</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						
+						</div>
+<!-- SIMO results -->
+						<div class="mode-content simo">
+						<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Analytical Response</p>
+							<ul style="text-align: left;">
+								<li>
+									<strong style="text-decoration: underline;">Initial Condition Response:</strong><br>
+										<p >The system remains stable and converges to equilibrium for angular disturbances roughly up to 10°, demonstrating robustness to non-zero initial conditions</p>
+									<div class="image-row">
+										<div class="image-box">
+											
+											<img src="images/initsiso1.png" alt="SISO Controller 0°" />
+											<p class="image-title">Initial angle 0°-MATLAB response</p>
+										</div>
+
+										<div class="image-box">
+											
+											<img src="images/initsiso2.png" alt="SISO Controller 10°" />
+											<p class="image-title">Initial angle 10°-MATLABresponse</p>
+										</div>
+									</div>
+								</li>
+								<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">System Response</p>
+								<ul style="text-align: left;">
+								<li>
+									<strong style="text-decoration: underline;">Time vs Position & Time vs Angle (Experimental):</strong><br>
+										<p >For both initial conditions, the pendulum maintains the upright position without sustained oscillations, 
+											while cart motion remains bounded. Unlike the smooth simulation curves, the experimental time-response exhibits 
+											small fluctuations due to unmodeled dynamics, friction and sensor noise.</p>
+									<div class="image-row">
+										<div class="image-box">
+											
+											<img src="images/expsiso1.png" alt="SIMO Controller 0°" />
+											<p class="image-title">Initial angle 0°-Experimentalresponse</p>
+										</div>
+
+										<div class="image-box">
+											
+											<img src="images/expsiso2.png" alt="SIMO Controller 10°" />
+											<p class="image-title">Initial angle 10°-Experimental response</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						
+						</div>
+
+					</div>
+					</section>
+<!-- Design Comparison -->
+					<section id="DesignComparison" class="four">
+						<div class="container">
+
+							<header>
+								<h2>SISO vs. SIMO</h2>
+							</header>
+
+							<p style="text-align: left;font-weight: 700; margin-bottom: 10px;">Key Observations:</p>
+
+								<!-- Comparison Table -->
+							<table class="bode-table">
+								<thead>
+								<tr>
+									<th>Metric</th>
+									<th>SISO-10°</th>
+									<th>SIMO-10°</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>Pendulum swing to stabilize</td>
+									<td>0.06°</td>
+									<td>0.05°</td>
+								</tr>
+								<tr>
+									<td>Cart travel to stabilize pendulum</td>
+									<td>0.19 m</td>
+									<td>0.07 m</td>
+								</tr>
+								<tr>
+									<td>Settling time</td>
+									<td>~3 s</td>
+									<td>~2 s</td>
+								</tr>
+								<tr>
+									<td>Robustness to initial disturbance (0°–10°)</td>
+									<td>Stable, comparitively larger oscillations</td>
+									<td>Stable, smoother, smaller oscillations</td>
+								</tr>
+								</tbody>
+							</table>
+							<p style="text-align: left;margin:0; padding:0;" > SIMO shows improved robustness to initial disturbances, with smaller pendulum deviation, reduced cart displacement, and slightly faster settling compared to SISO.</p>
+							<p style="text-align: left;margin:0; padding:0;" > SIMO demonstrates improved robustness compared to SISO, with smaller steady-state variations in both pendulum angle and cart position, slightly faster settling, and smoother response under identical initial disturbances.</p>
+							
+						</div>
+					</section>
+				<!-- Learnings -->
+					<section id="Learnings" class="four">
+						<div class="container">
+							
+
+							<header>
+								<h2 > Learnings</h2>
+							</header>
+ 							<ul style="text-align: left;">
+								<li >Gained hands on experience in time-domain controller design by implementing and comparing SISO and SIMO control strategies against defined performance criteria.</li>
+								<li >Designed the time domain controller using pole placement, translating performance requirements (settling time, damping ratio) into eigenvalue selection.</li>
+								<li >Observed the gap between simulation and experimental response, recognizing the impact of unmodeled dynamics, friction, sensor noise, and actuator limits.</li>
+								<p style="text-align:left;">
+								<strong>Tools Used : </strong>  MATLAB
+								</p>
+							</ul>
+						</div>
+					</section>
+
+
+			</div>
+			<style>
+
+				.mode-switch {
+				text-align: center;
+				margin: 1.5rem 0;
+				font-weight: 600;
+				}
+
+				.mode-switch .mode {
+				cursor: pointer;
+				padding: 0.3rem 0.6rem;
+				}
+
+				.mode-switch .mode.active {
+				border-bottom: 2px solid #000;
+				}
+
+				.mode-content {
+				display: none;
+				}
+
+				.mode-content.active {
+				display: block;
+				}
+
+				.image-row {
+				display: flex;
+				gap: 1.5rem;
+				justify-content: center;
+				align-items: flex-start;
+				flex-wrap: wrap; /* stacks on small screens */
+				margin: 1rem 0;
+				}
+
+				.image-box {
+				text-align: center;
+				max-width: 45%;
+				}
+
+				.image-box img {
+				width: 100%;
+				height: auto;
+				border-radius: 8px;
+				margin: 0; /* removes unwanted spacing */
+				}
+
+				.image-title {
+				font-weight: 600;
+				margin-bottom: 0.4rem;
+				}
+
+				.bode-table {
+				width: 100%;
+				border-collapse: collapse;
+				text-align: center;
+				
+				}
+
+				.bode-table th,
+				.bode-table td {
+				border: 1px solid #ccc;
+				padding: 0.6rem 1rem;
+				}
+
+				/* Header row style */
+				.bode-table thead th {
+				background-color: #bbb8b8; /* dark gray for header */
+				color: #000;            /* black text */
+				font-weight: 700;
+				text-align: center;
+				font-size: 1.2rem;
+				}
+
+				/* Body rows style */
+				.bode-table tbody td {
+				background-color: #f0f0f0; /* same light gray for all body rows */
+				color: #000;               /* black text */
+				font-size: 1rem;
+				}
+
+
+
+
+
+
+
+			</style>
+		<!-- Footer -->
+
+			<footer id="footer" class="wrapper style1-alt">
+			<div class="inner" style="text-align:center;">
+				<p>&copy; 2025 Janhavi Gaikwad. | 
+				<a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" target="_blank">LinkedIn</a>
+				</p>
+			</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script>
+				const modes = document.querySelectorAll('.mode');
+
+				modes.forEach(mode => {
+				mode.addEventListener('click', () => {
+					const selected = mode.dataset.mode; // 'siso' or 'simo'
+
+					// Update mode button active state
+					modes.forEach(m => m.classList.remove('active'));
+					mode.classList.add('active');
+
+					// Update each section independently
+					document.querySelectorAll('section').forEach(section => {
+					const contents = section.querySelectorAll('.mode-content');
+					contents.forEach(c => c.classList.remove('active'));
+					const activeContent = section.querySelector('.mode-content.' + selected);
+					if (activeContent) activeContent.classList.add('active');
+					});
+				});
+				});
+			</script>
+
+
+
+	</body>
+</html>
