@@ -8601,3 +8601,101 @@ input, select, textarea {
 			#wrapper.divided > .invert:first-child {
 				box-shadow: none !important;
 			}
+
+/* SolarPlannerMBSE - Consistent padding throughout page */
+#wrapper.divided {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+	#wrapper.divided {
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+	}
+}
+
+/* SolarPlannerMBSE Hero - Matches Story theme (light bg, accent #47D3E5) */
+.hero {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	min-height: 100vh;
+	padding: 6rem 2rem 2rem;
+	position: relative;
+	overflow: hidden;
+	background-color: #eeeeee;
+}
+
+.hero .hero-content {
+	position: relative;
+	z-index: 1;
+	max-width: 90rem;
+	width: 100%;
+	margin: 0 auto;
+	padding: 2.5rem 2rem;
+}
+
+.hero h1 {
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
+	font-size: clamp(2.5rem, 8vw, 5.5rem);
+	font-weight: 400;
+	color: #000000;
+	margin: 0 0 1.5rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 3px solid #47D3E5;
+	line-height: 1.15;
+	letter-spacing: -0.05em;
+	display: inline-block;
+}
+
+.hero .hero-content p {
+	text-align: justify;
+	color: rgba(0, 0, 0, 0.75);
+	font-size: 1.05rem;
+	line-height: 1.7;
+	margin: 0 0 1.25rem;
+}
+
+.hero .hero-content p:last-of-type {
+	margin-bottom: 2rem;
+}
+
+.hero .hero-actions {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.hero .hero-actions .button {
+	background-color: transparent;
+	color: #000000;
+	border: 2px solid #47D3E5;
+}
+
+.hero .hero-actions .button:hover {
+	background-color: rgba(71, 211, 229, 0.2);
+	color: #000000;
+	border-color: #47D3E5;
+}
+
+@media screen and (max-width: 768px) {
+	.hero {
+		padding: 5rem 1.25rem 1.5rem;
+	}
+
+	.hero .hero-content {
+		padding: 1.75rem 1.25rem;
+	}
+
+	.hero h1 {
+		font-size: 2.25rem;
+	}
+
+	.hero .hero-content p {
+		font-size: 0.95rem;
+	}
+}

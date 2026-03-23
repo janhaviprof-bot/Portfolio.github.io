@@ -9,7 +9,7 @@
 		<title>MBSE for Solar Aware Route Planner</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/main.css?v=3" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	
@@ -20,7 +20,7 @@
 		<!-- Menu on left -->
 		<nav>
 		<ul>
-			<li><a href="#wrapper">Introduction</a></li>
+			<li><a href="#project-background">Introduction</a></li>
 			<li><a href="#first">Tools</a></li>
 			<li><a href="#downloads">Download</a></li>
 			<li><a href="#footer">Get in Touch</a></li>
@@ -43,42 +43,20 @@
 	</div>
 
 	</header>
-	<!-- Hero Section / Project Title -->
-	<div class="hero">
-		<h1 style="text-align: center;">Solar Aware Route Planner</h1>	
+	<!-- Hero Section: Title + Project Background -->
+	<div class="hero" id="project-background">
+		<div class="hero-content">
+			<h1>Solar Aware Route Planner</h1>
+			<p>Drivers in urban environments are often exposed to varying levels of solar radiation during their commutes, which can lead to health conditions, discomfort, increased fatigue, and reduced overall driving efficiency. Conventional navigation systems prioritize the shortest or fastest routes but do not account for environmental factors such as sunlight exposure. The goal of this project is to develop a solar aware route planner for vehicles that minimizes sun exposure while maintaining efficient travel times. The system integrates real time solar and weather data from external data centers, calculates shadow parameters, and applies optimization techniques to generate personalized driving routes. Using systems engineering principles, the project defines functional and structural requirements, identifies potential failure modes, and ensures that the final solution is reliable, efficient, and aligned with driver comfort and safety needs.</p>
+			<p>The following report documents the design and development of solar route planner using systems engineering methodologies. It details the all system engineering tools used across project life cycle from understanding customer needs through tools like customer affinity process, functional and structural modeling using activity diagrams, FFBD, IDEF0, QFD. The report also covers risk analysis and testing of product using FMEA, VCRM etc. Overall, it documents the use of different systems engineering tools for the design and development of user centric product.</p>
+			<ul class="actions stacked hero-actions">
+				<li><a href="#first" class="button big wide smooth-scroll-middle">Get Started</a></li>
+			</ul>
+		</div>
 	</div>
-	</header>
 
 		<!-- Wrapper -->
 			<div id="wrapper" class="divided">
-
-				<!-- Introduction -->
-					<section id="project-background" >
-						<div class="content">
-							<h1 style="text-align: center; padding: 0.5em 0;">Project Background</h1>
-							
-							<p style="text-align: justify;padding: 0 2.5em;">Drivers in urban environments are often exposed to varying levels of solar 
-								radiation during their commutes, which can lead to health conditions, discomfort, increased 
-								fatigue, and reduced overall driving efficiency. Conventional navigation systems prioritize 
-								the shortest or fastest routes but do not account for environmental factors such as sunlight 
-								exposure. The goal of this project is to develop a solar aware route planner for vehicles that 
-								minimizes sun exposure while maintaining efficient travel times. The system integrates real time 
-								solar and weather data from external data centers, calculates shadow parameters, and applies optimization 
-								techniques to generate personalized driving routes. Using systems engineering principles, the project 
-								defines functional and structural requirements, identifies potential failure modes, and ensures that 
-								the final solution is reliable, efficient, and aligned with driver comfort and safety needs.</p>
-							<p style="text-align: justify;padding: 0 2.5em;">The following report documents the design and development of solar route planner using systems engineering 
-								methodologies. It details the all system engineering tools used across project life cycle from understanding 
-								customer needs through tools like customer affinity process, functional and structural modeling using activity 
-								diagrams, FFBD, IDEF0, QFD. The report also covers risk analysis and testing of product using FMEA, VCRM etc. 
-								Overall, it documents the use of different systems engineering tools  for the design and development of user 
-								centric product.</p>
-							<ul class="actions stacked" style="text-align: center;">
-								<li><a href="#first" class="button big wide smooth-scroll-middle" >Get Started</a></li>
-							</ul>
-						</div>
-						
-					</section>
 				<h1 style="text-align: center; padding: 1em 0;">Systems Engineering Tools</h1>
 				<!-- One -->
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
@@ -1132,28 +1110,6 @@
 				color: #00bfff;
 			}
 
-			/* Hero / Big title section */
-			.header .hero {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				text-align: center;
-				height: 60vh; /* adjust height as needed */
-				padding-top: 5em; /* to account for fixed menu */
-				color: #fff;
-			}
-
-			.header .hero h1 {
-				font-size: 6rem; /* large title */
-				margin: 0.2em 0;
-			}
-
-			.header .hero p {
-				font-size: 1.3rem;
-				max-width: 800px;
-			}
-
 			/* Optional: semi-transparent overlay effect on background image */
 			.header::after {
 				content: "";
@@ -1167,7 +1123,7 @@
 			}
 
 			/* Ensure inner content stays above overlay */
-			.header .inner, .header .hero {
+			.header .inner {
 				position: relative;
 				z-index: 1;
 			}
@@ -1182,13 +1138,6 @@
 					flex-direction: column;
 					gap: 0.8em;
 					align-items: center;
-				}
-				.header .hero h1 {
-					font-size: 2rem;
-				}
-				.header .hero p {
-					font-size: 1rem;
-					padding: 0 1em;
 				}
 			}
 			/* Initially hide the menu and icons */
@@ -1215,72 +1164,6 @@
 				opacity: 1;
 				transform: translateY(0);
 				box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-			}
-
-			/* Hero Section */
-			.hero {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				text-align: center;
-				height: 100vh; /* full screen */
-				background: linear-gradient(135deg, #1e3c72, #2a5298); /* fancy gradient */
-				color: #fff;
-				position: relative;
-				overflow: hidden;
-			}
-
-			/* Optional animated background */
-			.hero::before {
-				content: "";
-				position: absolute;
-				top: -50%;
-				left: -50%;
-				width: 200%;
-				height: 200%;
-				background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 10%);
-				animation: rotate 20s linear infinite;
-				z-index: 0;
-			}
-
-			@keyframes rotate {
-				from { transform: rotate(0deg); }
-				to { transform: rotate(360deg); }
-			}
-
-			/* Hero content */
-			.hero-content {
-				position: relative;
-				z-index: 1;
-				max-width: 900px;
-				padding: 0 2em;
-			}
-
-			/* Hero title banner*/
-			.hero h1 {
-				font-size: 6em; /* make it bigger */
-				font-weight: 900;
-				margin: 0;
-				background: linear-gradient(90deg, #ff7e5f, #feb47b); /* fancy gradient text */
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				text-shadow: 2px 2px 15px rgba(0,0,0,0.4);
-				line-height: 1.1;
-				transition: transform 0.5s ease;
-			}
-
-			/* Optional hover effect */
-			.hero h1:hover {
-				transform: scale(1.05);
-			}
-
-			/* Responsive */
-			@media screen and (max-width: 1200px){
-				.hero h1 { font-size: 4.5em; }
-			}
-
-			@media screen and (max-width: 768px){
-				.hero h1 { font-size: 3em; }
 			}
 
 			/* Introduction section padding removal*/
@@ -1348,11 +1231,6 @@
 			ul.icons li a.icon:hover {
 				transform: scale(1.2); /* slight zoom on hover */
 			}
-			#project-background {
-				background-color: #f5f8fb; /* light blue-grey, change as you like */
-				padding: 2em;
-			}
-
 
 
 
