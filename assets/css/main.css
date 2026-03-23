@@ -3911,6 +3911,79 @@ input, select, textarea {
 
 /* Portfolio custom styles */
 
+/* Typography */
+body, input, select, textarea {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#intro h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+#intro .punch-line {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+#intro p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+#intro p:first-of-type {
+  color: #e2e8f0;
+}
+#intro p:last-of-type {
+  color: #cbd5e1;
+  font-style: italic;
+  border-left: 3px solid #475569;
+  padding-left: 1rem;
+  margin-top: 1.25rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+h3, .project-item h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.experience-summary {
+  line-height: 1.4;
+}
+
+.experience-summary .role {
+  font-weight: 600;
+}
+
+.button {
+  letter-spacing: 0.15em;
+}
+
+#sidebar nav a {
+  letter-spacing: 0.05em;
+}
+
+.modal-content,
+.modal-body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.modal-body ul,
+.modal-body li {
+  line-height: 1.6;
+}
+
 /* Section backgrounds - professional slate palette */
 #intro {
   background-color: #0f172a;
@@ -3934,32 +4007,84 @@ input, select, textarea {
   background-color: #1e293b;
 }
 
-/* Text colors for light sections */
-#one h2,
-#one .experience-summary,
-#one .experience-summary p,
-#one .experience-summary .role,
-#one .experience-summary .team,
+/* Modular text colors - distinct hierarchy per section */
+
+/* Experience section */
+#one h2 {
+  color: #0f172a;
+  font-weight: 700;
+  border-left: 4px solid #475569;
+  padding-left: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+#one .experience-summary .role {
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 1.05em;
+}
+#one .experience-summary .team {
+  color: #64748b;
+  font-size: 0.95em;
+}
 #one .experience-summary .skills {
-  color: #1e293b;
+  color: #475569;
+  font-size: 0.9em;
+  font-weight: 500;
 }
-#two h2,
-#two .project-item h3,
+#one .experience-summary p {
+  color: #334155;
+}
+
+/* Projects section */
+#two h2 {
+  color: #0f172a;
+  border-bottom: 3px solid #475569;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+#two .project-item h3 {
+  color: #1e293b;
+  transition: color 0.2s ease;
+}
+#two .project-item:hover h3 {
+  color: #0f172a;
+}
 #two .filter-link {
-  color: #1e293b;
+  color: #64748b;
+  transition: color 0.2s ease;
 }
-#three h2,
-#three .contact-icons,
+#two .filter-link:hover {
+  color: #334155;
+}
+#two .filter-link.active {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Contact section */
+#three h2 {
+  color: #0f172a;
+  border-left: 4px solid #475569;
+  padding-left: 0.75rem;
+}
 #three .contact-icons li {
-  color: #1e293b;
+  color: #334155;
+}
+#three .contact-icons .icon {
+  color: #475569;
 }
 #three .contact-icons a {
   color: #1e293b;
-  border-bottom-color: rgba(30, 41, 59, 0.3);
+  border-bottom-color: rgba(71, 85, 105, 0.4);
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 #three .contact-icons a:hover {
-  color: #475569;
+  color: #0f172a;
   border-bottom-color: transparent;
+}
+#three .copy-text {
+  color: #1e293b;
+  font-weight: 500;
 }
 #footer .inner,
 #footer .inner p,
@@ -4003,6 +4128,7 @@ input, select, textarea {
 /* Sidebar nav - professional */
 #sidebar nav a {
   color: rgba(241, 245, 249, 0.85);
+  font-size: 0.9rem;
 }
 #sidebar nav a:before {
   background: rgba(241, 245, 249, 0.25);
@@ -4152,8 +4278,20 @@ input, select, textarea {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+}
+
+@media screen and (max-width: 980px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-item {
@@ -4161,25 +4299,43 @@ input, select, textarea {
   transition: transform 0.3s;
 }
 
+.project-item {
+  background: #f0f9ff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
 .project-item img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
+}
+
+.project-item a {
+  display: block;
+  padding-bottom: 1rem;
 }
 
 .project-item h3 {
   font-family: inherit;
   font-size: 1em;
-  font-weight: 500;
-  margin-top: 0.5em;
+  font-weight: 600;
+  margin-top: 0.75em;
   margin-bottom: 0.5em;
+  padding: 0 1rem;
   text-align: center;
+  color: inherit;
 }
 
 .project-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.3);
 }
 
 .filter-link {
@@ -4262,10 +4418,6 @@ input, select, textarea {
 }
 
 #intro .punch-line {
-  font-size: 1.1em;
-  font-weight: 400;
-  font-style: italic;
-  color: #94a3b8;
   margin-bottom: 1em;
   max-width: 700px;
   text-align: left;
