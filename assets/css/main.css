@@ -3971,6 +3971,14 @@ input, select, textarea {
 }
 
 /* Button accent - professional */
+#intro .button {
+  border-color: rgba(248, 250, 252, 0.6) !important;
+  color: #f8fafc !important;
+}
+#intro .button:hover {
+  border-color: #f8fafc !important;
+  color: #ffffff !important;
+}
 #one .button,
 #three .button {
   border-color: rgba(71, 85, 105, 0.5) !important;
