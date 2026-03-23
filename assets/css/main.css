@@ -98,7 +98,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #1f2937;
+		background: #0f172a;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -3525,7 +3525,7 @@ input, select, textarea {
 
 	#sidebar {
 		padding: 2.5em 2.5em 0.5em 2.5em ;
-		background: #717682;
+		background: #1e293b;
 		cursor: default;
 		height: 100vh;
 		left: 0;
@@ -3911,6 +3911,105 @@ input, select, textarea {
 
 /* Portfolio custom styles */
 
+/* Section backgrounds - professional slate palette */
+#intro {
+  background-color: #0f172a;
+}
+#one {
+  background-color: #ffffff;
+}
+#one .spotlights > section:nth-child(2) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+#one .spotlights > section:nth-child(3) {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+#two {
+  background-color: #f8fafc;
+}
+#three {
+  background-color: #f1f5f9;
+}
+#footer {
+  background-color: #1e293b;
+}
+
+/* Text colors for light sections */
+#one h2,
+#one .experience-summary,
+#one .experience-summary p,
+#one .experience-summary .role,
+#one .experience-summary .team,
+#one .experience-summary .skills {
+  color: #1e293b;
+}
+#two h2,
+#two .project-item h3,
+#two .filter-link {
+  color: #1e293b;
+}
+#three h2,
+#three .contact-icons,
+#three .contact-icons li {
+  color: #1e293b;
+}
+#three .contact-icons a {
+  color: #1e293b;
+  border-bottom-color: rgba(30, 41, 59, 0.3);
+}
+#three .contact-icons a:hover {
+  color: #475569;
+  border-bottom-color: transparent;
+}
+#footer .inner,
+#footer .inner p,
+#footer .inner a {
+  color: #f1f5f9;
+}
+#footer .inner a:hover {
+  color: #ffffff;
+}
+
+/* Button accent - professional */
+#one .button,
+#three .button {
+  border-color: rgba(71, 85, 105, 0.5) !important;
+  color: #334155 !important;
+}
+#one .button:hover,
+#three .button:hover {
+  border-color: #475569 !important;
+  color: #1e293b !important;
+}
+#three .button.primary {
+  background-color: #334155 !important;
+  color: #fff !important;
+  border-color: #334155 !important;
+}
+#three .button.primary:hover {
+  background-color: #1e293b !important;
+  border-color: #1e293b !important;
+  color: #fff !important;
+}
+
+/* Sidebar nav - professional */
+#sidebar nav a {
+  color: rgba(241, 245, 249, 0.85);
+}
+#sidebar nav a:before {
+  background: rgba(241, 245, 249, 0.25);
+}
+#sidebar nav a:after {
+  background: #94a3b8;
+  background-image: none;
+}
+#sidebar nav a:hover {
+  color: #f1f5f9;
+}
+#sidebar nav a.active {
+  color: #f1f5f9;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -3938,7 +4037,7 @@ input, select, textarea {
 }
 
 #intro h1 {
-  color: #003366;
+  color: #f8fafc;
   position: relative;
   display: inline-block;
   margin-bottom: 20px;
@@ -3953,16 +4052,20 @@ input, select, textarea {
   bottom: 0;
   width: 400%;
   height: 3px;
-  background-color: #003366;
+  background-color: #94a3b8;
   border-radius: 2px;
 }
 
+#intro p {
+  color: #cbd5e1;
+}
+
 .modal-body h2 {
-  color: #003366;
+  color: #1e293b;
   margin-top: 0;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #003366;
+  border-bottom: 2px solid #475569;
 }
 
 .modal-body ul,
@@ -4035,8 +4138,8 @@ input, select, textarea {
 
 .filter-btn.active,
 .filter-btn:hover {
-  background-color: #333;
-  color: #fff;
+    background-color: #475569;
+    color: #fff;
 }
 
 .project-grid {
@@ -4086,6 +4189,7 @@ input, select, textarea {
 .filter-link.active {
   font-weight: 700;
   opacity: 1;
+  color: #334155;
 }
 
 .contact-clean {
@@ -4124,7 +4228,7 @@ input, select, textarea {
 .copy-text {
   cursor: pointer;
   position: relative;
-  color: #333;
+  color: #1e293b;
   text-decoration: underline;
 }
 
@@ -4134,7 +4238,7 @@ input, select, textarea {
   bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
-  background: #333;
+  background: #334155;
   color: #fff;
   padding: 4px 8px;
   border-radius: 4px;
@@ -4153,7 +4257,7 @@ input, select, textarea {
   font-size: 1.1em;
   font-weight: 400;
   font-style: italic;
-  color: #1F77C1;
+  color: #94a3b8;
   margin-bottom: 1em;
   max-width: 700px;
   text-align: left;
