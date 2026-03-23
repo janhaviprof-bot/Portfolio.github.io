@@ -1232,6 +1232,40 @@
 				transform: scale(1.2); /* slight zoom on hover */
 			}
 
+			/* Image hover - popup card */
+			.spotlight .image {
+				cursor: pointer;
+			}
+			.spotlight .image img {
+				transition: opacity 0.2s;
+			}
+			.spotlight .image:hover img {
+				opacity: 0.9;
+			}
+			.image-popup-card {
+				display: none;
+				position: fixed;
+				z-index: 10000;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+				border: 1px solid rgba(0,0,0,0.1);
+				padding: 0.5rem;
+				pointer-events: none;
+			}
+			.image-popup-card.show {
+				display: block;
+			}
+			.image-popup-card img {
+				display: block;
+				max-width: 80vw;
+				max-height: 70vh;
+				object-fit: contain;
+			}
+
 
 
 
@@ -1302,6 +1336,29 @@
 						} else {
 							header.classList.remove("show-menu");
 						}
+					});
+				});
+			</script>
+			<script>
+				document.addEventListener("DOMContentLoaded", function() {
+					const card = document.createElement("div");
+					card.className = "image-popup-card";
+					const cardImg = document.createElement("img");
+					cardImg.alt = "Full size";
+					card.appendChild(cardImg);
+					document.body.appendChild(card);
+
+					document.querySelectorAll(".spotlight .image").forEach(function(container) {
+						const img = container.querySelector("img");
+						if (!img) return;
+
+						container.addEventListener("mouseenter", function() {
+							cardImg.src = img.src || img.getAttribute("src");
+							card.classList.add("show");
+						});
+						container.addEventListener("mouseleave", function() {
+							card.classList.remove("show");
+						});
 					});
 				});
 			</script>
