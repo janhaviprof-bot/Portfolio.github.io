@@ -9,7 +9,7 @@
 		<title>SmartCharge — EV Green Charging Recommendations</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="SmartCharge — detailed project page." />
+		<meta name="description" content="SmartCharge recommends low-carbon EV charging windows using UK carbon intensity data, REST APIs, and AI integration." />
 		<link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 	<body class="is-preload">
@@ -23,8 +23,14 @@
 				</div>
 				<nav id="nav">
 					<ul>
-						<li><a href="#top" id="top-link"><span>Introduction</span></a></li>
-						<li><a href="#links" id="links-link"><span>Links</span></a></li>
+						<li><a href="#top" id="top-link"><span>Overview</span></a></li>
+						<li><a href="#demo" id="demo-link"><span>Demo</span></a></li>
+						<li><a href="#problem" id="problem-link"><span>Problem</span></a></li>
+						<li><a href="#application" id="application-link"><span>Application</span></a></li>
+						<li><a href="#process" id="process-link"><span>Process</span></a></li>
+						<li><a href="#architecture" id="architecture-link"><span>Architecture</span></a></li>
+						<li><a href="#results" id="results-link"><span>Results</span></a></li>
+						<li><a href="#future" id="future-link"><span>Future</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -39,34 +45,199 @@
 
 		<div id="main">
 
+			<!-- 1. Project Header -->
 			<section id="top" class="one dark cover">
 				<div class="container">
 					<header>
 						<h2 class="alt"><strong>SmartCharge</strong></h2>
-						<p>Application to recommend green energy charging slots<br />
-						in the next two days to really make your EV green.</p>
+						<p>Shiny for Python app that recommends low-carbon EV charging windows<br />
+						using UK grid carbon intensity, vehicle specs, and AI-assisted ranking.</p>
+						<p class="tech-stack-primary"><strong>Python</strong> &nbsp;|&nbsp; <strong>REST APIs</strong> &nbsp;|&nbsp; <strong>Data-Driven Design</strong> &nbsp;|&nbsp; <strong>AI Integration</strong></p>
+						<p class="tech-stack-secondary">Shiny for Python &nbsp;·&nbsp; pandas &nbsp;·&nbsp; OpenAI (gpt-4o-mini) &nbsp;·&nbsp; Ollama Cloud &nbsp;·&nbsp; API Ninjas &nbsp;·&nbsp; Posit Connect</p>
 					</header>
+					<footer>
+						<ul class="actions sc-project-actions">
+							<li><a href="https://019c954a-2c82-04f7-d168-089a7ea941e8.share.connect.posit.cloud/" class="button primary sc-btn-launch" target="_blank" rel="noopener noreferrer">Launch</a></li>
+							<li><a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng/tree/main/03_query_ai/charger_app" class="button sc-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+						</ul>
+					</footer>
 				</div>
 			</section>
 
-			<section id="content" class="two">
+			<!-- 2. Demo / Visuals -->
+			<section id="demo" class="two sc-section">
 				<div class="container">
 					<header>
-						<h2>Project Details</h2>
+						<h2>Demo &amp; Visuals</h2>
 					</header>
-					<p style="text-align: justify;">Detailed project documentation for SmartCharge will be added here. The portfolio card on the main site links to this page for the full write-up.</p>
+					<p style="text-align: justify;">The live dashboard combines a hero recommendation, a 48-hour carbon intensity strip, ranked charging slots, and vehicle configuration in one view.</p>
+					<a href="images/smartcharge.png" class="image featured sc-demo-img"><img src="images/smartcharge.png" alt="SmartCharge dashboard: hero low-carbon slot, carbon intensity chart, recommended slots, and vehicle confirmation panel" /></a>
+					<p class="sc-caption"><em>Hero slot highlights the lowest-carbon window; intensity bars are color-coded low / moderate / high; users can add any slot to Google Calendar or download an .ics file.</em></p>
 				</div>
 			</section>
 
-			<section id="links" class="three">
+			<!-- 3. Problem Statement -->
+			<section id="problem" class="three sc-section">
 				<div class="container">
 					<header>
-						<h2>Links</h2>
+						<h2>Problem Statement</h2>
 					</header>
-					<ul class="actions" style="justify-content: center;">
-						<li><a href="https://019c954a-2c82-04f7-d168-089a7ea941e8.share.connect.posit.cloud/" class="button primary" target="_blank" rel="noopener noreferrer">Launch App</a></li>
-						<li><a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng/tree/main/03_query_ai/charger_app" class="button" target="_blank" rel="noopener noreferrer">View on GitHub</a></li>
-						<li><a href="../../index.html#two" class="button">Back to Portfolio</a></li>
+					<p style="text-align: justify;">Most EV drivers charge when it is convenient—often during evening peaks—not when the UK electricity grid is cleanest. Carbon intensity varies hour by hour, but that forecast data is not packaged for everyday charging decisions.</p>
+					<p style="text-align: justify;">Drivers need a simple way to combine <strong>48-hour grid forecasts</strong>, <strong>their vehicle’s real charging time</strong>, and <strong>actionable schedules</strong> they can put on a calendar. Without that, “green charging” stays abstract rather than operational.</p>
+					<p style="text-align: justify;">SmartCharge addresses this gap with a data-driven decision-support tool aligned with sustainability goals and systems-engineering practice: integrate external data sources, apply constraints, and deliver recommendations users can act on.</p>
+				</div>
+			</section>
+
+			<!-- 4. What the Application Does -->
+			<section id="application" class="four sc-section">
+				<div class="container">
+					<header>
+						<h2>What the Application Does</h2>
+					</header>
+					<p style="text-align: justify;">The application allows users to:</p>
+					<ul class="sc-list">
+						<li>Describe their EV in plain text (e.g. “Tesla Model 3 Long Range”) and have AI infer make and model, then confirm or edit before specs are loaded.</li>
+						<li>View battery capacity, charge power, and estimated charging time from the EV API, with an LLM fallback when no API match exists.</li>
+						<li>Set a preferred charging duration and receive ranked low-carbon windows for the <strong>next 48 hours</strong>.</li>
+						<li>See a hero “best slot,” a 48-hour carbon intensity visualization, and all recommended slots labeled low, moderate, or high intensity.</li>
+						<li>Add a recommended slot to <strong>Google Calendar</strong> or download an <strong>.ics</strong> file for the suggested window.</li>
+					</ul>
+					<p style="text-align: justify;"><em>All times are shown in UK local time. Carbon data comes from the National Grid ESO Carbon Intensity API.</em></p>
+				</div>
+			</section>
+
+			<!-- Process flow -->
+			<section id="process" class="three sc-section">
+				<div class="container">
+					<header>
+						<h2><u>Process flow</u></h2>
+					</header>
+					<p style="text-align: justify;">Simple view of what happens from open to live recommendations:</p>
+					<div class="sc-mermaid-wrap">
+<pre class="mermaid">flowchart TD
+  launch[Open app] --> demo["Demo preview - Tesla Model 3"]
+  demo --> live{Want live results?}
+  live -->|Look up vehicle| parse[AI understands make and model]
+  live -->|Confirm duration or Get recommendations| carbon[Fetch 48h UK carbon intensity]
+  parse --> specs[Fetch EV battery and charge specs]
+  specs --> carbon
+  carbon --> recommend[AI picks low-carbon charging windows]
+  recommend --> view[Hero slot + intensity chart + slot cards]
+  view --> calendar[Add to Google Calendar or .ics]</pre>
+					</div>
+					<div class="table-wrapper sc-table-wrap">
+						<table class="sc-table">
+							<thead>
+								<tr>
+									<th>Step</th>
+									<th>What happens</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><strong>Demo</strong></td>
+									<td>Sample results show immediately so the layout is clear before you enter data.</td>
+								</tr>
+								<tr>
+									<td><strong>Look up</strong></td>
+									<td>Your car description becomes make/model, then EV specs load automatically.</td>
+								</tr>
+								<tr>
+									<td><strong>Slots</strong></td>
+									<td>Carbon data + AI produce the best times to charge; the chart highlights the top window.</td>
+								</tr>
+								<tr>
+									<td><strong>Calendar</strong></td>
+									<td>Export a chosen slot when you are using live (non-demo) results.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. Technical Architecture -->
+			<section id="architecture" class="four sc-section">
+				<div class="container">
+					<header>
+						<h2>Technical Architecture</h2>
+					</header>
+					<p style="text-align: justify;"><strong>Pattern:</strong> Single-page Shiny for Python application with no database; application state held in reactive values in <code>server.py</code>.</p>
+					<ul class="sc-list">
+						<li><strong>app.py</strong> — Entry point; wires UI and server.</li>
+						<li><strong>ui_components.py</strong> — Layout, dashboard cards, intensity strip, custom CSS.</li>
+						<li><strong>server.py</strong> — Vehicle lookup, confirm flow, slots pipeline, calendar modal.</li>
+						<li><strong>utils.py</strong> — All REST and LLM integrations, date/ISO8601 helpers, charging-time logic.</li>
+					</ul>
+					<p style="text-align: justify;"><strong>Data flow:</strong> User input → Ollama make/model parse → EV specs (API Ninjas or LLM fallback) → 48h intensity fetch (<code>pandas</code>) → <code>effective_hours = max(slot_length, vehicle_charging_time)</code> → OpenAI slot ranking → UI update and calendar export.</p>
+					<p style="text-align: justify;"><strong>External services:</strong> UK Carbon Intensity API, API Ninjas EV API, OpenAI Chat Completions (gpt-4o-mini), Ollama Cloud.</p>
+					<p style="text-align: justify;"><strong>Deployment:</strong> Docker image and publish to Posit Connect (<code>rsconnect-python</code>).</p>
+
+					<div class="table-wrapper sc-table-wrap">
+						<table class="sc-table">
+							<thead>
+								<tr>
+									<th>File</th>
+									<th>Role</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><td><code>app.py</code></td><td>Entry point; runs the Shiny app</td></tr>
+								<tr><td><code>server.py</code></td><td>Reactive logic for lookup, confirm, slots, calendar</td></tr>
+								<tr><td><code>ui_components.py</code></td><td>UI layout, cards, hero, intensity strip, modal styling</td></tr>
+								<tr><td><code>utils.py</code></td><td>API and LLM helpers, data shaping, timeouts</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+
+			<!-- 8. Results / Metrics -->
+			<section id="results" class="three sc-section">
+				<div class="container">
+					<header>
+						<h2>Results &amp; Metrics</h2>
+					</header>
+					<div class="sc-metrics">
+						<div class="sc-metric-card">
+							<span class="sc-metric-value">48 h</span>
+							<span class="sc-metric-label">Carbon forecast horizon</span>
+						</div>
+						<div class="sc-metric-card">
+							<span class="sc-metric-value">30 min</span>
+							<span class="sc-metric-label">Grid intensity intervals</span>
+						</div>
+						<div class="sc-metric-card">
+							<span class="sc-metric-value">4</span>
+							<span class="sc-metric-label">External REST / LLM services</span>
+						</div>
+						<div class="sc-metric-card">
+							<span class="sc-metric-value">Live</span>
+							<span class="sc-metric-label">Posit Connect deployment</span>
+						</div>
+					</div>
+					<ul class="sc-list">
+						<li>End-to-end user path: plain-text vehicle description → ranked slots → calendar export in one session.</li>
+						<li>No persistent storage; reactive pipeline refreshes intensity and slots on demand.</li>
+						<li>Hosted demo available for interactive evaluation without local setup.</li>
+					</ul>
+					<p class="sc-callout"><em>Quantitative savings metrics (e.g. gCO₂/kWh avoided vs. convenience charging) can be added after field validation with real user sessions.</em></p>
+				</div>
+			</section>
+
+			<!-- 9. Future Improvements -->
+			<section id="future" class="two sc-section">
+				<div class="container">
+					<header>
+						<h2>Future Improvements</h2>
+					</header>
+					<ul class="sc-list">
+						<li>Real-time intensity updates and tariff-aware cost optimization alongside carbon.</li>
+						<li>Multi-region grid data beyond the UK National Grid ESO forecast.</li>
+						<li>User accounts with saved vehicles and charging preferences.</li>
+						<li>Push or email notifications before optimal slots begin.</li>
+						<li>On-device or edge inference to reduce reliance on cloud LLM calls.</li>
+						<li>Field study measuring carbon savings vs. baseline convenience charging habits.</li>
 					</ul>
 				</div>
 			</section>
@@ -88,6 +259,23 @@
 		<script src="assets/js/breakpoints.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+		<script>
+			mermaid.initialize({
+				startOnLoad: true,
+				theme: 'neutral',
+				themeVariables: {
+					fontSize: '13px'
+				},
+				flowchart: {
+					useMaxWidth: true,
+					htmlLabels: true,
+					curve: 'basis',
+					nodeSpacing: 35,
+					rankSpacing: 40
+				}
+			});
+		</script>
 
 	</body>
 </html>
