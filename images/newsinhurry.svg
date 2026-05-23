@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="News for People in a Hurry dashboard preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="56" fill="#9a3412"/>
+  <text x="40" y="36" fill="#fff" font-family="system-ui,sans-serif" font-size="22" font-weight="700">News for People in a Hurry</text>
+  <text x="900" y="36" fill="#ffedd5" font-family="system-ui,sans-serif" font-size="14">Global Insight · Live</text>
+  <rect x="24" y="72" width="220" height="580" rx="12" fill="#fff" stroke="#fdba74" stroke-width="2"/>
+  <text x="44" y="108" fill="#9a3412" font-family="system-ui,sans-serif" font-size="13" font-weight="700">FILTERS</text>
+  <rect x="44" y="120" width="180" height="28" rx="6" fill="#ffedd5"/>
+  <rect x="44" y="160" width="180" height="28" rx="6" fill="#fff7ed" stroke="#fed7aa"/>
+  <rect x="44" y="200" width="180" height="36" rx="8" fill="#c2410c"/>
+  <text x="88" y="223" fill="#fff" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Refresh News</text>
+  <rect x="260" y="72" width="916" height="580" rx="12" fill="#fff" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="280" y="92" width="520" height="32" rx="8" fill="#ffedd5"/>
+  <text x="300" y="114" fill="#9a3412" font-family="system-ui,sans-serif" font-size="14" font-weight="600">All · Business · Technology · Signal Studio</text>
+  <rect x="280" y="140" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="570" y="140" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="860" y="140" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="280" y="360" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="570" y="360" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="860" y="360" width="270" height="200" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="300" y="168" width="230" height="80" rx="6" fill="#cbd5e1"/>
+  <rect x="300" y="260" width="180" height="12" rx="4" fill="#94a3b8"/>
+  <rect x="300" y="280" width="140" height="10" rx="4" fill="#cbd5e1"/>
+  <text x="300" y="430" fill="#64748b" font-family="system-ui,sans-serif" font-size="12">NYT cards · AI summaries · Sentiment filters</text>
+  <rect x="280" y="460" width="850" height="170" rx="10" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="300" y="495" fill="#9a3412" font-family="system-ui,sans-serif" font-size="15" font-weight="700">Signal Studio  3-agent workflow</text>
+  <text x="300" y="525" fill="#64748b" font-family="system-ui,sans-serif" font-size="13">Cross-section · World mood · Market validation</text>
+</svg>

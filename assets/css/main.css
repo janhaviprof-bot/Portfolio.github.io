@@ -4360,6 +4360,13 @@ h3, .project-item h3 {
   font-style: italic;
 }
 
+.project-item--rich .project-desc--systems {
+  font-style: normal;
+  font-size: 0.8em;
+  color: #334155;
+  margin-bottom: 0.65em;
+}
+
 .project-item--rich .project-tech {
   display: flex;
   flex-wrap: wrap;
