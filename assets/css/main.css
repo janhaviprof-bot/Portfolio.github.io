@@ -4278,14 +4278,8 @@ h3, .project-item h3 {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-}
-
-@media screen and (max-width: 980px) {
-  .project-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media screen and (max-width: 480px) {
@@ -4325,17 +4319,83 @@ h3, .project-item h3 {
   font-family: inherit;
   font-size: 1em;
   font-weight: 600;
-  margin-top: 0.75em;
-  margin-bottom: 0.5em;
-  padding: 0 1rem;
+  margin: 0;
+  padding: 1rem 1rem 0.5rem;
   text-align: center;
   color: inherit;
+}
+
+.project-item:not(.project-item--rich) > a h3 {
+  display: block;
 }
 
 .project-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
   border-color: rgba(14, 165, 233, 0.3);
+}
+
+/* Rich project card (SmartCharge) */
+.project-item--rich > h3 {
+  margin: 0;
+  padding: 1rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.project-item--rich .project-item-body {
+  padding: 0 1rem 1rem;
+  text-align: left;
+}
+
+.project-item--rich img {
+  cursor: default;
+}
+
+.project-item--rich .project-desc {
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0 0 0.75em;
+  text-align: left;
+  font-style: italic;
+}
+
+.project-item--rich .project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.25rem 0;
+  font-size: 0.75em;
+  color: #64748b;
+  margin: 0 0 1em;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.project-item--rich .project-tech span {
+  font-weight: 700;
+}
+
+.project-item--rich .project-tech span:not(:last-child)::after {
+  content: "|";
+  margin: 0 0.35em;
+  color: #94a3b8;
+}
+
+.project-item--rich .project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.project-item--rich .project-actions .button.small {
+  font-size: 0.65em;
+  padding: 0 1.25em;
+  height: 2.5em;
+  line-height: 2.5em;
+  margin: 0;
 }
 
 .filter-link {
