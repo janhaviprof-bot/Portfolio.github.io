@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>News for People in a Hurry — AI News Intelligence Dashboard</title>
+	<title>News for People in a Hurry | AI News Intelligence Dashboard</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Shiny for Python dashboard that curates NYT Top Stories with AI enrichment, multi-agent Signal Studio, and news-vs-market validation for busy readers." />
@@ -10,29 +10,15 @@
 </head>
 <body class="nh-page">
 
-	<header class="nh-topbar">
+	<header class="nh-portfolio-bar">
 		<div class="nh-topbar-inner">
 			<a href="../../index.html" class="nh-brand">
 				<img src="images/me.jpg" alt="" />
 				<span class="nh-brand-text">
 					<strong>Janhavi Gaikwad</strong>
-					<span>Systems Engineer</span>
+					<span>Systems Engineer · Portfolio</span>
 				</span>
 			</a>
-			<button type="button" class="nh-nav-toggle" aria-expanded="false" aria-controls="nh-nav-wrap">Menu</button>
-			<div class="nh-nav-wrap" id="nh-nav-wrap">
-				<ul class="nh-nav">
-					<li><a href="#top">Overview</a></li>
-					<li><a href="#demo">Demo</a></li>
-					<li><a href="#problem">Problem</a></li>
-					<li><a href="#application">Application</a></li>
-					<li><a href="#process">Process</a></li>
-					<li><a href="#agents">Agents</a></li>
-					<li><a href="#architecture">Architecture</a></li>
-					<li><a href="#results">Results</a></li>
-					<li><a href="#future">Future</a></li>
-				</ul>
-			</div>
 			<ul class="nh-social">
 				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
 				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
@@ -41,35 +27,68 @@
 		</div>
 	</header>
 
+	<section class="nh-masthead" id="top">
+		<div class="nh-masthead-inner">
+			<h1>News for People in a Hurry</h1>
+			<p class="nh-masthead-sub">Stay informed with curated headlines from The New York Times</p>
+			<span class="nh-ticker">Global Insight · Signal Studio · AI-validated cross-section analysis</span>
+		</div>
+	</section>
+
+	<nav class="nh-desk-nav-bar" aria-label="Project sections">
+		<div class="nh-desk-nav-inner">
+			<ul class="nh-desk-nav">
+				<li><a href="#story" class="is-active">The problem</a></li>
+				<li><a href="#features">Features</a></li>
+				<li><a href="#agents">Signal Studio</a></li>
+				<li><a href="#process">Pipeline</a></li>
+				<li><a href="#architecture">Architecture</a></li>
+				<li><a href="#systems">Systems view</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<section class="nh-edition-bar">
+		<div class="nh-edition-inner">
+			<div class="nh-edition-center">
+				<p class="nh-edition-lead">News for People in a Hurry helps you catch up fast. It brings in live top stories from the New York Times (business, tech, world, politics, and more) and shows them as simple cards you can scan in a few minutes. You choose how far back to look (6 to 48 hours) and can filter by mood if you want; the app adds short AI summaries and highlights what is breaking or trending first. When you want the bigger picture, Signal Studio looks across all sections, explains how stories connect, sums up the overall mood, and checks that picture against live market data. You can also open a longer research note on any headline when you need more depth.</p>
+
+				<div class="nh-edition-meta" aria-label="Skills and technology">
+					<div class="nh-tag-row" aria-label="Skills demonstrated">
+						<span class="nh-tag">Python</span>
+						<span class="nh-tag">Multi-Agent AI</span>
+						<span class="nh-tag">AI Validation</span>
+						<span class="nh-tag">Agentic Orchestration</span>
+					</div>
+					<p class="nh-stack-line">Shiny for Python · pandas · OpenAI · NYT API · yfinance · Posit Connect</p>
+				</div>
+
+				<div class="nh-edition-cta">
+					<ul class="nh-hero-actions">
+						<li class="nh-hero-action-launch">
+							<a href="https://019d8404-9dd4-eac9-b283-668a261698b8.share.connect.posit.cloud/" class="nh-btn nh-btn-launch" target="_blank" rel="noopener noreferrer">Launch app</a>
+						</li>
+					</ul>
+					<div class="nh-hero-actions-secondary">
+						<a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng-Project/tree/main" class="nh-btn nh-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a>
+						<a href="../../index.html#two" class="nh-btn nh-btn-portfolio">Back to Portfolio</a>
+					</div>
+				</div>
+			</div>
+			<div class="nh-brief-card" aria-label="Systems engineering demonstration">
+				<p class="nh-brief-card-kicker">Systems engineering demonstration</p>
+				<span class="nh-brief-card-label">Brief</span>
+				<p>Live data integration, agentic orchestration of AI analysis, and validation of AI-driven conclusions.</p>
+			</div>
+		</div>
+	</section>
+
 	<main class="nh-main">
 
-		<section class="nh-hero" id="top">
-			<div class="nh-hero-inner">
-				<span class="nh-hero-badge">News · Multi-agent intelligence</span>
-				<h1>News for People in a Hurry</h1>
-				<div class="nh-hero-column">
-					<p class="nh-hero-lead">Stay informed in minutes: browse curated New York Times headlines with AI summaries, filter by time and sentiment, then explore cross-section insight in Signal Studio—with optional deep research on any story.</p>
-					<div class="nh-hero-stack">
-						<p class="nh-tech-primary">Python &nbsp;|&nbsp; Multi-Agent AI &nbsp;|&nbsp; AI Validation &nbsp;|&nbsp; Agentic Orchestration</p>
-						<p class="nh-tech-secondary">Shiny for Python · pandas · OpenAI · NYT API · yfinance · Posit Connect</p>
-					</div>
-					<ul class="nh-hero-actions">
-						<li><a href="https://019d8404-9dd4-eac9-b283-668a261698b8.share.connect.posit.cloud/" class="nh-btn nh-btn-launch" target="_blank" rel="noopener noreferrer">Launch</a></li>
-						<li><a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng-Project/tree/main" class="nh-btn nh-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-						<li><a href="../../index.html#two" class="nh-btn nh-btn-portfolio">Back to Portfolio</a></li>
-					</ul>
-				</div>
-				<blockquote class="nh-sedemo nh-sedemo--hero" aria-label="Systems engineering demonstration">
-					<p class="nh-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="nh-sedemo-text">Integrates, processes, and utilizes API-based live data streams alongside LLM-driven intelligent analysis to support informed, data-driven operational decision making in dynamic systems environments.</p>
-				</blockquote>
-			</div>
-		</section>
-
-		<section class="nh-section" id="demo">
-			<div class="nh-section-inner">
-				<h2>Demo &amp; Visuals</h2>
-				<p>The live app opens on a fast card feed with sidebar filters, category tabs, section briefs, and a dedicated <strong>Signal Studio</strong> tab for the three-agent workflow and market pulse.</p>
+		<section class="nh-spread nh-spread--demo" id="demo">
+			<div class="nh-spread-inner">
+				<h2>Live dashboard</h2>
+				<p class="nh-spread-deck">The deployed app mirrors this layout: sidebar filters, category tabs, an AI section brief, and a six-card top-stories grid.</p>
 				<div class="nh-demo-frame">
 					<img src="images/newsinhurry.png" alt="News for People in a Hurry dashboard: NYT headlines, time and sentiment filters, All News brief, and top story cards" loading="lazy" />
 				</div>
@@ -77,161 +96,164 @@
 			</div>
 		</section>
 
-		<section class="nh-section" id="problem">
-			<div class="nh-section-inner">
-				<h2>Problem Statement</h2>
-				<p>Busy readers need signal, not noise. Raw news feeds across many sections are hard to scan; understanding how stories connect—and whether markets align—takes more time than most people have.</p>
-				<p>The app packages <strong>live NYT Top Stories</strong>, <strong>AI-ranked cards</strong> (breaking, trending, latest), and a <strong>multi-agent analysis layer</strong> so users get scannable headlines first and deeper synthesis when they want it.</p>
-			</div>
-		</section>
+		<div class="nh-layout">
+			<div class="nh-feed">
 
-		<section class="nh-section" id="application">
-			<div class="nh-section-inner">
-				<h2>What the Application Does</h2>
-				<ul class="nh-list">
-					<li>Fetches <strong>NYT Top Stories</strong> across home, business, arts, technology, world, and politics.</li>
-					<li>Orders stories as <strong>breaking → trending → latest</strong> and filters by a <strong>6–48 hour</strong> window with optional sentiment filter.</li>
-					<li>Enriches articles with <strong>AI sentiment, impact labels, and tone-aware summaries</strong> (informational, opinion, or analytical).</li>
-					<li>Shows <strong>six cards per page</strong> with pagination; first page uses a 2+2+2 mix of breaking, trending, and latest.</li>
-					<li>Runs <strong>parallel section briefs</strong>, then a <strong>three-agent serial workflow</strong> for cross-section links, world mood, and news-vs-market validation.</li>
-					<li>Displays a <strong>Global Insight</strong> header marquee and full <strong>Signal Studio</strong> dashboard with QC metrics and downloadable PDF report.</li>
-					<li>Offers <strong>Dive deeper</strong> per article—a separate research agent with Wikipedia and Yahoo Finance tools.</li>
-				</ul>
-			</div>
-		</section>
+				<article class="nh-article" id="story">
+					<h2>The problem</h2>
+					<p class="nh-article-deck">Why another news surface?</p>
+					<p>Busy readers need signal, not noise. Raw feeds across many sections are hard to scan; seeing how stories connect and whether markets align takes more time than most people have.</p>
+					<p>The app packages <strong>live NYT Top Stories</strong>, <strong>AI-ranked cards</strong> (breaking, trending, latest), and a <strong>multi-agent analysis layer</strong> so users get scannable headlines first and deeper synthesis when they want it.</p>
+				</article>
 
-		<section class="nh-section" id="process">
-			<div class="nh-section-inner">
-				<h2>Process flow</h2>
-				<p>From refresh to live intelligence:</p>
-				<div class="nh-mermaid-wrap">
-<pre class="mermaid">flowchart TD
-  open[Open app] --> refresh[Refresh News]
-  refresh --> nyt[Fetch NYT sections]
-  nyt --> feed[Publish card feed]
-  feed --> enrich[Sentiment impact summaries]
-  enrich --> packets[Build section packets]
-  packets --> briefs[Parallel section briefs]
-  briefs --> a1[Agent 1 cross-section]
-  a1 --> a2[Agent 2 world mood]
-  a2 --> market[Market snapshot yfinance]
-  market --> a3[Agent 3 validation]
-  a3 --> ui[Marquee + Signal Studio]</pre>
-				</div>
-				<div class="nh-table-wrap">
-					<table class="nh-table">
-						<thead>
-							<tr><th>Phase</th><th>What happens</th></tr>
-						</thead>
-						<tbody>
-							<tr><td><strong>Quick feed</strong></td><td>NYT data and cards appear fast; placeholders until scoped AI enrichment finishes.</td></tr>
-							<tr><td><strong>Enrichment</strong></td><td>Sentiment, impact, and tone-aware summaries cached per article and tone.</td></tr>
-							<tr><td><strong>Agents</strong></td><td>Fallback Signal Studio first; full LLM pass upgrades briefs, marquee, and studio.</td></tr>
-							<tr><td><strong>Research</strong></td><td>Optional per-article deep brief via separate tool-using agent.</td></tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
+				<article class="nh-article" id="features">
+					<h2>What readers get</h2>
+					<p class="nh-article-deck">From headline to validated insight</p>
+					<ul class="nh-list">
+						<li><strong>NYT Top Stories</strong> across home, business, arts, technology, world, and politics.</li>
+						<li><strong>Breaking → trending → latest</strong> ordering with a <strong>6 to 48 hour</strong> window and optional sentiment filter.</li>
+						<li><strong>AI sentiment, impact labels,</strong> and tone-aware summaries (informational, opinion, analytical).</li>
+						<li><strong>Six cards per page</strong> with pagination; first page uses a 2+2+2 mix.</li>
+						<li><strong>Global Insight</strong> marquee and <strong>Signal Studio</strong> with QC metrics and PDF report.</li>
+						<li><strong>Dive deeper</strong> per article via a separate research agent (Wikipedia + Yahoo Finance tools).</li>
+					</ul>
+				</article>
 
-		<section class="nh-section" id="agents">
-			<div class="nh-section-inner">
-				<h2>Multi-agent workflow</h2>
-				<p>Coordinated agents with clear roles, workflow integration, and UI-bound outputs (<a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng-Project/blob/main/docs/README.md" target="_blank" rel="noopener noreferrer">project documentation</a>).</p>
-				<ul class="nh-list">
-					<li><strong>Section briefs (parallel)</strong> — short LLM summary per section packet before the main chain.</li>
-					<li><strong>Agent 1</strong> — cross-section themes, triggers, and propagation across desks.</li>
-					<li><strong>Agent 2</strong> — world mood score, market stance, and reasoning from Agent 1 plus sentiment counts.</li>
-					<li><strong>Market snapshot</strong> — live Yahoo Finance data via <code>yfinance</code> (not an LLM).</li>
-					<li><strong>Agent 3</strong> — compares the news narrative to market tape; may call <code>get_market_snapshot</code> via OpenAI function calling.</li>
-				</ul>
-				<div class="nh-mermaid-wrap">
+				<article class="nh-article" id="agents">
+					<h2>Signal Studio</h2>
+					<p class="nh-article-deck">Three agents, one orchestrated workflow</p>
+					<div class="nh-agent-grid">
+						<div class="nh-agent-card">
+							<strong>Agent 1</strong>
+							<span>Cross-section themes, triggers, and propagation across desks.</span>
+						</div>
+						<div class="nh-agent-card">
+							<strong>Agent 2</strong>
+							<span>World mood score, market stance, and reasoning from linked stories.</span>
+						</div>
+						<div class="nh-agent-card">
+							<strong>Agent 3</strong>
+							<span>Validates the news narrative against live market data, with extra market lookups when needed.</span>
+						</div>
+					</div>
+					<p>Parallel <strong>section briefs</strong> run first; agents <strong>1 → 2 → 3</strong> run in series toward the marquee and Signal Studio dashboard. See the <a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng-Project/blob/main/docs/README.md" target="_blank" rel="noopener noreferrer">full documentation</a>.</p>
+					<div class="nh-mermaid-wrap">
 <pre class="mermaid">flowchart LR
   PK[Section packets] --> A1[Agent 1]
   A1 --> A2[Agent 2]
   A2 --> MS[Market data]
   MS --> A3[Agent 3]
   A3 --> W[Marquee + Signal Studio]</pre>
-				</div>
-			</div>
-		</section>
+					</div>
+				</article>
 
-		<section class="nh-section" id="architecture">
-			<div class="nh-section-inner">
-				<h2>Technical Architecture</h2>
-				<p><strong>Pattern:</strong> Shiny for Python single-page app; reactive state and in-memory caches in <code>AppV1/app.py</code>—no database.</p>
-				<ul class="nh-list">
-					<li><strong>UI</strong> — tabs, filters, cards, Signal Studio, marquee (<code>ui/</code>, <code>modules/news_cards.py</code>).</li>
-					<li><strong>Data</strong> — NYT fetch, dedupe, breaking/trending/latest (<code>modules/data_fetch.py</code>, <code>categorization.py</code>).</li>
-					<li><strong>AI enrichment</strong> — sentiment, impact, summaries (<code>ai_services.py</code>, <code>impact_classifier.py</code>).</li>
-					<li><strong>Agents</strong> — workflow orchestration (<code>agents/workflow.py</code>, <code>llm_client.py</code>).</li>
-					<li><strong>Research</strong> — per-article modal agent (<code>research_agent/</code>).</li>
-				</ul>
-				<p><strong>External services:</strong> NYT Top Stories API, OpenAI Chat Completions, Yahoo Finance (<code>yfinance</code>).</p>
-				<p><strong>Deployment:</strong> Posit Connect (<code>AppV1/Procfile</code>); API keys via <code>.env</code> or environment.</p>
-				<div class="nh-table-wrap">
-					<table class="nh-table">
-						<thead>
-							<tr><th>Layer</th><th>Key modules</th></tr>
-						</thead>
-						<tbody>
-							<tr><td>Entry</td><td><code>app.py</code>, <code>config.py</code></td></tr>
-							<tr><td>Agents</td><td><code>cross_section_agent</code>, <code>world_sentiment_agent</code>, <code>market_validation_agent</code>, <code>market_data.py</code></td></tr>
-							<tr><td>QC / reporting</td><td><code>output_qc.py</code>, <code>qc_pdf_report.py</code></td></tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
+				<article class="nh-article" id="process">
+					<h2>How the pipeline runs</h2>
+					<p class="nh-article-deck">From Refresh News to live intelligence</p>
+					<div class="nh-mermaid-wrap">
+<pre class="mermaid">flowchart TD
+  refresh[Refresh News] --> nyt[Fetch NYT sections]
+  nyt --> feed[Publish card feed]
+  feed --> enrich[Sentiment impact summaries]
+  enrich --> packets[Section packets]
+  packets --> briefs[Parallel briefs]
+  briefs --> agents[Agents 1 2 3]
+  agents --> ui[Marquee + Signal Studio]</pre>
+					</div>
+					<div class="nh-table-wrap">
+						<table class="nh-table">
+							<thead>
+								<tr><th>Phase</th><th>What happens</th></tr>
+							</thead>
+							<tbody>
+								<tr><td><strong>Quick feed</strong></td><td>Cards appear fast; placeholders until scoped AI enrichment finishes.</td></tr>
+								<tr><td><strong>Enrichment</strong></td><td>Sentiment, impact, and tone-aware summaries cached per article.</td></tr>
+								<tr><td><strong>Agents</strong></td><td>Fallback studio first; full LLM pass upgrades marquee and tabs.</td></tr>
+								<tr><td><strong>Research</strong></td><td>Optional per-article deep brief on demand.</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</article>
 
-		<section class="nh-section" id="results">
-			<div class="nh-section-inner">
-				<h2>Results &amp; Metrics</h2>
-				<blockquote class="nh-sedemo nh-sedemo--section" aria-label="Systems engineering demonstration">
-					<p class="nh-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="nh-sedemo-text">Integrates, processes, and utilizes API-based live data streams alongside LLM-driven intelligent analysis to support informed, data-driven operational decision making in dynamic systems environments.</p>
-				</blockquote>
-				<ul class="nh-list">
-					<li><strong>Progressive loading</strong> — feed visible before full AI and agent passes complete.</li>
-					<li><strong>API-based data</strong> — NYT ingestion, market snapshots, and tool-backed research in one system.</li>
-					<li><strong>Informed synthesis</strong> — agents connect desks, mood, and markets for analyst-style insight.</li>
-					<li><strong>Resilience</strong> — partial NYT failures, caches, and rule-based fallbacks keep the UI usable.</li>
-					<li><strong>Verification</strong> — live deployment for end-to-end review without local setup.</li>
-				</ul>
-				<div class="nh-metrics">
-					<div class="nh-metric">
-						<span class="nh-metric-value">6</span>
-						<span class="nh-metric-label">NYT sections</span>
-					</div>
-					<div class="nh-metric">
-						<span class="nh-metric-value">3</span>
-						<span class="nh-metric-label">Serial LLM agents</span>
-					</div>
-					<div class="nh-metric">
-						<span class="nh-metric-value">48 h</span>
-						<span class="nh-metric-label">Max time window</span>
-					</div>
-					<div class="nh-metric">
-						<span class="nh-metric-value">Live</span>
-						<span class="nh-metric-label">Posit Connect</span>
-					</div>
-				</div>
-				<p class="nh-callout"><em>Signal Studio includes schema QC, composite evidence scores, marquee quality badges, and a downloadable QC PDF report.</em></p>
-			</div>
-		</section>
+				<article class="nh-article" id="architecture">
+					<h2>Under the hood</h2>
+					<p class="nh-article-deck">Shiny for Python · reactive state · no database</p>
+					<ul class="nh-list">
+						<li><strong>UI</strong>: tabs, filters, cards, Signal Studio, marquee.</li>
+						<li><strong>Data</strong>: NYT fetch, dedupe, breaking/trending/latest ranking.</li>
+						<li><strong>AI</strong>: sentiment, impact, summaries, agent JSON outputs.</li>
+						<li><strong>Agents</strong>: <code>workflow.py</code>, <code>llm_client.py</code>, market snapshot via <code>yfinance</code>.</li>
+					</ul>
+					<p><strong>Deployed</strong> on Posit Connect (<code>AppV1/Procfile</code>).</p>
+				</article>
 
-		<section class="nh-section" id="future">
-			<div class="nh-section-inner">
-				<h2>Future Improvements</h2>
-				<ul class="nh-list">
-					<li>Additional news sources beyond NYT Top Stories.</li>
-					<li>User accounts and saved filters or reading lists.</li>
-					<li>Push or email digests for breaking clusters.</li>
-					<li>Cost controls and batching strategies for high-volume OpenAI usage.</li>
-					<li>Broader market universes and regional news desks.</li>
-				</ul>
+				<article class="nh-article" id="systems">
+					<h2>Systems view</h2>
+					<p class="nh-article-deck">Results and what this project demonstrates</p>
+					<div class="nh-stats-strip">
+						<div class="nh-stat">
+							<span class="nh-stat-value">6</span>
+							<span class="nh-stat-label">NYT sections</span>
+						</div>
+						<div class="nh-stat">
+							<span class="nh-stat-value">3</span>
+							<span class="nh-stat-label">Serial agents</span>
+						</div>
+						<div class="nh-stat">
+							<span class="nh-stat-value">48 h</span>
+							<span class="nh-stat-label">Time window</span>
+						</div>
+						<div class="nh-stat">
+							<span class="nh-stat-value">Live</span>
+							<span class="nh-stat-label">Deployment</span>
+						</div>
+					</div>
+					<ul class="nh-list">
+						<li><strong>Progressive loading</strong>: feed before full AI and agent passes complete.</li>
+						<li><strong>Live data</strong>: NYT ingestion and market snapshots in one pipeline.</li>
+						<li><strong>Validation</strong>: schema QC, evidence scores, and news-vs-market checks.</li>
+						<li><strong>Resilience</strong>: partial API failures and fallbacks keep the UI usable.</li>
+					</ul>
+					<p class="nh-callout"><em>Signal Studio includes composite evidence metrics, marquee quality badges, and a downloadable QC PDF report.</em></p>
+					<h3 class="nh-article-sub">Looking ahead</h3>
+					<ul class="nh-list">
+						<li>Additional news sources beyond NYT Top Stories.</li>
+						<li>Saved filters, reading lists, and digest notifications.</li>
+						<li>Cost-aware batching for high-volume OpenAI usage.</li>
+					</ul>
+				</article>
+
 			</div>
-		</section>
+
+			<aside class="nh-sidebar" aria-label="Quick reference">
+				<div class="nh-sidebar-card">
+					<h3>Sidebar controls</h3>
+					<ul>
+						<li>Time range (6 to 48 h)</li>
+						<li>Sentiment filter</li>
+						<li>Summary tone</li>
+						<li>Signal Studio view mode</li>
+						<li>Refresh News</li>
+					</ul>
+				</div>
+				<div class="nh-sidebar-card">
+					<h3>Card labels</h3>
+					<ul>
+						<li><span style="color:var(--nh-breaking)">■</span> Breaking</li>
+						<li><span style="color:var(--nh-accent)">■</span> Trending</li>
+						<li>Latest stories</li>
+					</ul>
+				</div>
+				<div class="nh-sidebar-card">
+					<h3>External services</h3>
+					<ul>
+						<li>NYT Top Stories API</li>
+						<li>OpenAI Chat Completions</li>
+						<li>Yahoo Finance (yfinance)</li>
+					</ul>
+				</div>
+			</aside>
+		</div>
 
 	</main>
 
@@ -240,11 +262,175 @@
 	</footer>
 
 	<script>
-		document.querySelector('.nh-nav-toggle')?.addEventListener('click', function () {
-			var wrap = document.getElementById('nh-nav-wrap');
-			var open = wrap.classList.toggle('is-open');
-			this.setAttribute('aria-expanded', open);
-		});
+		(function () {
+			var navBar = document.querySelector('.nh-desk-nav-bar');
+			var masthead = document.querySelector('.nh-masthead');
+			if (!navBar || !masthead || !('IntersectionObserver' in window)) return;
+			var barPx = document.querySelector('.nh-portfolio-bar') ? document.querySelector('.nh-portfolio-bar').offsetHeight : 52;
+			new IntersectionObserver(function (entries) {
+				navBar.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+			}, { threshold: 0, rootMargin: '-' + barPx + 'px 0px 0px 0px' }).observe(masthead);
+		})();
+
+		(function () {
+			var deskLinks = document.querySelectorAll('.nh-desk-nav a');
+			var navList = document.querySelector('.nh-desk-nav');
+			var sections = [];
+			var lockedId = null;
+			var lastLoggedActive = null;
+			var lastLoggedPick = null;
+
+			// #region agent log
+			function logDebug(hypothesisId, location, message, data) {
+				var payload = { sessionId: 'd7592d', hypothesisId: hypothesisId, location: location, message: message, data: data, timestamp: Date.now(), runId: 'post-fix-2' };
+				try {
+					var logs = JSON.parse(localStorage.getItem('debug-d7592d') || '[]');
+					logs.push(payload);
+					if (logs.length > 150) logs = logs.slice(-150);
+					localStorage.setItem('debug-d7592d', JSON.stringify(logs));
+				} catch (e) {}
+				fetch('http://127.0.0.1:7729/ingest/987e6ed5-80bb-44e5-8954-77221eb154b6', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': 'd7592d' }, body: JSON.stringify(payload) }).catch(function () {});
+			}
+			// #endregion
+
+			deskLinks.forEach(function (link) {
+				var href = link.getAttribute('href');
+				if (href && href.charAt(0) === '#') {
+					var el = document.getElementById(href.slice(1));
+					if (el) sections.push({ link: link, el: el, id: href.slice(1) });
+				}
+			});
+			if (!sections.length) return;
+
+			// #region agent log
+			logDebug('D', 'index.html:init', 'sections registered', { count: sections.length, ids: sections.map(function (s) { return s.id; }) });
+			// #endregion
+
+			function stickyTop() {
+				var portfolio = document.querySelector('.nh-portfolio-bar');
+				var deskNav = document.querySelector('.nh-desk-nav-bar');
+				return (portfolio ? portfolio.offsetHeight : 52) + (deskNav ? deskNav.offsetHeight : 44);
+			}
+
+			function sectionHeading(el) {
+				return el.querySelector('h2') || el;
+			}
+
+			function activeTriggerY() {
+				var top = stickyTop();
+				return top + (window.innerHeight - top) * 0.38;
+			}
+
+			function setActive(id) {
+				if (!id) return;
+				deskLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) {
+						l.setAttribute('aria-current', 'location');
+					} else {
+						l.removeAttribute('aria-current');
+					}
+					if (on && navList) {
+						try {
+							var li = l.parentElement;
+							var target = li.offsetLeft - (navList.clientWidth - li.offsetWidth) / 2;
+							navList.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+						} catch (scrollErr) {}
+					}
+				});
+				// #region agent log
+				if (id !== lastLoggedActive) {
+					lastLoggedActive = id;
+					var domActive = [];
+					deskLinks.forEach(function (l) { if (l.classList.contains('is-active')) domActive.push(l.textContent.trim()); });
+					logDebug('C', 'index.html:setActive', 'active class applied', { requestedId: id, domActiveLabels: domActive, lockedId: lockedId });
+				}
+				// #endregion
+			}
+
+			function scrollToSection(el) {
+				var heading = sectionHeading(el);
+				var y = heading.getBoundingClientRect().top + window.pageYOffset - stickyTop() - 8;
+				window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+			}
+
+			function pickActiveSection() {
+				var doc = document.documentElement;
+				if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 20) {
+					return sections[sections.length - 1].id;
+				}
+
+				var trigger = activeTriggerY();
+				var picked = sections[0].id;
+				var headingTops = {};
+
+				for (var i = sections.length - 1; i >= 0; i--) {
+					var top = sectionHeading(sections[i].el).getBoundingClientRect().top;
+					headingTops[sections[i].id] = Math.round(top);
+					if (top <= trigger) {
+						picked = sections[i].id;
+						break;
+					}
+				}
+
+				// #region agent log
+				if (picked !== lastLoggedPick) {
+					lastLoggedPick = picked;
+					logDebug('A', 'index.html:pickActive', 'heading-based pick', { picked: picked, trigger: Math.round(trigger), headingTops: headingTops, scrollY: Math.round(window.pageYOffset) });
+				}
+				// #endregion
+
+				return picked;
+			}
+
+			function onScroll() {
+				if (lockedId) {
+					setActive(lockedId);
+					var el = document.getElementById(lockedId);
+					if (el) {
+						var top = sectionHeading(el).getBoundingClientRect().top;
+						if (Math.abs(top - stickyTop()) <= 36) {
+							lockedId = null;
+							// #region agent log
+							logDebug('B', 'index.html:unlock', 'heading aligned', { id: lastLoggedActive });
+							// #endregion
+						}
+					}
+					return;
+				}
+				setActive(pickActiveSection());
+			}
+
+			var ticking = false;
+			window.addEventListener('scroll', function () {
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(function () {
+					onScroll();
+					ticking = false;
+				});
+			}, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
+
+			deskLinks.forEach(function (link) {
+				link.addEventListener('click', function (e) {
+					e.preventDefault();
+					var id = link.getAttribute('href').slice(1);
+					var target = document.getElementById(id);
+					if (!target) return;
+					lockedId = id;
+					// #region agent log
+					logDebug('B', 'index.html:click', 'tab clicked', { id: id });
+					// #endregion
+					setActive(id);
+					scrollToSection(target);
+				});
+			});
+
+			window.__nhNavReady = true;
+			onScroll();
+		})();
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 	<script>
@@ -253,12 +439,12 @@
 			theme: 'base',
 			themeVariables: {
 				fontSize: '13px',
-				primaryColor: '#ffedd5',
+				primaryColor: '#eff6ff',
 				primaryTextColor: '#1e293b',
-				primaryBorderColor: '#c2410c',
-				lineColor: '#c2410c',
-				secondaryColor: '#fff7ed',
-				tertiaryColor: '#fef3c7'
+				primaryBorderColor: '#1e3a5f',
+				lineColor: '#1e3a5f',
+				secondaryColor: '#f8fafc',
+				tertiaryColor: '#f1f5f9'
 			},
 			flowchart: {
 				useMaxWidth: true,
