@@ -4366,15 +4366,16 @@ h3, .project-item h3 {
   justify-content: flex-start;
   align-items: center;
   gap: 0.25rem 0;
-  font-size: 0.75em;
-  color: #64748b;
-  margin: 0 0 1em;
-  line-height: 1.4;
+  font-size: 0.82em;
+  color: #000000;
+  margin: 0.85em 0 1.15em;
+  line-height: 1.45;
   text-align: left;
 }
 
 .project-item--rich .project-tech span {
   font-weight: 700;
+  color: #000000;
 }
 
 .project-item--rich .project-tech span:not(:last-child)::after {
@@ -4385,17 +4386,24 @@ h3, .project-item h3 {
 
 .project-item--rich .project-actions {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0.5rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0.45rem;
+  width: 100%;
 }
 
 .project-item--rich .project-actions .button.small {
-  font-size: 0.65em;
-  padding: 0 1.25em;
-  height: 2.5em;
-  line-height: 2.5em;
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 0.58em;
+  padding: 0 0.4em;
+  height: 2.65em;
+  line-height: 2.65em;
   margin: 0;
+  text-align: center;
+  letter-spacing: 0.06em;
 }
 
 .filter-link {
