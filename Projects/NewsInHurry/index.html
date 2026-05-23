@@ -277,21 +277,6 @@
 			var navList = document.querySelector('.nh-desk-nav');
 			var sections = [];
 			var lockedId = null;
-			var lastLoggedActive = null;
-			var lastLoggedPick = null;
-
-			// #region agent log
-			function logDebug(hypothesisId, location, message, data) {
-				var payload = { sessionId: 'd7592d', hypothesisId: hypothesisId, location: location, message: message, data: data, timestamp: Date.now(), runId: 'post-fix-2' };
-				try {
-					var logs = JSON.parse(localStorage.getItem('debug-d7592d') || '[]');
-					logs.push(payload);
-					if (logs.length > 150) logs = logs.slice(-150);
-					localStorage.setItem('debug-d7592d', JSON.stringify(logs));
-				} catch (e) {}
-				fetch('http://127.0.0.1:7729/ingest/987e6ed5-80bb-44e5-8954-77221eb154b6', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': 'd7592d' }, body: JSON.stringify(payload) }).catch(function () {});
-			}
-			// #endregion
 
 			deskLinks.forEach(function (link) {
 				var href = link.getAttribute('href');
@@ -301,10 +286,6 @@
 				}
 			});
 			if (!sections.length) return;
-
-			// #region agent log
-			logDebug('D', 'index.html:init', 'sections registered', { count: sections.length, ids: sections.map(function (s) { return s.id; }) });
-			// #endregion
 
 			function stickyTop() {
 				var portfolio = document.querySelector('.nh-portfolio-bar');
@@ -339,14 +320,6 @@
 						} catch (scrollErr) {}
 					}
 				});
-				// #region agent log
-				if (id !== lastLoggedActive) {
-					lastLoggedActive = id;
-					var domActive = [];
-					deskLinks.forEach(function (l) { if (l.classList.contains('is-active')) domActive.push(l.textContent.trim()); });
-					logDebug('C', 'index.html:setActive', 'active class applied', { requestedId: id, domActiveLabels: domActive, lockedId: lockedId });
-				}
-				// #endregion
 			}
 
 			function scrollToSection(el) {
@@ -363,23 +336,13 @@
 
 				var trigger = activeTriggerY();
 				var picked = sections[0].id;
-				var headingTops = {};
 
 				for (var i = sections.length - 1; i >= 0; i--) {
-					var top = sectionHeading(sections[i].el).getBoundingClientRect().top;
-					headingTops[sections[i].id] = Math.round(top);
-					if (top <= trigger) {
+					if (sectionHeading(sections[i].el).getBoundingClientRect().top <= trigger) {
 						picked = sections[i].id;
 						break;
 					}
 				}
-
-				// #region agent log
-				if (picked !== lastLoggedPick) {
-					lastLoggedPick = picked;
-					logDebug('A', 'index.html:pickActive', 'heading-based pick', { picked: picked, trigger: Math.round(trigger), headingTops: headingTops, scrollY: Math.round(window.pageYOffset) });
-				}
-				// #endregion
 
 				return picked;
 			}
@@ -392,9 +355,6 @@
 						var top = sectionHeading(el).getBoundingClientRect().top;
 						if (Math.abs(top - stickyTop()) <= 36) {
 							lockedId = null;
-							// #region agent log
-							logDebug('B', 'index.html:unlock', 'heading aligned', { id: lastLoggedActive });
-							// #endregion
 						}
 					}
 					return;
@@ -420,15 +380,11 @@
 					var target = document.getElementById(id);
 					if (!target) return;
 					lockedId = id;
-					// #region agent log
-					logDebug('B', 'index.html:click', 'tab clicked', { id: id });
-					// #endregion
 					setActive(id);
 					scrollToSection(target);
 				});
 			});
 
-			window.__nhNavReady = true;
 			onScroll();
 		})();
 	</script>
