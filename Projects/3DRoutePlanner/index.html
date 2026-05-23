@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>3D Urban Path Planning — Comparative Frameworks</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Graduate capstone comparing Visibility Graph + Dijkstra and Buffered 3D A* for urban air mobility path planning with no fly zones, sensitivity analysis, and Hong Kong scale recommendations." />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body class="rp-page">
+
+	<header class="rp-topbar">
+		<div class="rp-topbar-inner">
+			<a href="../../index.html" class="rp-brand">
+				<img src="images/me.jpg" alt="" />
+				<span class="rp-brand-text">
+					<strong>Janhavi Gaikwad</strong>
+					<span>Systems Engineer</span>
+				</span>
+			</a>
+			<button type="button" class="rp-nav-toggle" aria-expanded="false" aria-controls="rp-nav-wrap">Menu</button>
+			<div class="rp-nav-wrap" id="rp-nav-wrap">
+				<ul class="rp-nav">
+					<li><a href="#top">Overview</a></li>
+					<li><a href="#framework1">Framework 1</a></li>
+					<li><a href="#framework2">Framework 2</a></li>
+					<li><a href="#comparative">Comparative study</a></li>
+				</ul>
+			</div>
+			<ul class="rp-social">
+				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+			</ul>
+		</div>
+	</header>
+
+	<main class="rp-main">
+
+		<section class="rp-hero" id="top">
+			<div class="rp-hero-inner">
+				<p class="rp-hero-product">Graduate capstone · Cornell</p>
+				<h1>Comparative Frameworks for 3D Urban Path Planning</h1>
+				<p class="rp-hero-subtitle">3D geometry creation · Algorithm selection · Sensitivity analysis</p>
+				<ul class="rp-roadmap" aria-label="Presentation structure">
+					<li>Goal</li>
+					<li class="is-current">Framework 1</li>
+					<li class="is-current">Framework 2</li>
+					<li class="is-current">Comparative study</li>
+				</ul>
+				<div class="rp-hero-column">
+					<p class="rp-hero-lead">Urban airspace is becoming contested as autonomous delivery and UAM systems grow. This capstone compares two 3D path planning pipelines on a dense 73 building demo city with five origin destination pairs and four ground clearance levels (3, 5, 10, 15 m).</p>
+					<p class="rp-hero-lead"><strong>Goal:</strong> Compare visibility graph + Dijkstra and buffer field 3D A*, and recommend VG + Dijkstra for Hong Kong style city scale UAM versus buffer + A* for shorter, grid refined routes.</p>
+					<div class="rp-hero-meta">
+						<div class="rp-tag-row" aria-label="Skills demonstrated">
+							<span class="rp-tag">Python</span>
+							<span class="rp-tag">3D Path Planning</span>
+							<span class="rp-tag">Sensitivity Analysis</span>
+							<span class="rp-tag">Trade Studies</span>
+						</div>
+						<p class="rp-tech-secondary">Python · scipy · visibility graph · Dijkstra · 3D A* · capstone with Zhaoyao Bao</p>
+					</div>
+					<div class="rp-hero-cta">
+						<div class="rp-hero-actions-secondary">
+							<a href="FinalPresentation_with_notes.pptx" class="rp-btn rp-btn-github" download>Download presentation</a>
+							<a href="../../index.html#two" class="rp-btn rp-btn-portfolio">Back to Portfolio</a>
+						</div>
+					</div>
+				</div>
+				<blockquote class="rp-sedemo rp-sedemo--hero" aria-label="Systems engineering demonstration">
+					<span class="rp-sedemo-label">Brief</span>
+					<p class="rp-sedemo-kicker">Systems engineering demonstration</p>
+					<p class="rp-sedemo-text">Structures an urban air mobility routing problem as comparable architectures, runs sensitivity analysis on no fly zone clearance, and recommends VG + Dijkstra for city scale operations versus buffer + A* when minimum distance justifies heavier compute.</p>
+				</blockquote>
+			</div>
+		</section>
+
+		<section class="rp-section" id="framework1">
+			<div class="rp-section-inner">
+				<h2>Framework 1: VG + Dijkstra</h2>
+				<p>Pipeline A: raster grid → building cuboids → no fly zone cuboids → visibility graph → Dijkstra shortest path.</p>
+
+				<ol class="rp-pipeline" aria-label="Framework 1 processing pipeline">
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">1</span>
+							<h3>Grid → building cuboids</h3>
+						</div>
+						<p>2D height grid: cells with height &gt; 0 form 8 connected clusters; each cluster becomes one axis aligned cuboid (flat roof at cluster max height). Output: <code>building_cuboids.json</code>.</p>
+						<div class="rp-pipeline-compare" role="group" aria-label="Original geometry to simplified cuboids">
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Original geometry</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step1-original.png" alt="Original urban height grid geometry" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Raster input (per cell height)</figcaption>
+							</figure>
+							<div class="rp-pipeline-arrow" aria-hidden="true">
+								<i class="fas fa-arrow-right rp-pipeline-arrow-icon rp-pipeline-arrow-icon--h"></i>
+								<i class="fas fa-arrow-down rp-pipeline-arrow-icon rp-pipeline-arrow-icon--v"></i>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Simplified cuboids</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step1-cuboids.png" alt="Cuboid approximation of building clusters" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>One cuboid per connected cluster</figcaption>
+							</figure>
+						</div>
+					</li>
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">2</span>
+							<h3>No fly zone addition</h3>
+						</div>
+						<p>Expand each building cuboid by buffer parameters; add ground NFZ slab over map footprint (z = 0 to clearance height). Output: <code>only_nfz_map_*.json</code> for routing.</p>
+						<div class="rp-pipeline-compare" role="group" aria-label="Simplified cuboids to no fly zone volumes">
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Simplified cuboid geometry</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step2-cuboids.png" alt="Building cuboids after grid to block approximation" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Building cuboids from <code>building_cuboids.json</code></figcaption>
+							</figure>
+							<div class="rp-pipeline-arrow" aria-hidden="true">
+								<i class="fas fa-arrow-right rp-pipeline-arrow-icon rp-pipeline-arrow-icon--h"></i>
+								<i class="fas fa-arrow-down rp-pipeline-arrow-icon rp-pipeline-arrow-icon--v"></i>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>No fly zone geometry</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step2-nfz.png" alt="Buffered building NFZ and ground clearance slab over the city model" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Buffered building NFZ (blue) and ground clearance slab</figcaption>
+							</figure>
+						</div>
+					</li>
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">3</span>
+							<h3>Visibility graph</h3>
+						</div>
+						<div class="rp-pipeline-split">
+							<div class="rp-pipeline-split-text">
+								<p>Represent free 3D space as a graph: <strong>nodes</strong> are key points and <strong>edges</strong> are straight, collision free sight lines between them.</p>
+								<ul class="rp-list">
+									<li><strong>Nodes:</strong> start, goal, and corners of each building and ground NFZ cuboid.</li>
+									<li><strong>Edges:</strong> connect two nodes only if the segment does not pass through any NFZ interior.</li>
+									<li><strong>Rule:</strong> no horizontal travel on the ground plane (z ≈ 0).</li>
+								</ul>
+								<p class="rp-pipeline-note">Output: all feasible straight moves between origin and destination — not the final route yet.</p>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Visibility graph</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step3-visibility-graph.png" alt="Visibility graph edges between corner nodes in free 3D space" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Collision free sight lines between corners</figcaption>
+							</figure>
+						</div>
+					</li>
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">4</span>
+							<h3>Dijkstra shortest path</h3>
+						</div>
+						<div class="rp-pipeline-split">
+							<div class="rp-pipeline-split-text">
+								<p>On the visibility graph, find the <strong>minimum total 3D distance</strong> from start to goal.</p>
+								<ul class="rp-list">
+									<li><strong>Edge cost:</strong> Euclidean length of each visible segment (all weights ≥ 0).</li>
+									<li><strong>Method:</strong> expand from start with a min heap; always process the closest unvisited node next.</li>
+									<li><strong>Guarantee:</strong> shortest path on this graph when edge costs are non negative distances.</li>
+								</ul>
+								<p class="rp-pipeline-note">Few waypoints along straight segments; ground NFZ forces vertical lift when origin or destination is on the surface.</p>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Optimized route</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f1-step4-dijkstra-route.png" alt="Dijkstra optimized 3D route through the urban no fly zone model" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Minimum distance path on sparse corner graph</figcaption>
+							</figure>
+						</div>
+					</li>
+				</ol>
+
+				<div class="rp-subsection">
+					<h3>Algorithm selection</h3>
+					<p>Compared graph methods (VG + Dijkstra, PRM, RRT*) and field/grid methods (potential field, Eikonal/FMM, FMT*) using a weighted decision matrix on shortest path guarantee, few waypoints, determinism, cuboid geometry fit, and scale to 73 buildings.</p>
+					<p><strong>Selected: Visibility Graph + Dijkstra</strong> (composite score 4.45/5): near optimal geometric paths, explicit 3D waypoints, deterministic, and acceptable runtime for urban scale after NFZ build.</p>
+				</div>
+
+				<div class="rp-subsection">
+					<h3>Sensitivity analysis</h3>
+					<p><strong>Question:</strong> How does ground NFZ height affect routes when OD points start on the ground?</p>
+					<p><strong>Constants:</strong> Same 73 building map, same 5 OD pairs, VG + Dijkstra. <strong>Variable:</strong> Ground NFZ top height → 3, 5, 10, 15 m.</p>
+					<ul class="rp-list">
+						<li>Higher NFZ → higher minimum flyable altitude → longer 3D paths.</li>
+						<li>Vertical lift at OD dominates gap between horizontal and total path length.</li>
+						<li>Path topology similar across pairs; sensitivity is mainly altitude and length, not failure to find a path.</li>
+						<li>Demo range at 15 m clearance: ~527–672 m total distance per pair.</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="rp-section" id="framework2">
+			<div class="rp-section-inner">
+				<h2>Framework 2: Buffered A*</h2>
+				<p>Pipeline B: building height grid H → buffer altitude field B (2.5D) → 3D A* on a fine cell graph with z ≥ B.</p>
+
+				<div class="rp-subsection">
+					<h3>3D city model</h3>
+					<p><strong>No fly zone creation:</strong> From raster <code>3d_structure</code>, apply horizontal buffer around building cells and rooftop clearance; each cell gets minimum safe altitude B. Ground clearance applies where buildings do not dominate.</p>
+					<p>Representation: one scalar B[i,j] per cell (2.5D field), not axis aligned 3D boxes. Outputs: <code>3d_structure_nfz10.csv</code>, height CSV.</p>
+				</div>
+
+				<div class="rp-subsection">
+					<h3>3D A*</h3>
+					<p>Search on 26 connected 3D grid neighbors; fly only if z ≥ B[row,col]. Edge cost = Euclidean 3D step length; f = g + h with admissible straight line h to goal.</p>
+					<div class="rp-demo-frame">
+						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Optimized route</em></div>
+						<img src="images/route-buffer-astar.png" alt="Buffered 3D A star route on raster NFZ field" loading="lazy" />
+					</div>
+					<p class="rp-caption">Many grid waypoints (~330–480 per route on demo map); typically shorter total distance than Framework 1 in the same clearance scenarios.</p>
+				</div>
+
+				<div class="rp-subsection">
+					<h3>Sensitivity analysis</h3>
+					<p>Same 5 OD pairs and clearance levels (3, 5, 10, 15 m) as Framework 1.</p>
+					<ul class="rp-list">
+						<li>Higher buffer → longer paths for all 5 pairs; biggest jump from 3 m to 10 m; 10 m ≈ 15 m for most pairs.</li>
+						<li>Pair 1 most sensitive (~387 → 586 m); Pair 5 least (~501 → 587 m).</li>
+						<li>Per pair compute: ~4–38 s @ 3 m clearance → ~41–147 s @ 10 m (up to ~1.8M node expansions on 720×720 grid).</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="rp-section" id="comparative">
+			<div class="rp-section-inner">
+				<h2>Comparative study</h2>
+				<p>Output comparison and model setup comparison on the same demo city (<code>3d_structure</code>, 720×720 cells).</p>
+
+				<div class="rp-subsection">
+					<h3>Framework comparison</h3>
+					<div class="rp-table-wrap">
+						<table class="rp-table">
+							<thead>
+								<tr><th>Aspect</th><th>Framework 1 (VG + Dijkstra)</th><th>Framework 2 (Buffer + A*)</th></tr>
+							</thead>
+							<tbody>
+								<tr><td>Preprocessing</td><td>Grid → cuboids → NFZ cuboids per scenario</td><td>H CSV → B buffer CSV per scenario</td></tr>
+								<tr><td>Search space</td><td>Sparse: NFZ corners + OD (tens to low hundreds of nodes)</td><td>Dense: full grid × altitude layers</td></tr>
+								<tr><td>Per pair compute</td><td>Light VG + Dijkstra on small graph</td><td>Heavy: millions of expansions at tight clearance</td></tr>
+								<tr><td>Scaling (dense city)</td><td>NFZ build once; routing stays sparse → many OD / replanning</td><td>Expansions grow with clutter → poor Hong Kong scale fit without acceleration</td></tr>
+								<tr><td>Path length</td><td>Longer (cuboid over approximation): ~527–672 m</td><td>Shorter (finer grid): ~387–604 m</td></tr>
+								<tr><td>Waypoints</td><td>Few corner to corner segments</td><td>~330–480 grid steps per route</td></tr>
+							</tbody>
+						</table>
+					</div>
+					<p>Framework 1: few points to process → fast routing after NFZ is built; path is not the geometric minimum in the true city. Framework 2: finer search → closer to minimum in the buffer model; needs significantly more CPU, memory, and time.</p>
+				</div>
+
+				<div class="rp-subsection">
+					<h3>Sensitivity comparison</h3>
+					<div class="rp-demo-frame">
+						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
+						<img src="images/comparison-sensitivity.png" alt="Sensitivity analysis comparing both frameworks across clearance levels" loading="lazy" />
+					</div>
+					<p class="rp-caption">Both show longer paths as clearance grows (3 m → 15 m). Framework 2 is ~8–20% shorter on average at 3 m but with far higher search cost. Trends align; absolute metres differ because cuboid NFZ ≠ raster buffer B.</p>
+				</div>
+
+				<div class="rp-subsection">
+					<h3>Conclusions &amp; recommendations</h3>
+					<ul class="rp-list">
+						<li><strong>Hong Kong scale UAM:</strong> Prefer Framework 1 (VG + Dijkstra) for city scale dispatch and replanning.</li>
+						<li><strong>Local / offline planning:</strong> Use Framework 2 when minimum distance matters and heavy compute is acceptable (vertiport corridors, range critical flights).</li>
+						<li><strong>Limitations:</strong> F1 cuboids over approximate buildings; F2 is 2.5D buffer and grid stepped.</li>
+					</ul>
+					<div class="rp-metrics">
+						<div class="rp-metric">
+							<span class="rp-metric-value">73</span>
+							<span class="rp-metric-label">Buildings</span>
+						</div>
+						<div class="rp-metric">
+							<span class="rp-metric-value">5</span>
+							<span class="rp-metric-label">OD pairs</span>
+						</div>
+						<div class="rp-metric">
+							<span class="rp-metric-value">4</span>
+							<span class="rp-metric-label">Clearance levels</span>
+						</div>
+						<div class="rp-metric">
+							<span class="rp-metric-value">2</span>
+							<span class="rp-metric-label">Frameworks</span>
+						</div>
+					</div>
+					<p class="rp-callout"><em>Capstone team: Janhavi Gaikwad and Zhaoyao Bao. Full slides with interactive route visuals: <a href="FinalPresentation_with_notes.pptx" download>download presentation</a>.</em></p>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="rp-footer">
+		<p>&copy; 2025 Janhavi Gaikwad · <a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="../../index.html#two">Portfolio</a></p>
+	</footer>
+
+	<script>
+		document.querySelector('.rp-nav-toggle')?.addEventListener('click', function () {
+			var wrap = document.getElementById('rp-nav-wrap');
+			var open = wrap.classList.toggle('is-open');
+			this.setAttribute('aria-expanded', open);
+		});
+
+		(function () {
+			var topbar = document.querySelector('.rp-topbar');
+			var hero = document.querySelector('.rp-hero');
+			if (topbar && hero && 'IntersectionObserver' in window) {
+				var barPx = topbar.offsetHeight || 56;
+				new IntersectionObserver(function (entries) {
+					topbar.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+				}, { threshold: 0, rootMargin: '-' + barPx + 'px 0px 0px 0px' }).observe(hero);
+			}
+
+			var navLinks = document.querySelectorAll('.rp-nav a[href^="#"]');
+			var sections = [];
+			navLinks.forEach(function (link) {
+				var href = link.getAttribute('href');
+				if (href && href.length > 1) {
+					var el = document.getElementById(href.slice(1));
+					if (el) sections.push({ id: href.slice(1), el: el });
+				}
+			});
+			if (!sections.length) return;
+
+			var lockedId = null;
+
+			function stickyTop() {
+				return (document.querySelector('.rp-topbar') || {}).offsetHeight || 56;
+			}
+
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+
+			function pickSection() {
+				var doc = document.documentElement;
+				if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 20) {
+					return sections[sections.length - 1].id;
+				}
+				var trigger = stickyTop() + (window.innerHeight - stickyTop()) * 0.38;
+				var picked = sections[0].id;
+				var heading = function (el) {
+					var h = el.querySelector('h2');
+					return h || el;
+				};
+				for (var i = sections.length - 1; i >= 0; i--) {
+					if (heading(sections[i].el).getBoundingClientRect().top <= trigger) {
+						picked = sections[i].id;
+						break;
+					}
+				}
+				return picked;
+			}
+
+			function onScroll() {
+				if (lockedId) {
+					setActive(lockedId);
+					var el = document.getElementById(lockedId);
+					if (el) {
+						var h = el.querySelector('h2') || el;
+						if (Math.abs(h.getBoundingClientRect().top - stickyTop()) <= 36) lockedId = null;
+					}
+					return;
+				}
+				setActive(pickSection());
+			}
+
+			var ticking = false;
+			window.addEventListener('scroll', function () {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(function () { onScroll(); ticking = false; });
+				}
+			}, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
+
+			navLinks.forEach(function (link) {
+				link.addEventListener('click', function (e) {
+					var id = link.getAttribute('href').slice(1);
+					var target = document.getElementById(id);
+					if (!target) return;
+					e.preventDefault();
+					lockedId = id;
+					setActive(id);
+					var h = target.querySelector('h2') || target;
+					var y = h.getBoundingClientRect().top + window.pageYOffset - stickyTop() - 12;
+					window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+				});
+			});
+
+			onScroll();
+		})();
+	</script>
+
+</body>
+</html>
