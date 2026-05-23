@@ -9,7 +9,10 @@
 		<title>MBSE for Solar Aware Route Planner</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css?v=3" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/main.css?v=4" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	
@@ -1024,13 +1027,32 @@
 
 	<!--CSS-->
 		<style>
-			body {
-			font-size: 0.5rem;   /* increase global text size */
-			line-height: 1.65;
+			/* Typographic scale - cohesive hierarchy */
+			:root {
+				--text-xs: 0.75rem;
+				--text-sm: 0.875rem;
+				--text-base: 1rem;
+				--text-md: 1.0625rem;
+				--text-lg: 1.125rem;
+				--text-xl: 1.25rem;
+				--text-2xl: 1.375rem;
+				--text-3xl: 1.5rem;
+				--text-4xl: 1.75rem;
+			}
+
+			/* Typography - Plus Jakarta Sans throughout */
+			body, input, select, textarea {
+				font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+				font-size: var(--text-base);
+				font-weight: 400;
+				line-height: 1.65;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
 			}
 
 			p {
-			font-size: 1rem;
+				font-size: var(--text-md);
+				color: #334155;
 			}
 
 						.modal {
@@ -1057,11 +1079,11 @@
 			}
 
 			.close {
-			position: absolute;
-			top: 15px;
-			right: 20px;
-			font-size: 28px;
-			cursor: pointer;
+				position: absolute;
+				top: 15px;
+				right: 20px;
+				font-size: var(--text-3xl);
+				cursor: pointer;
 			}
 
 			/* Sticky/fixed title */
@@ -1129,10 +1151,12 @@
 			}
 
 			.header nav ul li a {
+				font-family: 'Plus Jakarta Sans', sans-serif;
 				text-decoration: none;
 				color: #fff;
 				font-weight: 600;
-				font-size: 1rem;
+				font-size: var(--text-sm);
+				letter-spacing: 0.02em;
 				transition: color 0.2s;
 			}
 
@@ -1147,7 +1171,7 @@
 			}
 
 			.header-icons a {
-				font-size: 1.2rem;
+				font-size: var(--text-lg);
 				color: #fff;
 				transition: color 0.2s;
 			}
@@ -1237,20 +1261,70 @@
 				list-style: none;
 			}
 
+			/* Buttons - consistent typography */
+			.spotlight .button {
+				font-family: 'Plus Jakarta Sans', sans-serif !important;
+				font-size: var(--text-sm) !important;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+			}
+			.hero-actions .button,
+			.actions.horizontal .button.big {
+				font-family: 'Plus Jakarta Sans', sans-serif !important;
+				font-size: var(--text-base) !important;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+			}
+
+			/* Spotlight section content readability */
+			.spotlight .content p {
+				font-size: var(--text-md);
+				line-height: 1.65;
+				margin-bottom: 1rem;
+			}
+
+			/* Project Documentation section */
+			#downloads h2 {
+				font-family: 'Plus Jakarta Sans', sans-serif;
+				font-size: var(--text-3xl);
+				font-weight: 600;
+				color: #1e3a5f;
+			}
+			#downloads .content p {
+				font-size: var(--text-lg);
+				color: #475569;
+			}
+
+			/* Footer */
+			footer.wrapper.style1 {
+				font-family: 'Plus Jakarta Sans', sans-serif;
+			}
+			footer p {
+				font-size: var(--text-sm);
+				color: #64748b;
+			}
+
 			/* Main section titles */
 			#wrapper.divided > h1 {
+				font-family: 'Plus Jakarta Sans', sans-serif;
+				font-weight: 700;
+				font-size: var(--text-4xl);
+				letter-spacing: -0.03em;
 				color: #1e3a5f;
 			}
 
-			/* Quick fix for sub-headers */
+			/* Section sub-headers */
 			h2.sub-header {
-				font-size: 3em;
-				font-weight: 500;
+				font-family: 'Plus Jakarta Sans', sans-serif;
+				font-size: var(--text-2xl);
+				font-weight: 600;
 				color: #1e3a5f;
+				letter-spacing: -0.02em;
 				display: inline-block;
 				border-bottom: 2px solid #2563eb;
-				padding-bottom: 4px;          /* space between text and line */
-				margin-bottom: 0.5em;
+				padding-bottom: 6px;
+				margin-bottom: 0.75em;
+				line-height: 1.3;
 			}
 
 			/* Alternate background for spotlight sections */
@@ -1262,14 +1336,21 @@
 				background-color: #ffffff;
 			}
 
-			/* Popup / modal header underline */
+			/* Modal */
+			.modal-content, #modalTitle, #modalDescription {
+				font-family: 'Plus Jakarta Sans', sans-serif;
+			}
 			#modalTitle {
 				color: #1e3a5f;
 				font-weight: 600;
+				font-size: var(--text-3xl);
 				padding-bottom: 6px;
 				margin-bottom: 1em;
 				border-bottom: 2px solid #2563eb;
-				display: inline-block;         /* Line only as wide as text */
+				display: inline-block;
+			}
+			#modalDescription p {
+				font-size: var(--text-md);
 			}
 			/* Increase size of social/portfolio/email icons */
 			ul.icons li a.icon {
@@ -1322,14 +1403,15 @@
 				margin-top: 0;
 			}
 			.tools-nav-panel a {
+				font-family: 'Plus Jakarta Sans', sans-serif;
 				display: inline-block;
 				position: relative;
 				padding: 0.2em 0;
-				font-size: 0.75rem;
+				font-size: var(--text-xs);
 				font-weight: 600;
 				color: #1e293b;
 				text-decoration: none;
-				letter-spacing: 0.04em;
+				letter-spacing: 0.02em;
 				transition: color 0.2s ease;
 			}
 			.tools-nav-panel a:before,
@@ -1357,6 +1439,7 @@
 				max-width: 100%;
 			}
 			.tools-nav-toggle {
+				font-family: 'Plus Jakarta Sans', sans-serif;
 				position: fixed;
 				left: 0;
 				top: 6rem;
@@ -1372,11 +1455,11 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				font-size: 0.75rem;
+				font-size: var(--text-xs);
 				font-weight: 600;
 				color: #1e293b;
 				transition: background 0.2s, color 0.2s;
-				letter-spacing: 0.04em;
+				letter-spacing: 0.02em;
 			}
 			.tools-nav-toggle:hover {
 				background: #94a3b8;

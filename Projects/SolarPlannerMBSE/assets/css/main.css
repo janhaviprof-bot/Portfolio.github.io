@@ -1,4 +1,5 @@
 @import url(fontawesome-all.min.css);
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i");
 
 /*
@@ -8638,22 +8639,23 @@ input, select, textarea {
 }
 
 .hero h1 {
-	font-family: "Source Sans Pro", Helvetica, sans-serif;
-	font-size: clamp(2.5rem, 8vw, 5.5rem);
-	font-weight: 400;
+	font-family: "Plus Jakarta Sans", "Source Sans Pro", sans-serif;
+	font-size: clamp(2rem, 5.5vw, 3.5rem);
+	font-weight: 700;
 	color: #1e3a5f;
 	margin: 0 0 1.5rem;
 	padding-bottom: 0.6rem;
 	border-bottom: 3px solid #2563eb;
-	line-height: 1.15;
-	letter-spacing: -0.05em;
+	line-height: 1.2;
+	letter-spacing: -0.03em;
 	display: inline-block;
 }
 
 .hero .hero-content p {
+	font-family: "Plus Jakarta Sans", "Source Sans Pro", sans-serif;
 	text-align: justify;
 	color: #475569;
-	font-size: 1.05rem;
+	font-size: 1.0625rem;
 	line-height: 1.7;
 	margin: 0 0 1.25rem;
 }
@@ -8692,11 +8694,11 @@ input, select, textarea {
 	}
 
 	.hero h1 {
-		font-size: 2.25rem;
+		font-size: 1.75rem;
 	}
 
 	.hero .hero-content p {
-		font-size: 0.95rem;
+		font-size: 1rem;
 	}
 }
 
