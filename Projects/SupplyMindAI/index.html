@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>SupplyMind AI — Supply Chain Optimizer</title>
+	<title>SupplyMind AI</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="SupplyMind AI helps supply chain managers track in-transit shipments, predict delays, get AI optimization insights from historical data, and simulate investment trade-offs before committing resources." />
+	<meta name="description" content="SupplyMind AI helps supply chain managers track in transit shipments, predict delays, get AI optimization insights from historical data, and simulate investment tradeoffs before committing resources." />
 	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 	<link rel="stylesheet" href="assets/css/project.css" />
 </head>
@@ -44,10 +44,15 @@
 
 		<section class="sm-hero" id="top">
 			<div class="sm-hero-inner">
+				<p class="sm-hero-product">Supply chain operations platform</p>
 				<h1>SupplyMind AI</h1>
-				<p class="sm-hero-subtitle">Supply Chain Optimizer</p>
+				<ul class="sm-hero-kpis" aria-label="Shipment status categories">
+					<li class="sm-kpi sm-kpi--ok"><span class="sm-kpi-dot"></span> On time</li>
+					<li class="sm-kpi sm-kpi--warn"><span class="sm-kpi-dot"></span> Delayed</li>
+					<li class="sm-kpi sm-kpi--crit"><span class="sm-kpi-dot"></span> Critical</li>
+				</ul>
 				<div class="sm-hero-column">
-					<p class="sm-hero-lead">A smart dashboard for supply chain managers: monitor in-transit shipments, predict delays, escalate critical cases, and map problem hubs. Built-in analytical tools run historical optimization and investment simulations; an AI agent selects which tools to invoke from your questions and explains the results in plain language.</p>
+					<p class="sm-hero-lead">A smart dashboard for supply chain managers: monitor in transit shipments, predict delays, escalate critical cases, and map problem hubs. Built in analytical tools run historical optimization and investment simulations; an AI agent selects which tools to invoke from your questions and explains the results in plain language.</p>
 					<div class="sm-hero-meta">
 						<div class="sm-tag-row" aria-label="Skills demonstrated">
 							<span class="sm-tag">Python</span>
@@ -73,7 +78,7 @@
 				<blockquote class="sm-sedemo sm-sedemo--hero" aria-label="Systems engineering demonstration">
 					<span class="sm-sedemo-label">Brief</span>
 					<p class="sm-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="sm-sedemo-text">Integrates live operational data, simulation-based trade studies, and AI-driven simulation selection to answer system performance and operational tradeoffs.</p>
+					<p class="sm-sedemo-text">Integrates live operational data from in transit shipments and hub networks, simulation based trade studies across capacity and routing levers, and AI driven orchestration that selects which analyses to run and interprets the results, so managers can compare delay risk, investment, and on time performance before acting on operational tradeoffs.</p>
 				</blockquote>
 			</div>
 		</section>
@@ -81,17 +86,17 @@
 		<section class="sm-section" id="demo">
 			<div class="sm-section-inner">
 				<h2>Demo &amp; Visuals</h2>
-				<p>The live app combines delivery KPIs, a hub prediction map, a What-If Advisor agent, escalated shipments, and supply chain optimization with parameter simulation.</p>
+				<p>The live app combines delivery KPIs, a hub prediction map, a What If Advisor agent, escalated shipments, and supply chain optimization with parameter simulation.</p>
 				<div class="sm-demo-grid">
 					<figure class="sm-demo-block">
 						<div class="sm-demo-frame">
 							<div class="sm-demo-chrome" aria-hidden="true">
 								<span></span><span></span><span></span>
-								<em>What-If Advisor</em>
+								<em>What If Advisor</em>
 							</div>
-							<img src="images/supplymind-advisor.png" alt="SupplyMind AI What-If Advisor agent answering a capacity what-if scenario using RAG, database tools, and simulation" loading="lazy" />
+							<img src="images/supplymind-advisor.png" alt="SupplyMind AI What If Advisor agent answering a capacity what if scenario using RAG, database tools, and simulation" loading="lazy" />
 						</div>
-						<figcaption class="sm-caption">The What-If Advisor decides which analytical tools to run from your question—database queries, RAG, and simulation—then explains outputs in plain language rather than replacing the underlying analysis engines.</figcaption>
+						<figcaption class="sm-caption">The What If Advisor decides which analytical tools to run from your question (database queries, RAG, and simulation), then explains outputs in plain language rather than replacing the underlying analysis engines.</figcaption>
 					</figure>
 					<figure class="sm-demo-block">
 						<div class="sm-demo-frame">
@@ -99,9 +104,9 @@
 								<span></span><span></span><span></span>
 								<em>Simulation result</em>
 							</div>
-							<img src="images/supplymind.png" alt="SupplyMind AI simulation result chart showing investment versus on-time shipments with master and alternative recommendations" loading="lazy" />
+							<img src="images/supplymind.png" alt="SupplyMind AI simulation result chart showing investment versus on time shipments with master and alternative recommendations" loading="lazy" />
 						</div>
-						<figcaption class="sm-caption">Parameter simulation plots investment ($) against on-time shipments; gold stars mark ROI sweet spots, with AI master and alternative recommendations in the sidebar.</figcaption>
+						<figcaption class="sm-caption">Parameter simulation plots investment ($) against on time shipments; gold stars mark ROI sweet spots, with AI master and alternative recommendations in the sidebar.</figcaption>
 					</figure>
 				</div>
 			</div>
@@ -111,37 +116,37 @@
 			<div class="sm-section-inner">
 				<h2>Problem Statement</h2>
 				<p>Supply chain managers need to see delivery health at a glance, but delay signals are scattered across shipments, hubs, risks, and schedules. When problems surface late, escalation and rerouting become reactive instead of planned.</p>
-				<p>Historical delivered data holds patterns—congested hubs, dwell time, transit mode, dispatch timing—but turning that into <strong>actionable, cost-aware recommendations</strong> is hard without a structured decision loop: monitor → learn → simulate → decide.</p>
-				<p>SupplyMind AI closes that gap with prediction and mapping on live data, conventional optimization and simulation engines on historical deliveries, and an AI agent that routes natural-language questions to the right tools and interprets outputs for decision-makers.</p>
+				<p>Historical delivered data holds patterns (congested hubs, dwell time, transit mode, dispatch timing), but turning that into <strong>actionable, cost aware recommendations</strong> is hard without a structured decision loop: monitor → learn → simulate → decide.</p>
+				<p>SupplyMind AI closes that gap with prediction and mapping on live data, conventional optimization and simulation engines on historical deliveries, and an AI agent that routes natural language questions to the right tools and interprets outputs for decision makers.</p>
 			</div>
 		</section>
 
 		<section class="sm-section" id="workflow">
 			<div class="sm-section-inner">
 				<h2>Workflow</h2>
-				<p>Two ways to work: follow the dashboard cards in sequence, or ask the What-If Advisor in natural language—the agent runs the same analytical tools in parallel and explains the output.</p>
+				<p>Two ways to work: follow the dashboard cards in sequence, or ask the What If Advisor in natural language; the agent runs the same analytical tools in parallel and explains the output.</p>
 				<div class="sm-mermaid-wrap">
 <pre class="mermaid">flowchart TB
   user[Supply chain manager]
 
   subgraph dash [Direct dashboard workflow]
     direction TB
-    monitor[Monitor in-transit shipments]
-    map[Prediction map - problem hubs]
+    monitor[Monitor in transit shipments]
+    map[Prediction map problem hubs]
     learn[Historical optimization insights]
     simulate[Parameter simulation]
     decide[Decide with ROI sweet spot]
     monitor --> map --> learn --> simulate --> decide
   end
 
-  subgraph agent [Parallel: What-If Advisor]
+  subgraph agent [Parallel What If Advisor]
     direction TB
     ask[Ask in natural language]
     route[Agent selects tools]
     tool1[Tool 1]
     tool2[Tool 2]
     tool3[Tool 3]
-    explain[Plain-language answer]
+    explain[Plain language answer]
     ask --> route
     route --> tool1
     route --> tool2
@@ -163,15 +168,15 @@
 							<tr><th>Path</th><th>Steps</th><th>What happens</th></tr>
 						</thead>
 						<tbody>
-							<tr><td rowspan="5"><strong>Dashboard</strong></td><td>Monitor</td><td>Re-run analysis for On Time / Delayed / Critical; escalate critical shipments.</td></tr>
-							<tr><td>Prediction map</td><td>Focus red then orange problem hubs; size dots by at-risk volume.</td></tr>
-							<tr><td>Historical insights</td><td>Pick a date range; built-in tools surface levers for capacity, dwell, transit, dispatch, risk buffer.</td></tr>
-							<tr><td>Parameter simulation</td><td>Select levers; conventional engine plots investment vs. on-time performance.</td></tr>
+							<tr><td rowspan="5"><strong>Dashboard</strong></td><td>Monitor</td><td>Rerun analysis for On Time / Delayed / Critical; escalate critical shipments.</td></tr>
+							<tr><td>Prediction map</td><td>Focus red then orange problem hubs; size dots by at risk volume.</td></tr>
+							<tr><td>Historical insights</td><td>Pick a date range; built in tools surface levers for capacity, dwell, transit, dispatch, risk buffer.</td></tr>
+							<tr><td>Parameter simulation</td><td>Select levers; conventional engine plots investment vs. on time performance.</td></tr>
 							<tr><td>Decide</td><td>Use ROI sweet spots and recommendations before committing resources.</td></tr>
-							<tr><td rowspan="4"><strong>What-If Advisor</strong><br><em>(parallel)</em></td><td>Ask</td><td>Pose capacity, delay, ROI, or shipment questions in plain language.</td></tr>
-							<tr><td>Route</td><td>Agent decides which tools to call—session context, RAG, database queries, simulation.</td></tr>
+							<tr><td rowspan="4"><strong>What If Advisor</strong><br><em>(parallel)</em></td><td>Ask</td><td>Pose capacity, delay, ROI, or shipment questions in plain language.</td></tr>
+							<tr><td>Route</td><td>Agent decides which tools to call: session context, RAG, database queries, simulation.</td></tr>
 							<tr><td>Run</td><td>Conventional analysis runs; agent does not replace the engines.</td></tr>
-							<tr><td>Explain</td><td>Results returned as a plain-language interpretation of tool output.</td></tr>
+							<tr><td>Explain</td><td>Results returned as a plain language interpretation of tool output.</td></tr>
 						</tbody>
 					</table>
 				</div>
@@ -181,15 +186,28 @@
 		<section class="sm-section" id="features">
 			<div class="sm-section-inner">
 				<h2>What the Application Does</h2>
-				<ul class="sm-list">
-					<li><strong>Current Shipment Delivery Insight</strong> — KPI counts and donut chart for in-transit shipments (On Time, Delayed, Critical) with AI confidence; results stored in <code>insights</code>.</li>
-					<li><strong>Needs Attention &amp; Escalation</strong> — Critical shipment list with reasoning, detail modal, and a personal escalated drawer for follow-up.</li>
-					<li><strong>Prediction Map</strong> — US hub map with red/orange/black markers sized by at-risk shipment counts; guides capacity and routing focus.</li>
-					<li><strong>What-If Advisor</strong> — Agentic Q&amp;A on capacity and delay scenarios using session context, RAG, database tools, and simulation baseline.</li>
-					<li><strong>Supply Chain Optimization</strong> — Analyzes delivered shipments over a date range with built-in tools; surfaces improvement levers constrained for simulation.</li>
-					<li><strong>Parameter Simulation</strong> — Select up to five levers; conventional simulation grid-searches investment curves and ROI sweet spots, with AI-generated narrative recommendations.</li>
-				</ul>
-				<p><em>Flags use shipment stops, hub load/capacity, and risk severity; only high-priority shipments (<code>priority_level ≥ 8</code>) can be Critical.</em></p>
+				<div class="sm-feature-grid">
+					<article class="sm-feature-card">
+						<span class="sm-feature-icon" aria-hidden="true"><i class="fas fa-chart-pie"></i></span>
+						<h3>Delivery insight</h3>
+						<p>Flags each in transit shipment as On Time, Delayed, or Critical using hub occupancy, congestion, weather and traffic risks, past stop performance, and priority, summarized in KPIs and a confidence donut chart (<code>insights</code>).</p>
+					</article>
+					<article class="sm-feature-card">
+						<span class="sm-feature-icon" aria-hidden="true"><i class="fas fa-map-marked-alt"></i></span>
+						<h3>Prediction map</h3>
+						<p>Hub map with red, orange, and black markers sized by at risk volume: a bird's eye view of which regions need focus to improve on time performance.</p>
+					</article>
+					<article class="sm-feature-card sm-feature-card--agent">
+						<span class="sm-feature-icon" aria-hidden="true"><i class="fas fa-robot"></i></span>
+						<h3>What If Advisor</h3>
+						<p>Agentic Q&amp;A: based on your question, selects and runs the necessary tools, then returns the answer in natural language.</p>
+					</article>
+					<article class="sm-feature-card">
+						<span class="sm-feature-icon" aria-hidden="true"><i class="fas fa-sliders-h"></i></span>
+						<h3>Parameter simulation</h3>
+						<p>Runs sensitivity analysis on historical data across supply chain levers (investment vs. on time curves and ROI sweet spots) to find the best value for money improvements.</p>
+					</article>
+				</div>
 			</div>
 		</section>
 
@@ -198,11 +216,11 @@
 				<h2>Technical Architecture</h2>
 				<p><strong>Pattern:</strong> Shiny for Python dashboard backed by PostgreSQL (Supabase), with analysis pipelines writing to <code>insights</code> and simulation engines consuming enriched shipment payloads.</p>
 				<ul class="sm-list">
-					<li><strong>SupplyMindAI/app.py</strong> — Shiny entry point; UI and server wiring.</li>
-					<li><strong>supplymind_db/</strong> — Supabase/PostgreSQL client and database utilities.</li>
-					<li><strong>Analysis pipeline</strong> — Reads <code>shipments</code>, <code>stops</code>, <code>hubs</code>, <code>risks</code> for in-transit prediction; historical path for delivered cohorts.</li>
-					<li><strong>OpenAI</strong> — Prediction reasoning, optimization recommendations, simulation advice, and What-If Advisor responses.</li>
-					<li><strong>Simulation engine</strong> — Five levers (hub capacity, dwell, transit mode, earlier dispatch, risk buffer) with grid search, cost model, and ROI sweet-spot selection.</li>
+					<li><strong>SupplyMindAI/app.py</strong>: Shiny entry point; UI and server wiring.</li>
+					<li><strong>supplymind_db/</strong>: Supabase/PostgreSQL client and database utilities.</li>
+					<li><strong>Analysis pipeline</strong>: Reads <code>shipments</code>, <code>stops</code>, <code>hubs</code>, <code>risks</code> for in transit prediction; historical path for delivered cohorts.</li>
+					<li><strong>OpenAI</strong>: Prediction reasoning, optimization recommendations, simulation advice, and What If Advisor responses.</li>
+					<li><strong>Simulation engine</strong>: Five levers (hub capacity, dwell, transit mode, earlier dispatch, risk buffer) with grid search, cost model, and ROI sweet spot selection.</li>
 				</ul>
 				<div class="sm-table-wrap">
 					<table class="sm-table">
@@ -210,7 +228,7 @@
 							<tr><th>Data store</th><th>Role</th></tr>
 						</thead>
 						<tbody>
-							<tr><td><code>shipments</code></td><td>In-transit or delivered shipment metadata and deadlines</td></tr>
+							<tr><td><code>shipments</code></td><td>In transit or delivered shipment metadata and deadlines</td></tr>
 							<tr><td><code>stops</code></td><td>Planned vs actual times per hub along each route</td></tr>
 							<tr><td><code>hubs</code></td><td>Location, load, capacity, congestion status</td></tr>
 							<tr><td><code>risks</code></td><td>Weather, traffic, labor risks with severity and delay hours</td></tr>
@@ -218,7 +236,6 @@
 						</tbody>
 					</table>
 				</div>
-				<p><strong>Deployment:</strong> Posit Connect Cloud — <a href="https://019d5c4a-4baf-035a-e924-f93e54f21919.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">live app</a>. Source and docs on <a href="https://github.com/janhaviprof-bot/SupplyMindAI" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
 			</div>
 		</section>
 
@@ -227,13 +244,13 @@
 				<h2>Results &amp; Metrics</h2>
 				<blockquote class="sm-sedemo sm-sedemo--section" aria-label="Systems engineering demonstration">
 					<p class="sm-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="sm-sedemo-text">Integrates live operational data, simulation-based trade studies, and AI-driven simulation selection to answer system performance and operational tradeoffs.</p>
+					<p class="sm-sedemo-text">Integrates live operational data from in transit shipments and hub networks, simulation based trade studies across capacity and routing levers, and AI driven orchestration that selects which analyses to run and interprets the results, so managers can compare delay risk, investment, and on time performance before acting on operational tradeoffs.</p>
 				</blockquote>
 				<ul class="sm-list">
-					<li><strong>Operational visibility</strong> — Single view for in-transit health, hub geography, and escalation workflow.</li>
-					<li><strong>Explainable AI</strong> — Per-shipment reasoning and confidence; heuristic fallback when model confidence is missing.</li>
-					<li><strong>Constrained recommendations</strong> — Optimization outputs map to five levers so every suggestion is testable in simulation.</li>
-					<li><strong>Investment framing</strong> — Sweet-spot curves tie USD investment to recovered on-time shipments and ROI.</li>
+					<li><strong>Operational visibility</strong>: Single view for in transit health, hub geography, and escalation workflow.</li>
+					<li><strong>Explainable AI</strong>: Per shipment reasoning and confidence; heuristic fallback when model confidence is missing.</li>
+					<li><strong>Constrained recommendations</strong>: Optimization outputs map to five levers so every suggestion is testable in simulation.</li>
+					<li><strong>Investment framing</strong>: Sweet spot curves tie USD investment to recovered on time shipments and ROI.</li>
 				</ul>
 				<div class="sm-metrics">
 					<div class="sm-metric">
@@ -260,10 +277,10 @@
 			<div class="sm-section-inner">
 				<h2>Future Improvements</h2>
 				<ul class="sm-list">
-					<li>Real-time shipment and hub feeds instead of batch re-run analysis.</li>
+					<li>Real time shipment and hub feeds instead of batch rerun analysis.</li>
 					<li>Field validation of predicted flags vs. actual delivery outcomes.</li>
-					<li>Multi-tenant accounts with role-based escalation and notifications.</li>
-					<li>Deeper What-If Advisor tool coverage (routing, inventory, carrier SLAs).</li>
+					<li>Multi tenant accounts with role based escalation and notifications.</li>
+					<li>Deeper What If Advisor tool coverage (routing, inventory, carrier SLAs).</li>
 					<li>Export simulation studies and recommendations to PDF or ticketing systems.</li>
 				</ul>
 			</div>
@@ -384,12 +401,12 @@
 			theme: 'base',
 			themeVariables: {
 				fontSize: '13px',
-				primaryColor: '#dbeafe',
-				primaryTextColor: '#1e293b',
-				primaryBorderColor: '#2563eb',
-				lineColor: '#2563eb',
-				secondaryColor: '#eef2ff',
-				tertiaryColor: '#f8fafc'
+				primaryColor: '#e0f2fe',
+				primaryTextColor: '#0c1929',
+				primaryBorderColor: '#0369a1',
+				lineColor: '#0369a1',
+				secondaryColor: '#e4ebf2',
+				tertiaryColor: '#f0f4f8'
 			},
 			flowchart: {
 				useMaxWidth: true,
