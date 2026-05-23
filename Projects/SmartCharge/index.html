@@ -44,23 +44,36 @@
 
 		<section class="sc-hero" id="top">
 			<div class="sc-hero-inner">
-				<span class="sc-hero-badge">EV · Green grid charging</span>
+				<p class="sc-hero-eyebrow">Portfolio case study</p>
+				<span class="sc-hero-badge"><span class="sc-hero-badge-dot" aria-hidden="true"></span> EV · Green grid charging</span>
 				<h1>SmartCharge</h1>
 				<div class="sc-hero-column">
 					<p class="sc-hero-lead">Find when to charge your EV on the cleanest electricity: set your vehicle and how long you need to plug in, compare ranked low-carbon slots for the next 48 hours against live UK grid intensity, and add your preferred window to Google Calendar.</p>
-					<div class="sc-hero-stack">
-						<p class="sc-tech-primary">Python &nbsp;|&nbsp; REST APIs &nbsp;|&nbsp; Data-Driven Design &nbsp;|&nbsp; AI Integration</p>
+					<div class="sc-hero-meta">
+						<div class="sc-tag-row" aria-label="Skills demonstrated">
+							<span class="sc-tag">Python</span>
+							<span class="sc-tag">REST APIs</span>
+							<span class="sc-tag">Data-Driven Design</span>
+							<span class="sc-tag">AI Integration</span>
+						</div>
 						<p class="sc-tech-secondary">Shiny for Python · pandas · OpenAI (gpt-4o-mini) · Ollama Cloud · API Ninjas · Posit Connect</p>
 					</div>
-					<ul class="sc-hero-actions">
-						<li><a href="https://019c954a-2c82-04f7-d168-089a7ea941e8.share.connect.posit.cloud/" class="sc-btn sc-btn-launch" target="_blank" rel="noopener noreferrer">Launch</a></li>
-						<li><a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng/tree/main/03_query_ai/charger_app" class="sc-btn sc-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-						<li><a href="../../index.html#two" class="sc-btn sc-btn-portfolio">Back to Portfolio</a></li>
-					</ul>
+					<div class="sc-hero-cta">
+						<ul class="sc-hero-actions">
+							<li class="sc-hero-action-launch">
+								<a href="https://019c954a-2c82-04f7-d168-089a7ea941e8.share.connect.posit.cloud/" class="sc-btn sc-btn-launch" target="_blank" rel="noopener noreferrer"><span>Launch app</span><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+						<div class="sc-hero-actions-secondary">
+							<a href="https://github.com/janhaviprof-bot/DS-AIforSystemsEng/tree/main/03_query_ai/charger_app" class="sc-btn sc-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a>
+							<a href="../../index.html#two" class="sc-btn sc-btn-portfolio">Back to Portfolio</a>
+						</div>
+					</div>
 				</div>
 				<blockquote class="sc-sedemo sc-sedemo--hero" aria-label="Systems engineering demonstration">
+					<span class="sc-sedemo-label">Brief</span>
 					<p class="sc-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="sc-sedemo-text">Integrates, processes, and utilizes API-based live data streams alongside LLM-driven intelligent analysis to support informed, data-driven operational decision making in dynamic systems environments.</p>
+					<p class="sc-sedemo-text">Integrates live API data streams and LLM-driven analysis to support informed, data-driven operational decisions in dynamic systems environments.</p>
 				</blockquote>
 			</div>
 		</section>
@@ -70,6 +83,10 @@
 				<h2>Demo &amp; Visuals</h2>
 				<p>The live dashboard combines a hero recommendation, a 48-hour carbon intensity strip, ranked charging slots, and vehicle configuration in one view.</p>
 				<div class="sc-demo-frame">
+					<div class="sc-demo-chrome" aria-hidden="true">
+						<span></span><span></span><span></span>
+						<em>Live app preview</em>
+					</div>
 					<img src="images/smartcharge.png" alt="SmartCharge dashboard: hero low-carbon slot, carbon intensity chart, recommended slots, and vehicle confirmation panel" loading="lazy" />
 				</div>
 				<p class="sc-caption">Hero slot highlights the lowest-carbon window; intensity bars are color-coded low / moderate / high; users can add any slot to Google Calendar or download an .ics file.</p>
@@ -228,6 +245,101 @@
 			var open = wrap.classList.toggle('is-open');
 			this.setAttribute('aria-expanded', open);
 		});
+
+		(function () {
+			var topbar = document.querySelector('.sc-topbar');
+			var hero = document.querySelector('.sc-hero');
+			if (topbar && hero && 'IntersectionObserver' in window) {
+				var barPx = topbar.offsetHeight || 56;
+				new IntersectionObserver(function (entries) {
+					topbar.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+				}, { threshold: 0, rootMargin: '-' + barPx + 'px 0px 0px 0px' }).observe(hero);
+			}
+
+			var navLinks = document.querySelectorAll('.sc-nav a[href^="#"]');
+			var sections = [];
+			navLinks.forEach(function (link) {
+				var href = link.getAttribute('href');
+				if (href && href.length > 1) {
+					var el = document.getElementById(href.slice(1));
+					if (el) sections.push({ id: href.slice(1), el: el });
+				}
+			});
+			if (!sections.length) return;
+
+			var lockedId = null;
+
+			function stickyTop() {
+				return (document.querySelector('.sc-topbar') || {}).offsetHeight || 56;
+			}
+
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+
+			function pickSection() {
+				var doc = document.documentElement;
+				if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 20) {
+					return sections[sections.length - 1].id;
+				}
+				var trigger = stickyTop() + (window.innerHeight - stickyTop()) * 0.38;
+				var picked = sections[0].id;
+				var heading = function (el) {
+					var h = el.querySelector('h2');
+					return h || el;
+				};
+				for (var i = sections.length - 1; i >= 0; i--) {
+					if (heading(sections[i].el).getBoundingClientRect().top <= trigger) {
+						picked = sections[i].id;
+						break;
+					}
+				}
+				return picked;
+			}
+
+			function onScroll() {
+				if (lockedId) {
+					setActive(lockedId);
+					var el = document.getElementById(lockedId);
+					if (el) {
+						var h = el.querySelector('h2') || el;
+						if (Math.abs(h.getBoundingClientRect().top - stickyTop()) <= 36) lockedId = null;
+					}
+					return;
+				}
+				setActive(pickSection());
+			}
+
+			var ticking = false;
+			window.addEventListener('scroll', function () {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(function () { onScroll(); ticking = false; });
+				}
+			}, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
+
+			navLinks.forEach(function (link) {
+				link.addEventListener('click', function (e) {
+					var id = link.getAttribute('href').slice(1);
+					var target = document.getElementById(id);
+					if (!target) return;
+					e.preventDefault();
+					lockedId = id;
+					setActive(id);
+					var h = target.querySelector('h2') || target;
+					var y = h.getBoundingClientRect().top + window.pageYOffset - stickyTop() - 12;
+					window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+				});
+			});
+
+			onScroll();
+		})();
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 	<script>
