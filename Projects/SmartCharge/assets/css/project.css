@@ -17,6 +17,7 @@
   --sc-shadow: 0 4px 24px rgba(13, 148, 136, 0.08);
   --sc-radius: 12px;
   --sc-max: 920px;
+  --sc-hero-max: 1100px;
 }
 
 *, *::before, *::after {
@@ -157,7 +158,7 @@ body.sc-page {
 }
 
 .sc-hero-inner {
-  max-width: var(--sc-max);
+  max-width: var(--sc-hero-max);
   margin: 0 auto;
   text-align: center;
 }
@@ -184,11 +185,109 @@ body.sc-page {
   line-height: 1.15;
 }
 
+.sc-hero-lead,
+.sc-sedemo--hero,
+.sc-hero-stack {
+  max-width: min(54em, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .sc-hero-lead {
   font-size: 1.1rem;
   color: var(--sc-text-muted);
-  max-width: 36em;
-  margin: 0 auto 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Systems engineering demonstration */
+.sc-sedemo {
+  display: grid;
+  grid-template-columns: 5px 1fr;
+  margin-top: 1.35rem;
+  text-align: left;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.95) 0%, rgba(236, 253, 245, 0.85) 100%);
+  border: 1px solid var(--sc-border);
+  border-radius: var(--sc-radius);
+  box-shadow: var(--sc-shadow);
+  overflow: hidden;
+}
+
+.sc-sedemo--hero {
+  margin-top: 1.5rem;
+}
+
+.sc-sedemo--section {
+  margin: 0 0 1.35rem;
+  max-width: 100%;
+  background: var(--sc-surface-alt);
+}
+
+.sc-sedemo-accent {
+  background: linear-gradient(180deg, var(--sc-teal) 0%, var(--sc-green) 55%, var(--sc-teal-light) 100%);
+}
+
+.sc-sedemo-body {
+  padding: 1.15rem 1.4rem 1.2rem 1.2rem;
+  position: relative;
+}
+
+.sc-sedemo-body::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--sc-teal-light) 0%, transparent 70%);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.sc-sedemo-kicker {
+  margin: 0 0 0.55rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--sc-border);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--sc-teal-dark);
+  line-height: 1.3;
+}
+
+.sc-sedemo-text {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--sc-text);
+  line-height: 1.65;
+}
+
+.sc-list--sedemo-follow {
+  margin-top: 0;
+  padding-top: 0.15rem;
+  border-top: 1px dashed var(--sc-border);
+}
+
+.sc-hero-stack {
+  margin-bottom: 1.35rem;
+  padding-top: 0.25rem;
+}
+
+.sc-hero-stack .sc-tech-primary {
+  margin-bottom: 0.35rem;
+}
+
+.sc-hero-stack .sc-tech-secondary {
+  margin-bottom: 0;
+}
+
+.sc-subheading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sc-text);
+  margin: 0 0 0.75rem;
 }
 
 .sc-tech-primary {
@@ -204,13 +303,17 @@ body.sc-page {
   margin-bottom: 1.75rem;
 }
 
+.sc-hero .sc-tech-secondary {
+  margin-bottom: 0;
+}
+
 .sc-hero-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.75rem;
   list-style: none;
-  margin: 0;
+  margin: 0 0 0;
   padding: 0;
 }
 
