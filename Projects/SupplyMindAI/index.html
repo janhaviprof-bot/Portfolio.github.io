@@ -119,28 +119,59 @@
 		<section class="sm-section" id="workflow">
 			<div class="sm-section-inner">
 				<h2>Workflow</h2>
-				<p>End-to-end flow from monitoring live operations to choosing where to invest:</p>
+				<p>Two ways to work: follow the dashboard cards in sequence, or ask the What-If Advisor in natural language—the agent runs the same analytical tools in parallel and explains the output.</p>
 				<div class="sm-mermaid-wrap">
-<pre class="mermaid">flowchart TD
-  monitor[Monitor in-transit shipments]
-  map[Prediction map - problem hubs]
-  learn[Historical optimization insights]
-  simulate[Parameter simulation]
-  decide[Decide with ROI sweet spot]
-  monitor --> map
-  map --> learn
-  learn --> simulate
-  simulate --> decide</pre>
+<pre class="mermaid">flowchart TB
+  user[Supply chain manager]
+
+  subgraph dash [Direct dashboard workflow]
+    direction TB
+    monitor[Monitor in-transit shipments]
+    map[Prediction map - problem hubs]
+    learn[Historical optimization insights]
+    simulate[Parameter simulation]
+    decide[Decide with ROI sweet spot]
+    monitor --> map --> learn --> simulate --> decide
+  end
+
+  subgraph agent [Parallel: What-If Advisor]
+    direction TB
+    ask[Ask in natural language]
+    route[Agent selects tools]
+    tool1[Tool 1]
+    tool2[Tool 2]
+    tool3[Tool 3]
+    explain[Plain-language answer]
+    ask --> route
+    route --> tool1
+    route --> tool2
+    route --> tool3
+    tool1 --> explain
+    tool2 --> explain
+    tool3 --> explain
+  end
+
+  user --> dash
+  user --> agent
+  tool1 -.-> monitor
+  tool2 -.-> learn
+  tool3 -.-> simulate</pre>
 				</div>
 				<div class="sm-table-wrap">
 					<table class="sm-table">
 						<thead>
-							<tr><th>Step</th><th>What you do</th></tr>
+							<tr><th>Path</th><th>Steps</th><th>What happens</th></tr>
 						</thead>
 						<tbody>
-							<tr><td><strong>1. Monitor</strong></td><td>Re-run analysis for On Time / Delayed / Critical flags; escalate critical shipments; focus red then orange hubs on the map.</td></tr>
-							<tr><td><strong>2. Learn</strong></td><td>Select a date range on delivered shipments; get AI suggestions mapped to five simulation levers (capacity, dwell, transit, dispatch, risk buffer).</td></tr>
-							<tr><td><strong>3. Decide</strong></td><td>Select parameters, run simulation, read investment vs. on-time curves and sweet-spot recommendations.</td></tr>
+							<tr><td rowspan="5"><strong>Dashboard</strong></td><td>Monitor</td><td>Re-run analysis for On Time / Delayed / Critical; escalate critical shipments.</td></tr>
+							<tr><td>Prediction map</td><td>Focus red then orange problem hubs; size dots by at-risk volume.</td></tr>
+							<tr><td>Historical insights</td><td>Pick a date range; built-in tools surface levers for capacity, dwell, transit, dispatch, risk buffer.</td></tr>
+							<tr><td>Parameter simulation</td><td>Select levers; conventional engine plots investment vs. on-time performance.</td></tr>
+							<tr><td>Decide</td><td>Use ROI sweet spots and recommendations before committing resources.</td></tr>
+							<tr><td rowspan="4"><strong>What-If Advisor</strong><br><em>(parallel)</em></td><td>Ask</td><td>Pose capacity, delay, ROI, or shipment questions in plain language.</td></tr>
+							<tr><td>Route</td><td>Agent decides which tools to call—session context, RAG, database queries, simulation.</td></tr>
+							<tr><td>Run</td><td>Conventional analysis runs; agent does not replace the engines.</td></tr>
+							<tr><td>Explain</td><td>Results returned as a plain-language interpretation of tool output.</td></tr>
 						</tbody>
 					</table>
 				</div>
