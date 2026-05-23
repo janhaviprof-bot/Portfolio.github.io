@@ -199,21 +199,28 @@
 				</ol>
 
 				<div class="rp-subsection">
-					<h3>Algorithm selection</h3>
-					<p>Compared graph methods (VG + Dijkstra, PRM, RRT*) and field/grid methods (potential field, Eikonal/FMM, FMT*) using a weighted decision matrix on shortest path guarantee, few waypoints, determinism, cuboid geometry fit, and scale to 73 buildings.</p>
-					<p><strong>Selected: Visibility Graph + Dijkstra</strong> (composite score 4.45/5): near optimal geometric paths, explicit 3D waypoints, deterministic, and acceptable runtime for urban scale after NFZ build.</p>
-				</div>
-
-				<div class="rp-subsection">
 					<h3>Sensitivity analysis</h3>
 					<p><strong>Question:</strong> How does ground NFZ height affect routes when OD points start on the ground?</p>
 					<p><strong>Constants:</strong> Same 73 building map, same 5 OD pairs, VG + Dijkstra. <strong>Variable:</strong> Ground NFZ top height → 3, 5, 10, 15 m.</p>
-					<ul class="rp-list">
-						<li>Higher NFZ → higher minimum flyable altitude → longer 3D paths.</li>
-						<li>Vertical lift at OD dominates gap between horizontal and total path length.</li>
-						<li>Path topology similar across pairs; sensitivity is mainly altitude and length, not failure to find a path.</li>
-						<li>Demo range at 15 m clearance: ~527–672 m total distance per pair.</li>
-					</ul>
+					<div class="rp-pipeline-split rp-pipeline-split--chart">
+						<div class="rp-pipeline-split-text">
+							<p><strong>Observations</strong></p>
+							<ul class="rp-list">
+								<li>Higher NFZ → higher minimum flyable altitude → longer 3D paths.</li>
+								<li>Vertical lift at OD dominates gap between horizontal and total path length.</li>
+								<li>Path topology similar across pairs; sensitivity is mainly altitude and length, not failure to find a path.</li>
+								<li>Demo range at 15 m clearance: ~527–672 m total distance per pair.</li>
+							</ul>
+							<p class="rp-pipeline-note">VG + Dijkstra: longer paths as ground clearance increases; largest change from 3 m → 10 m for most pairs.</p>
+						</div>
+						<figure class="rp-pipeline-fig">
+							<div class="rp-demo-frame">
+								<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
+								<img src="images/f1-sensitivity.png" alt="Framework 1 sensitivity: total path distance by OD pair for ground NFZ heights 3, 5, 10, and 15 m" loading="lazy" />
+							</div>
+							<figcaption>Total path distance incl. vertical lift for each OD pair</figcaption>
+						</figure>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -242,11 +249,16 @@
 				<div class="rp-subsection">
 					<h3>Sensitivity analysis</h3>
 					<p>Same 5 OD pairs and clearance levels (3, 5, 10, 15 m) as Framework 1.</p>
+					<div class="rp-demo-frame">
+						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
+						<img src="images/f2-sensitivity.png" alt="Framework 2 sensitivity: total path distance by OD pair for buffer NFZ heights 3, 5, 10, and 15 m" loading="lazy" />
+					</div>
 					<ul class="rp-list">
 						<li>Higher buffer → longer paths for all 5 pairs; biggest jump from 3 m to 10 m; 10 m ≈ 15 m for most pairs.</li>
 						<li>Pair 1 most sensitive (~387 → 586 m); Pair 5 least (~501 → 587 m).</li>
 						<li>Per pair compute: ~4–38 s @ 3 m clearance → ~41–147 s @ 10 m (up to ~1.8M node expansions on 720×720 grid).</li>
 					</ul>
+					<p class="rp-caption">Buffered A*: consistently lower total distance than Framework 1 at the same clearance levels, with sharper compute cost as buffer tightens.</p>
 				</div>
 			</div>
 		</section>
