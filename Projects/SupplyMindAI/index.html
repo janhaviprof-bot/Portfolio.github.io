@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>SupplyMind AI — Supply Chain Optimizer</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="SupplyMind AI helps supply chain managers track in-transit shipments, predict delays, get AI optimization insights from historical data, and simulate investment trade-offs before committing resources." />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body class="sm-page">
+
+	<header class="sm-topbar">
+		<div class="sm-topbar-inner">
+			<a href="../../index.html" class="sm-brand">
+				<img src="images/me.jpg" alt="" />
+				<span class="sm-brand-text">
+					<strong>Janhavi Gaikwad</strong>
+					<span>Systems Engineer</span>
+				</span>
+			</a>
+			<button type="button" class="sm-nav-toggle" aria-expanded="false" aria-controls="sm-nav-wrap">Menu</button>
+			<div class="sm-nav-wrap" id="sm-nav-wrap">
+				<ul class="sm-nav">
+					<li><a href="#top">Overview</a></li>
+					<li><a href="#demo">Demo</a></li>
+					<li><a href="#problem">Problem</a></li>
+					<li><a href="#workflow">Workflow</a></li>
+					<li><a href="#features">Features</a></li>
+					<li><a href="#architecture">Architecture</a></li>
+					<li><a href="#results">Results</a></li>
+					<li><a href="#future">Future</a></li>
+				</ul>
+			</div>
+			<ul class="sm-social">
+				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+			</ul>
+		</div>
+	</header>
+
+	<main class="sm-main">
+
+		<section class="sm-hero" id="top">
+			<div class="sm-hero-inner">
+				<h1>SupplyMind AI</h1>
+				<p class="sm-hero-subtitle">Supply Chain Optimizer</p>
+				<div class="sm-hero-column">
+					<p class="sm-hero-lead">A smart dashboard for supply chain managers: monitor in-transit shipments, predict delays, escalate critical cases, and map problem hubs. Built-in analytical tools run historical optimization and investment simulations; an AI agent selects which tools to invoke from your questions and explains the results in plain language.</p>
+					<div class="sm-hero-meta">
+						<div class="sm-tag-row" aria-label="Skills demonstrated">
+							<span class="sm-tag">Python</span>
+							<span class="sm-tag">Supabase SQL</span>
+							<span class="sm-tag">Agentic AI</span>
+							<span class="sm-tag">Tool calling</span>
+							<span class="sm-tag">Simulation</span>
+						</div>
+						<p class="sm-tech-secondary">Shiny for Python · Supabase SQL · OpenAI · pandas · RAG agent · Posit Connect</p>
+					</div>
+					<div class="sm-hero-cta">
+						<ul class="sm-hero-actions">
+							<li class="sm-hero-action-launch">
+								<a href="https://019d5c4a-4baf-035a-e924-f93e54f21919.share.connect.posit.cloud/" class="sm-btn sm-btn-launch" target="_blank" rel="noopener noreferrer"><span>Launch app</span><i class="fas fa-external-link-alt" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+						<div class="sm-hero-actions-secondary">
+							<a href="https://github.com/janhaviprof-bot/SupplyMindAI" class="sm-btn sm-btn-github" target="_blank" rel="noopener noreferrer">GitHub</a>
+							<a href="../../index.html#two" class="sm-btn sm-btn-portfolio">Back to Portfolio</a>
+						</div>
+					</div>
+				</div>
+				<blockquote class="sm-sedemo sm-sedemo--hero" aria-label="Systems engineering demonstration">
+					<span class="sm-sedemo-label">Brief</span>
+					<p class="sm-sedemo-kicker">Systems engineering demonstration</p>
+					<p class="sm-sedemo-text">Integrates live operational data, simulation-based trade studies, and AI-driven simulation selection to answer system performance and operational tradeoffs.</p>
+				</blockquote>
+			</div>
+		</section>
+
+		<section class="sm-section" id="demo">
+			<div class="sm-section-inner">
+				<h2>Demo &amp; Visuals</h2>
+				<p>The live app combines delivery KPIs, a hub prediction map, a What-If Advisor agent, escalated shipments, and supply chain optimization with parameter simulation.</p>
+				<div class="sm-demo-grid">
+					<figure class="sm-demo-block">
+						<div class="sm-demo-frame">
+							<div class="sm-demo-chrome" aria-hidden="true">
+								<span></span><span></span><span></span>
+								<em>What-If Advisor</em>
+							</div>
+							<img src="images/supplymind-advisor.png" alt="SupplyMind AI What-If Advisor agent answering a capacity what-if scenario using RAG, database tools, and simulation" loading="lazy" />
+						</div>
+						<figcaption class="sm-caption">The What-If Advisor decides which analytical tools to run from your question—database queries, RAG, and simulation—then explains outputs in plain language rather than replacing the underlying analysis engines.</figcaption>
+					</figure>
+					<figure class="sm-demo-block">
+						<div class="sm-demo-frame">
+							<div class="sm-demo-chrome" aria-hidden="true">
+								<span></span><span></span><span></span>
+								<em>Simulation result</em>
+							</div>
+							<img src="images/supplymind.png" alt="SupplyMind AI simulation result chart showing investment versus on-time shipments with master and alternative recommendations" loading="lazy" />
+						</div>
+						<figcaption class="sm-caption">Parameter simulation plots investment ($) against on-time shipments; gold stars mark ROI sweet spots, with AI master and alternative recommendations in the sidebar.</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<section class="sm-section" id="problem">
+			<div class="sm-section-inner">
+				<h2>Problem Statement</h2>
+				<p>Supply chain managers need to see delivery health at a glance, but delay signals are scattered across shipments, hubs, risks, and schedules. When problems surface late, escalation and rerouting become reactive instead of planned.</p>
+				<p>Historical delivered data holds patterns—congested hubs, dwell time, transit mode, dispatch timing—but turning that into <strong>actionable, cost-aware recommendations</strong> is hard without a structured decision loop: monitor → learn → simulate → decide.</p>
+				<p>SupplyMind AI closes that gap with prediction and mapping on live data, conventional optimization and simulation engines on historical deliveries, and an AI agent that routes natural-language questions to the right tools and interprets outputs for decision-makers.</p>
+			</div>
+		</section>
+
+		<section class="sm-section" id="workflow">
+			<div class="sm-section-inner">
+				<h2>Workflow</h2>
+				<p>End-to-end flow from monitoring live operations to choosing where to invest:</p>
+				<div class="sm-mermaid-wrap">
+<pre class="mermaid">flowchart TD
+  monitor[Monitor in-transit shipments]
+  map[Prediction map - problem hubs]
+  learn[Historical optimization insights]
+  simulate[Parameter simulation]
+  decide[Decide with ROI sweet spot]
+  monitor --> map
+  map --> learn
+  learn --> simulate
+  simulate --> decide</pre>
+				</div>
+				<div class="sm-table-wrap">
+					<table class="sm-table">
+						<thead>
+							<tr><th>Step</th><th>What you do</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><strong>1. Monitor</strong></td><td>Re-run analysis for On Time / Delayed / Critical flags; escalate critical shipments; focus red then orange hubs on the map.</td></tr>
+							<tr><td><strong>2. Learn</strong></td><td>Select a date range on delivered shipments; get AI suggestions mapped to five simulation levers (capacity, dwell, transit, dispatch, risk buffer).</td></tr>
+							<tr><td><strong>3. Decide</strong></td><td>Select parameters, run simulation, read investment vs. on-time curves and sweet-spot recommendations.</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="sm-section" id="features">
+			<div class="sm-section-inner">
+				<h2>What the Application Does</h2>
+				<ul class="sm-list">
+					<li><strong>Current Shipment Delivery Insight</strong> — KPI counts and donut chart for in-transit shipments (On Time, Delayed, Critical) with AI confidence; results stored in <code>insights</code>.</li>
+					<li><strong>Needs Attention &amp; Escalation</strong> — Critical shipment list with reasoning, detail modal, and a personal escalated drawer for follow-up.</li>
+					<li><strong>Prediction Map</strong> — US hub map with red/orange/black markers sized by at-risk shipment counts; guides capacity and routing focus.</li>
+					<li><strong>What-If Advisor</strong> — Agentic Q&amp;A on capacity and delay scenarios using session context, RAG, database tools, and simulation baseline.</li>
+					<li><strong>Supply Chain Optimization</strong> — Analyzes delivered shipments over a date range with built-in tools; surfaces improvement levers constrained for simulation.</li>
+					<li><strong>Parameter Simulation</strong> — Select up to five levers; conventional simulation grid-searches investment curves and ROI sweet spots, with AI-generated narrative recommendations.</li>
+				</ul>
+				<p><em>Flags use shipment stops, hub load/capacity, and risk severity; only high-priority shipments (<code>priority_level ≥ 8</code>) can be Critical.</em></p>
+			</div>
+		</section>
+
+		<section class="sm-section" id="architecture">
+			<div class="sm-section-inner">
+				<h2>Technical Architecture</h2>
+				<p><strong>Pattern:</strong> Shiny for Python dashboard backed by PostgreSQL (Supabase), with analysis pipelines writing to <code>insights</code> and simulation engines consuming enriched shipment payloads.</p>
+				<ul class="sm-list">
+					<li><strong>SupplyMindAI/app.py</strong> — Shiny entry point; UI and server wiring.</li>
+					<li><strong>supplymind_db/</strong> — Supabase/PostgreSQL client and database utilities.</li>
+					<li><strong>Analysis pipeline</strong> — Reads <code>shipments</code>, <code>stops</code>, <code>hubs</code>, <code>risks</code> for in-transit prediction; historical path for delivered cohorts.</li>
+					<li><strong>OpenAI</strong> — Prediction reasoning, optimization recommendations, simulation advice, and What-If Advisor responses.</li>
+					<li><strong>Simulation engine</strong> — Five levers (hub capacity, dwell, transit mode, earlier dispatch, risk buffer) with grid search, cost model, and ROI sweet-spot selection.</li>
+				</ul>
+				<div class="sm-table-wrap">
+					<table class="sm-table">
+						<thead>
+							<tr><th>Data store</th><th>Role</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><code>shipments</code></td><td>In-transit or delivered shipment metadata and deadlines</td></tr>
+							<tr><td><code>stops</code></td><td>Planned vs actual times per hub along each route</td></tr>
+							<tr><td><code>hubs</code></td><td>Location, load, capacity, congestion status</td></tr>
+							<tr><td><code>risks</code></td><td>Weather, traffic, labor risks with severity and delay hours</td></tr>
+							<tr><td><code>insights</code></td><td>AI flags, reasoning, predicted arrival, confidence</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p><strong>Deployment:</strong> Posit Connect Cloud — <a href="https://019d5c4a-4baf-035a-e924-f93e54f21919.share.connect.posit.cloud/" target="_blank" rel="noopener noreferrer">live app</a>. Source and docs on <a href="https://github.com/janhaviprof-bot/SupplyMindAI" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+			</div>
+		</section>
+
+		<section class="sm-section" id="results">
+			<div class="sm-section-inner">
+				<h2>Results &amp; Metrics</h2>
+				<blockquote class="sm-sedemo sm-sedemo--section" aria-label="Systems engineering demonstration">
+					<p class="sm-sedemo-kicker">Systems engineering demonstration</p>
+					<p class="sm-sedemo-text">Integrates live operational data, simulation-based trade studies, and AI-driven simulation selection to answer system performance and operational tradeoffs.</p>
+				</blockquote>
+				<ul class="sm-list">
+					<li><strong>Operational visibility</strong> — Single view for in-transit health, hub geography, and escalation workflow.</li>
+					<li><strong>Explainable AI</strong> — Per-shipment reasoning and confidence; heuristic fallback when model confidence is missing.</li>
+					<li><strong>Constrained recommendations</strong> — Optimization outputs map to five levers so every suggestion is testable in simulation.</li>
+					<li><strong>Investment framing</strong> — Sweet-spot curves tie USD investment to recovered on-time shipments and ROI.</li>
+				</ul>
+				<div class="sm-metrics">
+					<div class="sm-metric">
+						<span class="sm-metric-value">5</span>
+						<span class="sm-metric-label">Simulation levers</span>
+					</div>
+					<div class="sm-metric">
+						<span class="sm-metric-value">4</span>
+						<span class="sm-metric-label">Core database tables</span>
+					</div>
+					<div class="sm-metric">
+						<span class="sm-metric-value">3</span>
+						<span class="sm-metric-label">Workflow steps</span>
+					</div>
+					<div class="sm-metric">
+						<span class="sm-metric-value">Live</span>
+						<span class="sm-metric-label">Posit Connect deployment</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="sm-section" id="future">
+			<div class="sm-section-inner">
+				<h2>Future Improvements</h2>
+				<ul class="sm-list">
+					<li>Real-time shipment and hub feeds instead of batch re-run analysis.</li>
+					<li>Field validation of predicted flags vs. actual delivery outcomes.</li>
+					<li>Multi-tenant accounts with role-based escalation and notifications.</li>
+					<li>Deeper What-If Advisor tool coverage (routing, inventory, carrier SLAs).</li>
+					<li>Export simulation studies and recommendations to PDF or ticketing systems.</li>
+				</ul>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="sm-footer">
+		<p>&copy; 2025 Janhavi Gaikwad · <a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" target="_blank" rel="noopener noreferrer">LinkedIn</a> · <a href="../../index.html#two">Portfolio</a></p>
+	</footer>
+
+	<script>
+		document.querySelector('.sm-nav-toggle')?.addEventListener('click', function () {
+			var wrap = document.getElementById('sm-nav-wrap');
+			var open = wrap.classList.toggle('is-open');
+			this.setAttribute('aria-expanded', open);
+		});
+
+		(function () {
+			var topbar = document.querySelector('.sm-topbar');
+			var hero = document.querySelector('.sm-hero');
+			if (topbar && hero && 'IntersectionObserver' in window) {
+				var barPx = topbar.offsetHeight || 56;
+				new IntersectionObserver(function (entries) {
+					topbar.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+				}, { threshold: 0, rootMargin: '-' + barPx + 'px 0px 0px 0px' }).observe(hero);
+			}
+
+			var navLinks = document.querySelectorAll('.sm-nav a[href^="#"]');
+			var sections = [];
+			navLinks.forEach(function (link) {
+				var href = link.getAttribute('href');
+				if (href && href.length > 1) {
+					var el = document.getElementById(href.slice(1));
+					if (el) sections.push({ id: href.slice(1), el: el });
+				}
+			});
+			if (!sections.length) return;
+
+			var lockedId = null;
+
+			function stickyTop() {
+				return (document.querySelector('.sm-topbar') || {}).offsetHeight || 56;
+			}
+
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+
+			function pickSection() {
+				var doc = document.documentElement;
+				if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 20) {
+					return sections[sections.length - 1].id;
+				}
+				var trigger = stickyTop() + (window.innerHeight - stickyTop()) * 0.38;
+				var picked = sections[0].id;
+				var heading = function (el) {
+					var h = el.querySelector('h2');
+					return h || el;
+				};
+				for (var i = sections.length - 1; i >= 0; i--) {
+					if (heading(sections[i].el).getBoundingClientRect().top <= trigger) {
+						picked = sections[i].id;
+						break;
+					}
+				}
+				return picked;
+			}
+
+			function onScroll() {
+				if (lockedId) {
+					setActive(lockedId);
+					var el = document.getElementById(lockedId);
+					if (el) {
+						var h = el.querySelector('h2') || el;
+						if (Math.abs(h.getBoundingClientRect().top - stickyTop()) <= 36) lockedId = null;
+					}
+					return;
+				}
+				setActive(pickSection());
+			}
+
+			var ticking = false;
+			window.addEventListener('scroll', function () {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(function () { onScroll(); ticking = false; });
+				}
+			}, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
+
+			navLinks.forEach(function (link) {
+				link.addEventListener('click', function (e) {
+					var id = link.getAttribute('href').slice(1);
+					var target = document.getElementById(id);
+					if (!target) return;
+					e.preventDefault();
+					lockedId = id;
+					setActive(id);
+					var h = target.querySelector('h2') || target;
+					var y = h.getBoundingClientRect().top + window.pageYOffset - stickyTop() - 12;
+					window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+				});
+			});
+
+			onScroll();
+		})();
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+	<script>
+		mermaid.initialize({
+			startOnLoad: true,
+			theme: 'base',
+			themeVariables: {
+				fontSize: '13px',
+				primaryColor: '#dbeafe',
+				primaryTextColor: '#1e293b',
+				primaryBorderColor: '#2563eb',
+				lineColor: '#2563eb',
+				secondaryColor: '#eef2ff',
+				tertiaryColor: '#f8fafc'
+			},
+			flowchart: {
+				useMaxWidth: true,
+				htmlLabels: true,
+				curve: 'basis',
+				nodeSpacing: 35,
+				rankSpacing: 40
+			}
+		});
+	</script>
+
+</body>
+</html>
