@@ -1225,6 +1225,7 @@ body.rp-page {
   align-items: center;
   justify-content: center;
   padding: 0.65rem;
+  overflow: hidden;
   background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
 }
 
@@ -1234,6 +1235,22 @@ body.rp-page {
   height: 100%;
   object-fit: contain;
   object-position: center;
+}
+
+.rp-pipeline-img-stage--crop-start img,
+.rp-pipeline-img-stage--crop-end img {
+  width: 200%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rp-pipeline-img-stage--crop-start img {
+  object-position: left center;
+}
+
+.rp-pipeline-img-stage--crop-end img {
+  object-position: right center;
 }
 
 .rp-pipeline-arrow {

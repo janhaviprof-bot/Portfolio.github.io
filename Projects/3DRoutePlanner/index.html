@@ -63,7 +63,7 @@
 					</div>
 					<div class="rp-hero-cta">
 						<div class="rp-hero-actions-secondary">
-							<a href="FinalPresentation_with_notes.pptx" class="rp-btn rp-btn-github" download>Download presentation</a>
+							<a href="FinalPresentation.pptx" class="rp-btn rp-btn-github" download>Download presentation</a>
 							<a href="../../index.html#two" class="rp-btn rp-btn-portfolio">Back to Portfolio</a>
 						</div>
 					</div>
@@ -230,35 +230,88 @@
 				<h2>Framework 2: Buffered A*</h2>
 				<p>Pipeline B: building height grid H → buffer altitude field B (2.5D) → 3D A* on a fine cell graph with z ≥ B.</p>
 
-				<div class="rp-subsection">
-					<h3>3D city model</h3>
-					<p><strong>No fly zone creation:</strong> From raster <code>3d_structure</code>, apply horizontal buffer around building cells and rooftop clearance; each cell gets minimum safe altitude B. Ground clearance applies where buildings do not dominate.</p>
-					<p>Representation: one scalar B[i,j] per cell (2.5D field), not axis aligned 3D boxes. Outputs: <code>3d_structure_nfz10.csv</code>, height CSV.</p>
-				</div>
-
-				<div class="rp-subsection">
-					<h3>3D A*</h3>
-					<p>Search on 26 connected 3D grid neighbors; fly only if z ≥ B[row,col]. Edge cost = Euclidean 3D step length; f = g + h with admissible straight line h to goal.</p>
-					<div class="rp-demo-frame">
-						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Optimized route</em></div>
-						<img src="images/route-buffer-astar.png" alt="Buffered 3D A star route on raster NFZ field" loading="lazy" />
-					</div>
-					<p class="rp-caption">Many grid waypoints (~330–480 per route on demo map); typically shorter total distance than Framework 1 in the same clearance scenarios.</p>
-				</div>
+				<ol class="rp-pipeline" aria-label="Framework 2 processing pipeline">
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">1</span>
+							<h3>Height grid → buffer NFZ field</h3>
+						</div>
+						<p>From raster <code>3d_structure</code>, apply horizontal buffer around building cells and rooftop clearance; each cell gets minimum safe altitude B. Ground clearance applies where buildings do not dominate. Outputs: <code>3d_structure_nfz10.csv</code>, <code>3d_structure_height.csv</code>.</p>
+						<div class="rp-pipeline-compare" role="group" aria-label="Building height grid to buffer altitude field">
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Building height H</em></div>
+									<div class="rp-pipeline-img-stage rp-pipeline-img-stage--crop-start">
+										<img src="images/f2-step1-height-buffer.png" alt="Building height grid H over the urban raster" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Raster input (per cell height)</figcaption>
+							</figure>
+							<div class="rp-pipeline-arrow" aria-hidden="true">
+								<i class="fas fa-arrow-right rp-pipeline-arrow-icon rp-pipeline-arrow-icon--h"></i>
+								<i class="fas fa-arrow-down rp-pipeline-arrow-icon rp-pipeline-arrow-icon--v"></i>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Min safe altitude B</em></div>
+									<div class="rp-pipeline-img-stage rp-pipeline-img-stage--crop-end">
+										<img src="images/f2-step1-height-buffer.png" alt="Buffered minimum safe altitude field B" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>2.5D buffer spreads influence horizontally and raises floors</figcaption>
+							</figure>
+						</div>
+					</li>
+					<li class="rp-pipeline-step">
+						<div class="rp-pipeline-step-head">
+							<span class="rp-pipeline-num" aria-hidden="true">2</span>
+							<h3>3D A* shortest path</h3>
+						</div>
+						<div class="rp-pipeline-split">
+							<div class="rp-pipeline-split-text">
+								<p>On a 3D cell graph, find the <strong>minimum 3D path length</strong> from start to goal while staying at or above B.</p>
+								<ul class="rp-list">
+									<li><strong>Feasibility:</strong> fly only if z ≥ B[row, col]; 26 connected grid neighbors.</li>
+									<li><strong>Edge cost:</strong> Euclidean 3D step length; f = g + h with admissible straight line h to goal.</li>
+									<li><strong>Method:</strong> best first search — expand the node with smallest f = g + h (min heap).</li>
+								</ul>
+								<p class="rp-pipeline-note">Many grid waypoints (~330–480 per route on demo map); typically shorter total distance than Framework 1 at the same clearance levels.</p>
+							</div>
+							<figure class="rp-pipeline-fig">
+								<div class="rp-demo-frame">
+									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Optimized route</em></div>
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f2-step2-astar-route.png" alt="Buffered 3D A star optimized route on raster NFZ field" loading="lazy" />
+									</div>
+								</div>
+								<figcaption>Minimum distance path on discretized 3D grid</figcaption>
+							</figure>
+						</div>
+					</li>
+				</ol>
 
 				<div class="rp-subsection">
 					<h3>Sensitivity analysis</h3>
-					<p>Same 5 OD pairs and clearance levels (3, 5, 10, 15 m) as Framework 1.</p>
-					<div class="rp-demo-frame">
-						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
-						<img src="images/f2-sensitivity.png" alt="Framework 2 sensitivity: total path distance by OD pair for buffer NFZ heights 3, 5, 10, and 15 m" loading="lazy" />
+					<p><strong>Question:</strong> How does ground NFZ height affect routes when OD points start on the ground?</p>
+					<p><strong>Constants:</strong> Same 73 building map, same 5 OD pairs, buffer + 3D A*. <strong>Variable:</strong> Ground / buffer clearance → 3, 5, 10, 15 m.</p>
+					<div class="rp-pipeline-split rp-pipeline-split--chart">
+						<div class="rp-pipeline-split-text">
+							<p><strong>Observations</strong></p>
+							<ul class="rp-list">
+								<li>Higher buffer → longer paths for all 5 pairs; biggest jump from 3 m to 10 m; 10 m ≈ 15 m for most pairs.</li>
+								<li>Pair 1 most sensitive (~387 → 586 m); Pair 5 least (~501 → 587 m).</li>
+								<li>Per pair compute: ~4–38 s @ 3 m clearance → ~41–147 s @ 10 m (up to ~1.8M node expansions on 720×720 grid).</li>
+							</ul>
+							<p class="rp-pipeline-note">Buffered A*: lower total distance than Framework 1 at the same clearance levels, with much higher search cost as buffer tightens.</p>
+						</div>
+						<figure class="rp-pipeline-fig">
+							<div class="rp-demo-frame">
+								<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
+								<img src="images/f2-sensitivity.png" alt="Framework 2 sensitivity: total path distance by OD pair for buffer NFZ heights 3, 5, 10, and 15 m" loading="lazy" />
+							</div>
+							<figcaption>Total path distance incl. vertical lift for each OD pair</figcaption>
+						</figure>
 					</div>
-					<ul class="rp-list">
-						<li>Higher buffer → longer paths for all 5 pairs; biggest jump from 3 m to 10 m; 10 m ≈ 15 m for most pairs.</li>
-						<li>Pair 1 most sensitive (~387 → 586 m); Pair 5 least (~501 → 587 m).</li>
-						<li>Per pair compute: ~4–38 s @ 3 m clearance → ~41–147 s @ 10 m (up to ~1.8M node expansions on 720×720 grid).</li>
-					</ul>
-					<p class="rp-caption">Buffered A*: consistently lower total distance than Framework 1 at the same clearance levels, with sharper compute cost as buffer tightens.</p>
 				</div>
 			</div>
 		</section>
@@ -322,7 +375,7 @@
 							<span class="rp-metric-label">Frameworks</span>
 						</div>
 					</div>
-					<p class="rp-callout"><em>Capstone team: Janhavi Gaikwad and Zhaoyao Bao. Full slides with interactive route visuals: <a href="FinalPresentation_with_notes.pptx" download>download presentation</a>.</em></p>
+					<p class="rp-callout"><em>Capstone team: Janhavi Gaikwad and Zhaoyao Bao. Full slides with interactive route visuals: <a href="FinalPresentation.pptx" download>download presentation</a>.</em></p>
 				</div>
 			</div>
 		</section>
