@@ -40,18 +40,10 @@
 
 		<section class="rp-hero" id="top">
 			<div class="rp-hero-inner">
-				<p class="rp-hero-product">Graduate capstone · Cornell</p>
 				<h1>Comparative Frameworks for 3D Urban Path Planning</h1>
-				<p class="rp-hero-subtitle">3D geometry creation · Algorithm selection · Sensitivity analysis</p>
-				<ul class="rp-roadmap" aria-label="Presentation structure">
-					<li>Goal</li>
-					<li class="is-current">Framework 1</li>
-					<li class="is-current">Framework 2</li>
-					<li class="is-current">Comparative study</li>
-				</ul>
 				<div class="rp-hero-column">
-					<p class="rp-hero-lead">Urban airspace is becoming contested as autonomous delivery and UAM systems grow. This capstone compares two 3D path planning pipelines on a dense 73 building demo city with five origin destination pairs and four ground clearance levels (3, 5, 10, 15 m).</p>
-					<p class="rp-hero-lead"><strong>Goal:</strong> Compare visibility graph + Dijkstra and buffer field 3D A*, and recommend VG + Dijkstra for Hong Kong style city scale UAM versus buffer + A* for shorter, grid refined routes.</p>
+					<p class="rp-hero-lead"><strong>Why:</strong> Cities are densifying and drone delivery / UAM traffic is growing, but urban airspace is hard to plan in 3D. Tall buildings and regulatory no fly zones mean 2D planners are not enough; operators need paths that are safe, repeatable, and fast to compute at scale. There is no single obvious algorithm, so the tradeoff between path quality, waypoint count, and runtime has to be made explicit.</p>
+					<p class="rp-hero-lead"><strong>What we did:</strong> With Zhaoyao Bao, we implemented and compared two pipelines on a 73-building demo map using five origin–destination pairs and ground clearance heights of 3, 5, 10, and 15 m. <strong>Framework 1</strong> uses cuboid NFZs, a visibility graph, and Dijkstra; <strong>Framework 2</strong> uses a raster buffer field and 3D A*. <strong>Recommendation:</strong> VG + Dijkstra for city-scale dispatch and replanning; buffer + A* when shorter paths justify heavier grid search.</p>
 					<div class="rp-hero-meta">
 						<div class="rp-tag-row" aria-label="Skills demonstrated">
 							<span class="rp-tag">Python</span>
@@ -59,19 +51,17 @@
 							<span class="rp-tag">Sensitivity Analysis</span>
 							<span class="rp-tag">Trade Studies</span>
 						</div>
-						<p class="rp-tech-secondary">Python · scipy · visibility graph · Dijkstra · 3D A* · capstone with Zhaoyao Bao</p>
 					</div>
 					<div class="rp-hero-cta">
 						<div class="rp-hero-actions-secondary">
-							<a href="FinalPresentation.pptx" class="rp-btn rp-btn-github" download>Download presentation</a>
+							<a href="FinalPresentation.pptx" class="rp-btn rp-btn-github" download>Presentation</a>
 							<a href="../../index.html#two" class="rp-btn rp-btn-portfolio">Back to Portfolio</a>
 						</div>
 					</div>
 				</div>
 				<blockquote class="rp-sedemo rp-sedemo--hero" aria-label="Systems engineering demonstration">
-					<span class="rp-sedemo-label">Brief</span>
-					<p class="rp-sedemo-kicker">Systems engineering demonstration</p>
-					<p class="rp-sedemo-text">Structures an urban air mobility routing problem as comparable architectures, runs sensitivity analysis on no fly zone clearance, and recommends VG + Dijkstra for city scale operations versus buffer + A* when minimum distance justifies heavier compute.</p>
+					<span class="rp-sedemo-label">Systems engineering</span>
+					<p class="rp-sedemo-text">Comparable architectures, NFZ clearance sensitivity, and scale vs distance tradeoffs for urban air mobility.</p>
 				</blockquote>
 			</div>
 		</section>
@@ -241,8 +231,8 @@
 							<figure class="rp-pipeline-fig">
 								<div class="rp-demo-frame">
 									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Building height H</em></div>
-									<div class="rp-pipeline-img-stage rp-pipeline-img-stage--crop-start">
-										<img src="images/f2-step1-height-buffer.png" alt="Building height grid H over the urban raster" loading="lazy" />
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f2-step1-height-h.png" alt="Building height grid H over the urban raster" loading="lazy" />
 									</div>
 								</div>
 								<figcaption>Raster input (per cell height)</figcaption>
@@ -254,8 +244,8 @@
 							<figure class="rp-pipeline-fig">
 								<div class="rp-demo-frame">
 									<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Min safe altitude B</em></div>
-									<div class="rp-pipeline-img-stage rp-pipeline-img-stage--crop-end">
-										<img src="images/f2-step1-height-buffer.png" alt="Buffered minimum safe altitude field B" loading="lazy" />
+									<div class="rp-pipeline-img-stage">
+										<img src="images/f2-step1-buffer-b.png" alt="Buffered minimum safe altitude field B" loading="lazy" />
 									</div>
 								</div>
 								<figcaption>2.5D buffer spreads influence horizontally and raises floors</figcaption>
@@ -344,10 +334,10 @@
 				<div class="rp-subsection">
 					<h3>Sensitivity comparison</h3>
 					<div class="rp-demo-frame">
-						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Distance vs clearance (5 OD pairs)</em></div>
-						<img src="images/comparison-sensitivity.png" alt="Sensitivity analysis comparing both frameworks across clearance levels" loading="lazy" />
+						<div class="rp-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Framework 1 vs Framework 2</em></div>
+						<img src="images/comparison-sensitivity.png" alt="Framework 1 vs Framework 2 total path distance by OD pair for clearance 3, 5, 10, and 15 m" loading="lazy" />
 					</div>
-					<p class="rp-caption">Both show longer paths as clearance grows (3 m → 15 m). Framework 2 is ~8–20% shorter on average at 3 m but with far higher search cost. Trends align; absolute metres differ because cuboid NFZ ≠ raster buffer B.</p>
+					<p class="rp-caption">Solid lines: VG + Dijkstra; dashed lines: buffered A*. Both show longer paths as clearance grows (3 m → 15 m). Framework 2 is ~8–20% shorter on average at 3 m but with far higher search cost.</p>
 				</div>
 
 				<div class="rp-subsection">
