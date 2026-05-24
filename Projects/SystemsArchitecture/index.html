@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Systems Architecture for General Aviation Aircraft System</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Systems architecture study for a next-generation general aviation aircraft: compare architecture alternatives using structured enumeration, evaluation, and tradespace analysis to inform system architecture decisions." />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body class="sa-page">
+
+	<header class="sa-topbar">
+		<div class="sa-topbar-inner">
+			<a href="../../index.html" class="sa-brand">
+				<img src="images/me.jpg" alt="" />
+				<span class="sa-brand-text">
+					<strong>Janhavi Gaikwad</strong>
+					<span>Systems Engineer</span>
+				</span>
+			</a>
+			<button type="button" class="sa-nav-toggle" aria-expanded="false" aria-controls="sa-nav-wrap">Menu</button>
+			<div class="sa-nav-wrap" id="sa-nav-wrap">
+				<ul class="sa-nav">
+					<li><a href="#top">Overview</a></li>
+					<li><a href="#stakeholders">Stakeholders</a></li>
+					<li><a href="#architecture">Architecture</a></li>
+					<li><a href="#enumeration">Enumeration</a></li>
+					<li><a href="#evaluation">Evaluation</a></li>
+					<li><a href="#genetic-algorithm">Genetic algorithm</a></li>
+					<li><a href="#downloads">Downloads</a></li>
+				</ul>
+			</div>
+			<ul class="sa-social">
+				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+			</ul>
+		</div>
+	</header>
+
+	<main class="sa-main">
+
+		<section class="sa-hero" id="top">
+			<div class="sa-hero-inner">
+				<h1>Systems Architecture for General Aviation Aircraft System</h1>
+				<div class="sa-hero-column">
+					<p class="sa-hero-lead"><strong>Why:</strong> New-generation aircraft programs must decide system architecture—how propulsion, energy storage, avionics, redundancy, and subsystem integration are arranged—before detailed design. Systems architecture principles provide a structured way to compare alternatives when many coupled decisions affect cost, certification, reliability, and durability.</p>
+					<p class="sa-hero-lead"><strong>What we did:</strong> SYSEN 5400 capstone on a family of next-generation general aviation aircraft, progressing from stakeholder and goal analysis through functional and operational architecture, full architecture enumeration, deterministic evaluation and tradespace visualization, and multi-objective selection with a genetic algorithm.</p>
+					<div class="sa-hero-meta">
+						<div class="sa-tag-row" aria-label="Skills demonstrated">
+							<span class="sa-tag">Enumeration</span>
+							<span class="sa-tag">Evaluation</span>
+							<span class="sa-tag">Genetic Algorithm</span>
+							<span class="sa-tag">Tradespace Analysis</span>
+							<span class="sa-tag">R</span>
+						</div>
+					</div>
+					<div class="sa-hero-cta">
+						<div class="sa-hero-actions-secondary">
+							<a href="FinalPresentation.pptx" class="sa-btn sa-btn-github" download>Presentation</a>
+							<a href="FinalReport.docx" class="sa-btn sa-btn-github" download>Final report</a>
+							<a href="../../index.html#two" class="sa-btn sa-btn-portfolio">Back to Portfolio</a>
+						</div>
+					</div>
+				</div>
+				<blockquote class="sa-sedemo sa-sedemo--hero" aria-label="Systems engineering demonstration">
+					<span class="sa-sedemo-label">Systems engineering</span>
+					<p class="sa-sedemo-text">Architecture decisions framed as an explicit design space, evaluated against program objectives, and compared through tradespace analysis so architecture selection is evidence-based rather than ad hoc.</p>
+				</blockquote>
+			</div>
+		</section>
+
+		<!-- HW2B / early framing: stakeholders -->
+		<section class="sa-section" id="stakeholders">
+			<div class="sa-section-inner">
+				<p class="sa-hw-badge">Homework 2B · Foundation</p>
+				<h2>Stakeholder analysis</h2>
+				<p class="sa-phase-lead">Before defining architectures, the program framed the aircraft as a socio-technical system: operators, regulators, passengers, maintainers, and insurers all impose different priorities on safety, cost, certification, and operational flexibility.</p>
+
+				<div class="sa-pipeline-split">
+					<div class="sa-pipeline-split-text">
+						<p>Stakeholder needs were consolidated into a structured goal set (G1–G20) spanning propulsion reliability, FAA certification, fuel and operating cost, redundancy, maintenance, range, and environmental targets. These goals later trace directly to evaluation metrics and architecture decisions.</p>
+						<ul class="sa-list">
+							<li><strong>G1, G14, G18:</strong> Propulsion reliability, accident reduction, critical-system redundancy</li>
+							<li><strong>G2, G20:</strong> Certification compliance and operational efficiency</li>
+							<li><strong>G6, G9, G10:</strong> Lifecycle cost, fuel savings, and maintenance burden</li>
+							<li><strong>G3, G13, G17, G19:</strong> Performance envelope, training, range, and endurance</li>
+						</ul>
+						<p>Three reference architectures (conventional piston, twin hybrid, and distributed electric) anchor the design space and provide calibration points for later evaluation.</p>
+					</div>
+					<figure class="sa-pipeline-fig">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Stakeholder value network</em></div>
+							<div class="sa-pipeline-img-stage">
+								<img src="images/stakeholder-value-network.png" alt="Stakeholder value network for general aviation aircraft ecosystem" loading="lazy" />
+							</div>
+						</div>
+						<figcaption>Stakeholders and value exchanges around the aircraft program</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<!-- HW2B Exercise 1: functional & operational architecture -->
+		<section class="sa-section" id="architecture">
+			<div class="sa-section-inner">
+				<p class="sa-hw-badge">Homework 2B · Exercise 1</p>
+				<h2>Functional and operational architecture</h2>
+				<p class="sa-phase-lead">Level-1 functional decomposition (SysML BDD), operational lifecycle modeling, and goal–function traceability establish what the system must do before encoding architecture decisions.</p>
+
+				<h3>Functional architecture</h3>
+				<p>Six primary functions decompose the next-generation general aviation aircraft: propulsion and energy management, flight-path control, safety monitoring, avionics and communications, cabin and payload support, and maintenance health management. Each branches into Level-2 sub-functions (e.g., hybrid thrust generation, envelope protection, fault isolation).</p>
+				<div class="sa-demo-grid sa-demo-grid--duo">
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Functional BDD</em></div>
+							<img src="images/functional-bdd.png" alt="Level-1 functional block definition diagram for NG-GA aircraft" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Level-1 functional decomposition (F1–F6)</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Goal–function DMM</em></div>
+							<img src="images/goals-functions-dmm.png" alt="Domain mapping matrix linking stakeholder goals to system functions" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Domain mapping matrix — goals to functions</figcaption>
+					</figure>
+				</div>
+
+				<h3>Operational architecture</h3>
+				<p>An operational state machine captures the aircraft lifecycle from idle and maintenance through preflight, taxi, takeoff, climb, cruise (including ATC loiter), descent, approach, landing, and emergency recovery paths. This defines the contexts in which functions must be available and redundant.</p>
+				<div class="sa-demo-grid sa-demo-grid--duo">
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Operational states</em></div>
+							<img src="images/operational-state-machine.png" alt="Operational state machine for general aviation aircraft lifecycle" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Operational state machine — ground to air and emergency paths</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>System IBD</em></div>
+							<img src="images/system-ibd.png" alt="Internal block diagram showing interfaces between aircraft subsystems" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Level-1 internal block diagram — subsystem interfaces</figcaption>
+					</figure>
+				</div>
+
+				<h3>Physical architecture</h3>
+				<p>Five physical subsystems (propulsion, electric and energy, flight and control, safety and support, airframe) allocate Level-2 functions to components. This physical backbone supports later LRU partitioning and integration constraints in enumeration.</p>
+				<figure class="sa-demo-block">
+					<div class="sa-demo-frame">
+						<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Physical BDD</em></div>
+						<img src="images/physical-bdd.png" alt="Physical block definition diagram hierarchy for general aircraft" loading="lazy" />
+					</div>
+					<figcaption class="sa-caption">Physical decomposition — five primary subsystems</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<!-- HW3B: enumeration -->
+		<section class="sa-section" id="enumeration">
+			<div class="sa-section-inner">
+				<p class="sa-hw-badge">Homework 3B</p>
+				<h2>Enumeration</h2>
+				<p class="sa-phase-lead">Eight architecture decisions (D1–D8) are encoded with canonical types (standard form, down-select, partition, binary). Full factorial expansion and constraint propagation yield every feasible hybrid-electric architecture—no sampling.</p>
+
+				<div class="sa-metrics">
+					<div class="sa-metric">
+						<span class="sa-metric-value">184,212</span>
+						<span class="sa-metric-label">Feasible architectures</span>
+					</div>
+					<div class="sa-metric">
+						<span class="sa-metric-value">324</span>
+						<span class="sa-metric-label">Independent backbone (D1×D2×D3×D5×D6×D8)</span>
+					</div>
+					<div class="sa-metric">
+						<span class="sa-metric-value">8</span>
+						<span class="sa-metric-label">Design decisions</span>
+					</div>
+					<div class="sa-metric">
+						<span class="sa-metric-value">4</span>
+						<span class="sa-metric-label">ADG constraint rules</span>
+					</div>
+				</div>
+
+				<div class="sa-pipeline-split">
+					<div class="sa-pipeline-split-text">
+						<p>Enumeration in R (<code>archr</code>) proceeds in stages:</p>
+						<ul class="sa-list">
+							<li><strong>Standard-form decisions</strong> — D1 propulsion topology, D2 battery chemistry, D3 motor count, D5 FCC redundancy, D6 avionics integration, D8 CAPS</li>
+							<li><strong>Down-select (D4)</strong> — six binary motor installation sites (wing root/tip, nose, tail), coupled to D1 and D3</li>
+							<li><strong>Partition (D7)</strong> — six functional subsystems grouped into k = 2 or 3 LRU packages, constrained by D5</li>
+							<li><strong>Constraint filtering</strong> — propulsion and motor-count rules; FCC redundancy vs feasible partitions</li>
+						</ul>
+						<p>The architectural decision graph (ADG) documents dependencies so infeasible combinations are pruned before evaluation—reducing a much larger raw combinatorial space to 184,212 valid designs.</p>
+					</div>
+					<figure class="sa-pipeline-fig">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Architectural decision graph</em></div>
+							<div class="sa-pipeline-img-stage">
+								<img src="images/architectural-decision-graph.png" alt="Architectural decision graph showing dependencies between design decisions D1 through D8" loading="lazy" />
+							</div>
+						</div>
+						<figcaption>ADG — enumeration-level constraints between decisions</figcaption>
+					</figure>
+				</div>
+
+				<div class="sa-table-wrap">
+					<table class="sa-table">
+						<thead>
+							<tr><th>ID</th><th>Decision</th><th>Type</th><th>Alternatives</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>D1</td><td>Propulsion topology</td><td>Standard form</td><td>Series hybrid · parallel hybrid · turboelectric</td></tr>
+							<tr><td>D2</td><td>Battery chemistry</td><td>Standard form</td><td>Li-ion NMC · Li-ion LFP · solid-state</td></tr>
+							<tr><td>D3</td><td>Electric motor count</td><td>Standard form</td><td>1 · 2 · 4 motors</td></tr>
+							<tr><td>D4</td><td>Motor installation positions</td><td>Down-select</td><td>6 binary sites; constrained by D1, D3</td></tr>
+							<tr><td>D5</td><td>FCC redundancy</td><td>Standard form</td><td>Simplex · dual · triple</td></tr>
+							<tr><td>D6</td><td>Avionics integration</td><td>Standard form</td><td>Federated · IMA</td></tr>
+							<tr><td>D7</td><td>LRU partitioning</td><td>Partitioning</td><td>2 or 3 packages over six subsystems</td></tr>
+							<tr><td>D8</td><td>Ballistic parachute (CAPS)</td><td>Binary</td><td>Installed · not installed</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<!-- HW4B: evaluation (+ HW5B tradespace as results) -->
+		<section class="sa-section" id="evaluation">
+			<div class="sa-section-inner">
+				<p class="sa-hw-badge">Homework 4B · Tradespace (HW5B Ex. 1)</p>
+				<h2>Evaluation</h2>
+				<p class="sa-phase-lead">Each enumerated architecture maps to four system-level metrics using deterministic value functions grounded in stakeholder goals. Tradespace plots visualize how the full feasible set trades cost, certification schedule, reliability, and durability.</p>
+
+				<div class="sa-feature-grid">
+					<article class="sa-feature-card">
+						<h3>Operating cost ($/hr)</h3>
+						<p>Additive subsystem costs. Traces to G6, G10 — operators and airlines need predictable hourly economics.</p>
+					</article>
+					<article class="sa-feature-card">
+						<h3>Certification schedule (years)</h3>
+						<p>Hybrid series–parallel critical path across propulsion, control, and avionics. Traces to G2, G20 — regulators and program managers need feasible certification timelines.</p>
+					</article>
+					<article class="sa-feature-card sa-feature-card--agent">
+						<h3>Propulsion reliability</h3>
+						<p>Series–parallel reliability block diagram. Traces to G1, G14, G18 — safety-critical redundancy and fault tolerance.</p>
+					</article>
+					<article class="sa-feature-card">
+						<h3>System durability (years)</h3>
+						<p>Min–max and redundancy-aware lifetimes. Traces to G4, G8 — maintenance teams and owners need component longevity.</p>
+					</article>
+				</div>
+
+				<p>Aggregation choices reflect engineering structure: additive cost where subsystems are separable, critical-path certification where activities are sequential, series–parallel reliability where failure propagation matters, and min–max durability for weakest-link and redundancy effects.</p>
+
+				<h3>Tradespace analysis</h3>
+				<p>Pairwise projections over all 184,212 feasible architectures reveal horizontal stratification in reliability and grid-like clustering in certification—driven largely by discrete decisions such as propulsion topology (D1) and FCC redundancy (D5).</p>
+				<div class="sa-demo-grid sa-demo-grid--tradespace">
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Reliability vs durability</em></div>
+							<img src="images/report-figure-1.png" alt="Reliability versus durability tradespace" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Reliability vs. durability</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Certification vs reliability</em></div>
+							<img src="images/report-figure-2.png" alt="Certification versus reliability tradespace" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Certification vs. reliability</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Durability vs cost</em></div>
+							<img src="images/report-figure-3.png" alt="Durability versus cost tradespace" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Durability vs. cost</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Cost vs reliability</em></div>
+							<img src="images/report-figure-4.png" alt="Cost versus reliability tradespace" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Cost vs. reliability</figcaption>
+					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Cost vs certification</em></div>
+							<img src="images/report-figure-5.png" alt="Cost versus certification tradespace" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Cost vs. certification</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<!-- HW5B Ex3: genetic algorithm -->
+		<section class="sa-section" id="genetic-algorithm">
+			<div class="sa-section-inner">
+				<p class="sa-hw-badge">Homework 5B · Exercise 3</p>
+				<h2>Genetic algorithm</h2>
+				<p class="sa-phase-lead">A multi-objective genetic algorithm (NSGA-II via <code>rmoo</code>) approximates the Pareto frontier of the discrete tradespace, balancing four objectives while enforcing architecture feasibility through repair-based constraint handling.</p>
+
+				<div class="sa-pipeline-split">
+					<div class="sa-pipeline-split-text">
+						<ul class="sa-list">
+							<li><strong>Encoding:</strong> 26-bit chromosome from 18 discrete decision elements (<code>int2bit</code> / <code>bit2int</code>)</li>
+							<li><strong>Population:</strong> 200 individuals · 200 generations · uniform crossover · low-probability mutation</li>
+							<li><strong>Selection:</strong> NSGA-II non-dominated sorting and crowding distance</li>
+							<li><strong>Feasibility:</strong> Repair for D3–D4 coupling and ADG rules before fitness evaluation</li>
+						</ul>
+						<p>The GA converges quickly (best fitness stabilizes near iteration 20), identifying a structured Pareto region dominated by high-impact decisions D1, D3, D5, and D7.</p>
+					</div>
+					<figure class="sa-pipeline-fig">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>MOGA flow</em></div>
+							<div class="sa-pipeline-img-stage">
+								<img src="images/moga-flow.png" alt="Multi-objective genetic algorithm flow from feasible architectures to Pareto selection" loading="lazy" />
+							</div>
+						</div>
+						<figcaption>NSGA-II optimization flow — feasible set to Pareto front</figcaption>
+					</figure>
+				</div>
+
+				<figure class="sa-demo-block">
+					<div class="sa-demo-frame">
+						<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>GA vs exhaustive Pareto</em></div>
+						<img src="images/ga-pareto-overlay.png" alt="Genetic algorithm Pareto front overlaid on full tradespace cost versus reliability" loading="lazy" />
+					</div>
+					<figcaption class="sa-caption">GA Pareto approximation compared with full factorial tradespace (cost vs. reliability)</figcaption>
+				</figure>
+
+				<h3>Selected Pareto architectures</h3>
+				<div class="sa-feature-grid">
+					<article class="sa-feature-card">
+						<h3>Architecture A — balanced efficiency–certification</h3>
+						<p>Central Pareto region: moderate propulsion complexity, efficient certification path, high reliability through balanced avionics and control redundancy.</p>
+						<ul class="sa-list sa-list--metrics">
+							<li><strong>Operating cost:</strong> $1,450/hr</li>
+							<li><strong>Certification:</strong> 5.5 years</li>
+							<li><strong>Propulsion reliability:</strong> 99.10%</li>
+							<li><strong>Durability:</strong> 8 years</li>
+						</ul>
+					</article>
+					<article class="sa-feature-card sa-feature-card--agent">
+						<h3>Architecture B — high-reliability robust</h3>
+						<p>Similar aggregate metrics with redundancy concentrated in propulsion-adjacent and safety-critical subsystems—preferred when fault tolerance outweighs structural simplicity.</p>
+						<ul class="sa-list sa-list--metrics">
+							<li><strong>Operating cost:</strong> $1,450/hr</li>
+							<li><strong>Certification:</strong> 5.5 years</li>
+							<li><strong>Propulsion reliability:</strong> ~99.10%</li>
+							<li><strong>Durability:</strong> 8 years</li>
+						</ul>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="sa-section" id="downloads">
+			<div class="sa-section-inner">
+				<h2>Downloads</h2>
+				<p>SYSEN 5400 deliverables: final report and presentation. Homework submissions (HW2B–HW5B) in the repository document the step-by-step progression shown on this page.</p>
+				<div class="sa-hero-cta">
+					<div class="sa-hero-actions-secondary">
+						<a href="FinalReport.docx" class="sa-btn sa-btn-github" download>Download final report</a>
+						<a href="FinalPresentation.pptx" class="sa-btn sa-btn-github" download>Download presentation</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="sa-footer">
+		<div class="sa-footer-inner">
+			<p>SYSEN 5400 · Systems Architecture for General Aviation Aircraft System · Cornell</p>
+			<p><a href="../../index.html#two">← Back to portfolio</a></p>
+		</div>
+	</footer>
+
+	<script>
+	(function () {
+		var toggle = document.querySelector('.sa-nav-toggle');
+		var wrap = document.getElementById('sa-nav-wrap');
+		if (toggle && wrap) {
+			toggle.addEventListener('click', function () {
+				var open = wrap.classList.toggle('is-open');
+				toggle.setAttribute('aria-expanded', open);
+			});
+		}
+	})();
+	</script>
+</body>
+</html>
