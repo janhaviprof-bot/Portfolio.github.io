@@ -43,7 +43,7 @@
 				<h1>Comparative Frameworks for 3D Urban Path Planning</h1>
 				<div class="rp-hero-column">
 					<p class="rp-hero-lead"><strong>Why:</strong> Cities are densifying and drone delivery / UAM traffic is growing, but urban airspace is hard to plan in 3D. Tall buildings and regulatory no fly zones mean 2D planners are not enough; operators need paths that are safe, repeatable, and fast to compute at scale. There is no single obvious algorithm, so the tradeoff between path quality, waypoint count, and runtime has to be made explicit.</p>
-					<p class="rp-hero-lead"><strong>What we did:</strong> With Zhaoyao Bao, we implemented and compared two pipelines on a 73-building demo map using five origin–destination pairs and ground clearance heights of 3, 5, 10, and 15 m. <strong>Framework 1</strong> uses cuboid NFZs, a visibility graph, and Dijkstra; <strong>Framework 2</strong> uses a raster buffer field and 3D A*. <strong>Recommendation:</strong> VG + Dijkstra for city-scale dispatch and replanning; buffer + A* when shorter paths justify heavier grid search.</p>
+					<p class="rp-hero-lead"><strong>What we did:</strong> With Zhaoyao Bao, we implemented and compared two pipelines on a 73-building demo map using five origin–destination pairs and ground clearance heights of 3, 5, 10, and 15 m. <strong>Framework 1</strong> uses cuboid NFZs, a visibility graph, and Dijkstra; <strong>Framework 2</strong> uses a raster buffer field and 3D A*.</p>
 					<div class="rp-hero-meta">
 						<div class="rp-tag-row" aria-label="Skills demonstrated">
 							<span class="rp-tag">Python</span>
@@ -61,7 +61,7 @@
 				</div>
 				<blockquote class="rp-sedemo rp-sedemo--hero" aria-label="Systems engineering demonstration">
 					<span class="rp-sedemo-label">Systems engineering</span>
-					<p class="rp-sedemo-text">Comparable architectures, NFZ clearance sensitivity, and scale vs distance tradeoffs for urban air mobility.</p>
+					<p class="rp-sedemo-text">A structured architecture trade study: same urban model and OD scenarios, parameterized no fly zone clearance, and sensitivity analysis to compare sparse-graph vs grid-based routing on safety, path length, compute cost, and suitability for city-scale urban air mobility operations.</p>
 				</blockquote>
 			</div>
 		</section>

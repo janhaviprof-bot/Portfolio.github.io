@@ -4280,6 +4280,7 @@ h3, .project-item h3 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 @media screen and (max-width: 480px) {
@@ -4336,15 +4337,30 @@ h3, .project-item h3 {
 }
 
 /* Rich project card (SmartCharge) */
+.project-item--rich {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .project-item--rich > h3 {
   margin: 0;
   padding: 1rem 1rem 0.5rem;
   text-align: center;
+  flex-shrink: 0;
+}
+
+.project-item--rich > img {
+  flex-shrink: 0;
 }
 
 .project-item--rich .project-item-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   padding: 0 1rem 1rem;
   text-align: left;
+  min-height: 0;
 }
 
 .project-item--rich img {
@@ -4375,7 +4391,7 @@ h3, .project-item h3 {
   gap: 0.25rem 0;
   font-size: 0.82em;
   color: #000000;
-  margin: 0.85em 0 1.15em;
+  margin: 0.85em 0 0;
   line-height: 1.45;
   text-align: left;
 }
@@ -4399,6 +4415,8 @@ h3, .project-item h3 {
   align-items: stretch;
   gap: 0.45rem;
   width: 100%;
+  margin-top: auto;
+  padding-top: 1.15em;
 }
 
 .project-item--rich .project-actions .button.small {

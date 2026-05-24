@@ -169,7 +169,7 @@
 						<div class="project-filters">
 						<span class="filter-link active" data-filter="all">All</span>
 						<span class="filter-link" data-filter="system">Systems Projects</span>
-						<span class="filter-link" data-filter="technical">Technical Projects</span>
+						<span class="filter-link" data-filter="technical">Control Systems Projects</span>
 						</div>
 
 						<!-- Project Grid -->
@@ -198,7 +198,7 @@
 								<img src="images/supplymind.png" alt="SupplyMind AI simulation result: investment vs on time shipments with master recommendation" loading="lazy">
 								<div class="project-item-body">
 									<p class="project-desc">Intelligent supply chain optimization dashboard enabling users to predict shipment delays and identify improvement opportunities through simulations or AI agent driven analysis.</p>
-									<p class="project-desc project-desc--systems"><strong>Systems Engineering Skill:</strong> Integrates live operational data from in transit shipments and hub networks, simulation based trade studies across capacity and routing levers, and AI driven orchestration that selects which analyses to run and interprets the results, so managers can compare delay risk, investment, and on time performance before acting on operational tradeoffs.</p>
+									<p class="project-desc project-desc--systems"><strong>Systems Engineering Skill:</strong> Uses live operational data from in transit shipments and hub networks to improve operational efficiency and help managers make data informed decisions on capacity, routing, and delay risk.</p>
 									<p class="project-tech" aria-label="Skills demonstrated">
 										<span>Python</span><span>Supabase SQL</span><span>Agentic AI</span><span>Tool calling</span><span>Simulation</span>
 									</p>
@@ -245,44 +245,83 @@
 								</div>
 							</div>
 
-							<!-- Project 1 -->
-							<div class="project-item" data-category="system">
-								<a href="Projects/SolarPlannerMBSE/index.html" target="_blank" rel="noopener noreferrer">
-									<h3>Solar Aware Route Planner-MBSE</h3>
-									<img src="images/solarplanner.png" alt="Solar Aware Route Planner MBSE project" loading="lazy">
-								</a>
-							</div>
-							
-							<!-- Project 2 -->
-							<div class="project-item" data-category="technical">
-								<a href="Projects/ControllerTime/index.html" target="_blank" rel="noopener noreferrer">
-									<h3>Time-Domain Inverted Pendulum Control</h3>
-									<img src="images/InvertedPendulum1.png" alt="Time-Domain Inverted Pendulum Control project" loading="lazy">
-								</a>
-							</div>
-							
-							<!-- Project 3 -->
-							<div class="project-item" data-category="technical">
-								<a href="Projects/ControllerFrequency/index.html" target="_blank" rel="noopener noreferrer">
-									<h3>Frequency-Domain Inverted Pendulum Control</h3>
-									<img src="images/InvertedPendulum2.png" alt="Frequency-Domain Inverted Pendulum Control project" loading="lazy">
-								</a>
+							<!-- Solar Aware Route Planner-MBSE -->
+							<div class="project-item project-item--rich" data-category="system">
+								<h3>Solar Aware Route Planner-MBSE</h3>
+								<img src="images/solarplanner.png" alt="Solar aware route planner systems engineering study" loading="lazy">
+								<div class="project-item-body">
+									<p class="project-desc">MBSE study for a navigation system that minimizes driver sun exposure on urban routes while preserving efficient travel, using live solar and weather data, shadow modeling, and route optimization.</p>
+									<p class="project-desc project-desc--systems"><strong>Systems Engineering Skill:</strong> End to end MBSE lifecycle from customer affinity and QFD through SysML requirements, functional flow modeling, FMEA, and traceable verification for a user centric mobility product.</p>
+									<p class="project-tech" aria-label="Skills demonstrated">
+										<span>MBSE</span><span>SysML</span><span>Requirements</span><span>QFD</span><span>FMEA</span>
+									</p>
+									<div class="project-actions">
+										<a href="Projects/SolarPlannerMBSE/index.html" class="button small" target="_blank" rel="noopener noreferrer">More Details</a>
+										<a href="Projects/SolarPlannerMBSE/assets/GaikwadJ_TechprocessReport.pdf" class="button small" download>Tech Report</a>
+									</div>
+								</div>
 							</div>
 
-							<!-- Project 4 -->
-							<div class="project-item" data-category="system">
-								<a href="Projects/ProjectManagement/index.html" target="_blank" rel="noopener noreferrer">
-									<h3>Project Management Plan for a Vertical Farming Enterprise</h3>
-									<img src="images/PM.png" alt="Project Management Plan for Vertical Farming Enterprise" loading="lazy">
-								</a>
+							<!-- Time-Domain Inverted Pendulum -->
+							<div class="project-item project-item--rich" data-category="technical">
+								<h3>Time-Domain Inverted Pendulum Control</h3>
+								<img src="images/InvertedPendulum1.png" alt="Time domain inverted pendulum control response plots" loading="lazy">
+								<div class="project-item-body">
+									<p class="project-desc">Designed state feedback control with pole placement and a state observer to stabilize an inverted pendulum on a motorized cart; compared SISO and SIMO designs and validated on the lab setup.</p>
+									<p class="project-tech" aria-label="Skills demonstrated">
+										<span>MATLAB</span><span>State Space</span><span>Pole Placement</span><span>Control Theory</span>
+									</p>
+									<div class="project-actions">
+										<a href="Projects/ControllerTime/index.html" class="button small" target="_blank" rel="noopener noreferrer">More Details</a>
+									</div>
+								</div>
 							</div>
 
-							<!-- Project 5 -->
-							<div class="project-item" data-category="technical">
-								<a href="Projects/ControllerEngine/index.html" target="_blank" rel="noopener noreferrer">
-									<h3>Engine Spool Speed Control with Disturbance Rejection</h3>
-									<img src="images/enginecontroller.jpg" alt="Engine Spool Speed Control with Disturbance Rejection project" loading="lazy">
-								</a>
+							<!-- Frequency-Domain Inverted Pendulum -->
+							<div class="project-item project-item--rich" data-category="technical">
+								<h3>Frequency-Domain Inverted Pendulum Control</h3>
+								<img src="images/InvertedPendulum2.png" alt="Frequency domain inverted pendulum Bode and response analysis" loading="lazy">
+								<div class="project-item-body">
+									<p class="project-desc">Frequency domain controller for the inverted pendulum using MATLAB SISO design tools, targeting phase margin, settling time, and overshoot before hardware validation.</p>
+									<p class="project-tech" aria-label="Skills demonstrated">
+										<span>MATLAB</span><span>Bode Design</span><span>SISO Tool</span><span>Control Theory</span>
+									</p>
+									<div class="project-actions">
+										<a href="Projects/ControllerFrequency/index.html" class="button small" target="_blank" rel="noopener noreferrer">More Details</a>
+									</div>
+								</div>
+							</div>
+
+							<!-- Vertical Farming PMP -->
+							<div class="project-item project-item--rich" data-category="system">
+								<h3>Vertical Farming Enterprise PMP</h3>
+								<img src="images/PM.png" alt="Project management plan for EcoElevate vertical farming enterprise" loading="lazy">
+								<div class="project-item-body">
+									<p class="project-desc">Team project management plan for EcoElevate, a modular solar powered vertical farming system, covering organization, WBS, schedule, cost and earned value, and risk management.</p>
+									<p class="project-desc project-desc--systems"><strong>Systems Engineering Skill:</strong> Structured planning for a multidisciplinary venture with defined roles, milestones, entrance and exit criteria, and a risk framework tied to deliverables.</p>
+									<p class="project-tech" aria-label="Skills demonstrated">
+										<span>Project Management</span><span>WBS</span><span>EVM</span><span>Risk Management</span>
+									</p>
+									<div class="project-actions">
+										<a href="Projects/ProjectManagement/index.html" class="button small" target="_blank" rel="noopener noreferrer">More Details</a>
+										<a href="Projects/ProjectManagement/assets/Final PMP.pdf" class="button small" download>PMP PDF</a>
+									</div>
+								</div>
+							</div>
+
+							<!-- Engine Spool Speed Control -->
+							<div class="project-item project-item--rich" data-category="technical">
+								<h3>Engine Spool Speed Control</h3>
+								<img src="images/enginecontroller.jpg" alt="Engine spool speed frequency domain control study" loading="lazy">
+								<div class="project-item-body">
+									<p class="project-desc">Frequency domain control design for aircraft engine spool speed that rejects inlet flow disturbances while maintaining reference tracking and stability margins.</p>
+									<p class="project-tech" aria-label="Skills demonstrated">
+										<span>MATLAB</span><span>Frequency Domain</span><span>Disturbance Rejection</span><span>Control Theory</span>
+									</p>
+									<div class="project-actions">
+										<a href="Projects/ControllerEngine/index.html" class="button small" target="_blank" rel="noopener noreferrer">More Details</a>
+									</div>
+								</div>
 							</div>
 
 							<!-- Add more projects with appropriate data-category -->
