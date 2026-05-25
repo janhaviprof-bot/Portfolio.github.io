@@ -4008,7 +4008,7 @@ h3, .project-item h3 {
 
 /* Modular text colors - distinct hierarchy per section */
 
-/* Experience section — soft slate, matches Projects palette */
+/* Experience section: soft slate, matches Projects palette */
 #one .spotlights > section {
   align-items: stretch;
   background: transparent;
@@ -4084,7 +4084,7 @@ h3, .project-item h3 {
   font-weight: 400;
 }
 
-/* Logo panels — neutral cool gray, subtle step per row */
+/* Logo panels: neutral cool gray, subtle step per row */
 #one .spotlights > section:nth-child(1) > .image.image--company-logo {
   background: #e2e8f0;
 }
@@ -4158,7 +4158,7 @@ h3, .project-item h3 {
   }
 }
 
-/* Projects section — section title uses .section-title (see recruiter block) */
+/* Projects section: section title uses .section-title (see recruiter block) */
 #two .project-item h3 {
   color: #1e293b;
   transition: color 0.2s ease;
@@ -4178,7 +4178,7 @@ h3, .project-item h3 {
   font-weight: 600;
 }
 
-/* Contact section — section title uses .section-title (see recruiter block) */
+/* Contact section: section title uses .section-title (see recruiter block) */
 #three .contact-icons li {
   color: #334155;
 }
@@ -4738,7 +4738,7 @@ html {
   margin-top: 0.75em;
 }
 
-/* USP boxes — full width of hero area */
+/* USP boxes: full width of hero area */
 .hero-usp {
   list-style: none;
   padding: 0;

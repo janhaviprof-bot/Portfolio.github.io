@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>3D Urban Path Planning — Comparative Frameworks</title>
+	<title>3D Urban Path Planning: Comparative Frameworks</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Graduate capstone comparing Visibility Graph + Dijkstra and Buffered 3D A* for urban air mobility path planning with no fly zones, sensitivity analysis, and Hong Kong scale recommendations." />
@@ -147,7 +147,7 @@
 									<li><strong>Edges:</strong> connect two nodes only if the segment does not pass through any NFZ interior.</li>
 									<li><strong>Rule:</strong> no horizontal travel on the ground plane (z ≈ 0).</li>
 								</ul>
-								<p class="rp-pipeline-note">Output: all feasible straight moves between origin and destination — not the final route yet.</p>
+								<p class="rp-pipeline-note">Output: all feasible straight moves between origin and destination, not the final route yet.</p>
 							</div>
 							<figure class="rp-pipeline-fig">
 								<div class="rp-demo-frame">
@@ -263,7 +263,7 @@
 								<ul class="rp-list">
 									<li><strong>Feasibility:</strong> fly only if z ≥ B[row, col]; 26 connected grid neighbors.</li>
 									<li><strong>Edge cost:</strong> Euclidean 3D step length; f = g + h with admissible straight line h to goal.</li>
-									<li><strong>Method:</strong> best first search — expand the node with smallest f = g + h (min heap).</li>
+									<li><strong>Method:</strong> best-first search: expand the node with smallest f = g + h (min heap).</li>
 								</ul>
 								<p class="rp-pipeline-note">Many grid waypoints (~330–480 per route on demo map); typically shorter total distance than Framework 1 at the same clearance levels.</p>
 							</div>

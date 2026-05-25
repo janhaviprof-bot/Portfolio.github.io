@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>SmartCharge — EV Green Charging Recommendations</title>
+	<title>SmartCharge: EV Green Charging Recommendations</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="SmartCharge helps you find the greenest times to charge your EV over the next 48 hours using live UK grid carbon data, then save your chosen slot to your calendar." />
@@ -95,7 +95,7 @@
 		<section class="sc-section" id="problem">
 			<div class="sc-section-inner">
 				<h2>Problem Statement</h2>
-				<p>Most EV drivers charge when it is convenient—often during evening peaks—not when the UK electricity grid is cleanest. Carbon intensity varies hour by hour, but that forecast data is not packaged for everyday charging decisions.</p>
+				<p>Most EV drivers charge when it is convenient, often during evening peaks, not when the UK electricity grid is cleanest. Carbon intensity varies hour by hour, but that forecast data is not packaged for everyday charging decisions.</p>
 				<p>Drivers need a simple way to combine <strong>48-hour grid forecasts</strong>, <strong>their vehicle’s real charging time</strong>, and <strong>actionable schedules</strong> they can put on a calendar. Without that, “green charging” stays abstract rather than operational.</p>
 				<p>SmartCharge addresses this gap with a data-driven decision-support tool: integrate external data sources, apply constraints, and deliver recommendations users can act on.</p>
 			</div>
@@ -153,10 +153,10 @@
 				<h2>Technical Architecture</h2>
 				<p><strong>Pattern:</strong> Single-page Shiny for Python application with no database; application state held in reactive values in <code>server.py</code>.</p>
 				<ul class="sc-list">
-					<li><strong>app.py</strong> — Entry point; wires UI and server.</li>
-					<li><strong>ui_components.py</strong> — Layout, dashboard cards, intensity strip, custom CSS.</li>
-					<li><strong>server.py</strong> — Vehicle lookup, confirm flow, slots pipeline, calendar modal.</li>
-					<li><strong>utils.py</strong> — All REST and LLM integrations, date/ISO8601 helpers, charging-time logic.</li>
+					<li><strong>app.py</strong>: Entry point; wires UI and server.</li>
+					<li><strong>ui_components.py</strong>: Layout, dashboard cards, intensity strip, custom CSS.</li>
+					<li><strong>server.py</strong>: Vehicle lookup, confirm flow, slots pipeline, calendar modal.</li>
+					<li><strong>utils.py</strong>: All REST and LLM integrations, date/ISO8601 helpers, charging-time logic.</li>
 				</ul>
 				<p><strong>Data flow:</strong> User input → Ollama make/model parse → EV specs (API Ninjas or LLM fallback) → 48h intensity fetch (<code>pandas</code>) → <code>effective_hours = max(slot_length, vehicle_charging_time)</code> → OpenAI slot ranking → UI update and calendar export.</p>
 				<p><strong>External services:</strong> UK Carbon Intensity API, API Ninjas EV API, OpenAI Chat Completions (gpt-4o-mini), Ollama Cloud.</p>
@@ -185,11 +185,11 @@
 					<p class="sc-sedemo-text">Integrates, processes, and utilizes API-based live data streams alongside LLM-driven intelligent analysis to support informed, data-driven operational decision making in dynamic systems environments.</p>
 				</blockquote>
 				<ul class="sc-list">
-					<li><strong>Problem framing</strong> — translates an abstract sustainability goal into operational charging decisions with clear inputs and outputs.</li>
-					<li><strong>API-based data</strong> — ingests live REST responses (UK National Grid carbon intensity, EV specification APIs), normalizes forecasts and vehicle parameters, and combines them in one reactive pipeline.</li>
-					<li><strong>Informed decisions</strong> — ranks charging windows from that combined data so users choose forecast-backed low-carbon slots instead of convenience-only timing.</li>
-					<li><strong>AI when APIs fall short</strong> — uses LLM parsing and spec fallback when vehicle lookup or API coverage is incomplete, keeping the decision path usable end to end.</li>
-					<li><strong>Verification</strong> — live Posit Connect deployment lets reviewers exercise the full path from vehicle lookup to calendar export without local setup.</li>
+					<li><strong>Problem framing</strong>: translates an abstract sustainability goal into operational charging decisions with clear inputs and outputs.</li>
+					<li><strong>API-based data</strong>: ingests live REST responses (UK National Grid carbon intensity, EV specification APIs), normalizes forecasts and vehicle parameters, and combines them in one reactive pipeline.</li>
+					<li><strong>Informed decisions</strong>: ranks charging windows from that combined data so users choose forecast-backed low-carbon slots instead of convenience-only timing.</li>
+					<li><strong>AI when APIs fall short</strong>: uses LLM parsing and spec fallback when vehicle lookup or API coverage is incomplete, keeping the decision path usable end to end.</li>
+					<li><strong>Verification</strong>: live Posit Connect deployment lets reviewers exercise the full path from vehicle lookup to calendar export without local setup.</li>
 				</ul>
 				<div class="sc-metrics">
 					<div class="sc-metric">
