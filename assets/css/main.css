@@ -4060,6 +4060,77 @@ h3, .project-item h3 {
   font-size: 0.95em;
 }
 
+#one .experience-usp {
+  list-style: none;
+  padding: 0;
+  margin: 0.75em 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  max-width: 22rem;
+}
+
+#one .experience-usp--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 28rem;
+}
+
+@media screen and (max-width: 980px) {
+  #one .experience-usp--cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 22rem;
+  }
+
+  #one .experience-usp--cols-3 li:last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+#one .experience-usp li {
+  text-align: center;
+  padding: 0.5rem 0.4rem;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+#one .experience-usp strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+#one .experience-usp span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.25;
+}
+
+@media screen and (max-width: 736px) {
+  #one .experience-usp {
+    max-width: none;
+  }
+
+  #one .experience-usp--cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  #one .experience-usp--cols-3 li:last-child {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
+  }
+}
+
 #one .experience-summary .experience-tech {
   display: flex;
   flex-wrap: wrap;
