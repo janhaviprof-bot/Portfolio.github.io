@@ -8,10 +8,16 @@
 	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
 	<link rel="stylesheet" href="assets/css/project.css" />
 </head>
-<body class="sa-page">
+<body class="sa-page sa-page--sidebar">
 
-	<header class="sa-topbar">
-		<div class="sa-topbar-inner">
+	<button type="button" class="sa-sidebar-toggle" aria-expanded="false" aria-controls="sa-sidebar" aria-label="Open navigation menu">
+		<span class="sa-sidebar-toggle-icon" aria-hidden="true"></span>
+		<span class="sa-sidebar-toggle-text">Menu</span>
+	</button>
+	<div class="sa-sidebar-backdrop" id="sa-sidebar-backdrop" hidden></div>
+
+	<aside class="sa-sidebar" id="sa-sidebar" aria-label="Page navigation">
+		<div class="sa-sidebar-inner">
 			<a href="../../index.html" class="sa-brand">
 				<img src="images/me.jpg" alt="" />
 				<span class="sa-brand-text">
@@ -19,8 +25,8 @@
 					<span>Systems Engineer</span>
 				</span>
 			</a>
-			<button type="button" class="sa-nav-toggle" aria-expanded="false" aria-controls="sa-nav-wrap">Menu</button>
-			<div class="sa-nav-wrap" id="sa-nav-wrap">
+			<p class="sa-sidebar-project">General aviation aircraft · systems architecture</p>
+			<nav class="sa-sidebar-nav">
 				<ul class="sa-nav">
 					<li><a href="#top">Overview</a></li>
 					<li><a href="#stakeholders">Stakeholders</a></li>
@@ -30,20 +36,24 @@
 					<li><a href="#genetic-algorithm">Genetic algorithm</a></li>
 					<li><a href="#downloads">Downloads</a></li>
 				</ul>
+			</nav>
+			<div class="sa-sidebar-foot">
+				<ul class="sa-social">
+					<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+					<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+					<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+				</ul>
+				<a href="https://github.com/janhaviprof-bot/SystemsArchitecture" class="sa-sidebar-repo" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub repository</a>
+				<a href="../../index.html#two" class="sa-sidebar-portfolio">← Back to portfolio</a>
 			</div>
-			<ul class="sa-social">
-				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
-				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
-				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
-			</ul>
 		</div>
-	</header>
+	</aside>
 
+	<div class="sa-page-shell">
 	<main class="sa-main">
 
 		<section class="sa-hero" id="top">
 			<div class="sa-hero-inner">
-				<p class="sa-hero-eyebrow">General aviation · hybrid-electric architecture</p>
 				<h1>Systems Architecture for General Aviation Aircraft System</h1>
 				<ul class="sa-hero-kpis" aria-label="Study scope">
 					<li class="sa-kpi"><span class="sa-kpi-dot sa-kpi-dot--scope" aria-hidden="true"></span>184,212 feasible architectures</li>
@@ -66,6 +76,7 @@
 						<div class="sa-hero-actions-secondary">
 							<a href="FinalPresentation.pptx" class="sa-btn sa-btn-github" download>Presentation</a>
 							<a href="FinalReport.docx" class="sa-btn sa-btn-github" download>Final report</a>
+							<a href="https://github.com/janhaviprof-bot/SystemsArchitecture" class="sa-btn sa-btn-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
 							<a href="../../index.html#two" class="sa-btn sa-btn-portfolio">Back to Portfolio</a>
 						</div>
 					</div>
@@ -549,34 +560,79 @@
 		<section class="sa-section" id="downloads">
 			<div class="sa-section-inner">
 				<h2>Downloads</h2>
-				<p>Final report and presentation. Supporting materials in the repository document the step-by-step progression shown on this page.</p>
-				<div class="sa-hero-cta">
-					<div class="sa-hero-actions-secondary">
-						<a href="FinalReport.docx" class="sa-btn sa-btn-github" download>Download final report</a>
-						<a href="FinalPresentation.pptx" class="sa-btn sa-btn-github" download>Download presentation</a>
-					</div>
+				<p>Final report and presentation. SysML models, R scripts, and supporting artifacts are in the <a href="https://github.com/janhaviprof-bot/SystemsArchitecture" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
+				<div class="sa-download-cta">
+					<a href="FinalReport.docx" class="sa-btn sa-btn-download" download>Download final report</a>
+					<a href="FinalPresentation.pptx" class="sa-btn sa-btn-download" download>Download presentation</a>
+					<a href="https://github.com/janhaviprof-bot/SystemsArchitecture" class="sa-btn sa-btn-repo" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> View GitHub repository</a>
 				</div>
 			</div>
 		</section>
 
 	</main>
 
-	<footer class="sa-footer">
+	<footer class="sa-footer sa-footer--in-shell">
 		<div class="sa-footer-inner">
 			<p>Systems Architecture for General Aviation Aircraft System · MBSE tradespace study</p>
 			<p><a href="../../index.html#two">← Back to portfolio</a></p>
 		</div>
 	</footer>
+	</div>
 
 	<script>
 	(function () {
-		var toggle = document.querySelector('.sa-nav-toggle');
-		var wrap = document.getElementById('sa-nav-wrap');
-		if (toggle && wrap) {
-			toggle.addEventListener('click', function () {
-				var open = wrap.classList.toggle('is-open');
+		var sidebar = document.getElementById('sa-sidebar');
+		var backdrop = document.getElementById('sa-sidebar-backdrop');
+		var toggle = document.querySelector('.sa-sidebar-toggle');
+
+		function setSidebarOpen(open) {
+			document.body.classList.toggle('sa-sidebar-open', open);
+			if (toggle) {
 				toggle.setAttribute('aria-expanded', open);
+				toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+			}
+			if (backdrop) backdrop.hidden = !open;
+		}
+
+		if (toggle && sidebar) {
+			toggle.addEventListener('click', function () {
+				setSidebarOpen(!document.body.classList.contains('sa-sidebar-open'));
 			});
+		}
+		if (backdrop) {
+			backdrop.addEventListener('click', function () { setSidebarOpen(false); });
+		}
+		document.querySelectorAll('.sa-nav a[href^="#"]').forEach(function (link) {
+			link.addEventListener('click', function () {
+				if (window.matchMedia('(max-width: 900px)').matches) setSidebarOpen(false);
+			});
+		});
+
+		var navLinks = document.querySelectorAll('.sa-nav a[href^="#"]');
+		var sections = [];
+		navLinks.forEach(function (link) {
+			var href = link.getAttribute('href');
+			if (href && href.length > 1) {
+				var el = document.getElementById(href.slice(1));
+				if (el) sections.push({ id: href.slice(1), el: el });
+			}
+		});
+		if (sections.length && 'IntersectionObserver' in window) {
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+			var observer = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) setActive(entry.target.id);
+				});
+			}, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
+			sections.forEach(function (s) { observer.observe(s.el); });
+			setActive(sections[0].id);
 		}
 	})();
 	</script>

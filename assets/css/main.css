@@ -4411,7 +4411,7 @@ h3, .project-item h3 {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: stretch;
   gap: 0.45rem;
   width: 100%;
@@ -4422,6 +4422,7 @@ h3, .project-item h3 {
 .project-item--rich .project-actions .button.small {
   flex: 1 1 0;
   min-width: 0;
+  max-width: none;
   font-size: 0.58em;
   padding: 0 0.4em;
   height: 2.65em;
@@ -4429,6 +4430,43 @@ h3, .project-item h3 {
   margin: 0;
   text-align: center;
   letter-spacing: 0.06em;
+  background-color: transparent !important;
+  color: #334155 !important;
+  box-shadow: inset 0 0 0 1px rgba(71, 85, 105, 0.45) !important;
+}
+
+.project-item--rich .project-actions .button.small:hover {
+  border-color: #475569 !important;
+  color: #1e293b !important;
+  background-color: rgba(241, 245, 249, 0.9) !important;
+}
+
+/* Layout: other actions left, Launch center, More Details right */
+.project-item--rich .project-actions .project-action-details {
+  order: 3;
+}
+
+.project-item--rich .project-actions .project-action-launch {
+  order: 2;
+}
+
+.project-item--rich .project-actions .button.small:not(.project-action-details):not(.project-action-launch) {
+  order: 1;
+}
+
+/* Highlight Launch when present; otherwise highlight More Details */
+.project-item--rich .project-actions:has(.project-action-launch) .project-action-launch,
+.project-item--rich .project-actions:not(:has(.project-action-launch)) .project-action-details {
+  background-color: #334155 !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px #334155 !important;
+}
+
+.project-item--rich .project-actions:has(.project-action-launch) .project-action-launch:hover,
+.project-item--rich .project-actions:not(:has(.project-action-launch)) .project-action-details:hover {
+  background-color: #1e293b !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px #1e293b !important;
 }
 
 .filter-link {
