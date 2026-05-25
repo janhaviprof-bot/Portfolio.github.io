@@ -719,6 +719,16 @@ body.sa-page {
   color: var(--sa-text-muted);
 }
 
+.sa-phase-bridge {
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sa-border, rgba(255, 255, 255, 0.08));
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--sa-text-muted);
+  font-style: italic;
+}
+
 .sa-demo-grid--duo {
   grid-template-columns: 1fr;
 }
@@ -858,6 +868,15 @@ body.sa-page {
   color: var(--sa-teal-dark);
   padding: 0.15em 0.4em;
   border-radius: 4px;
+}
+
+.sa-table--compact {
+  font-size: 0.85rem;
+}
+
+.sa-table--compact th,
+.sa-table--compact td {
+  padding: 0.55rem 0.75rem;
 }
 
 /* Mermaid */
@@ -1100,6 +1119,17 @@ body.sa-page {
   margin: 0 0 0.85rem;
 }
 
+.sa-h4 {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--sa-text-muted);
+}
+
+.sa-subsection > .sa-h4:first-of-type {
+  margin-top: 1rem;
+}
+
 .sa-subsection .sa-caption {
   text-align: left;
   margin-top: 0.85rem;
@@ -1292,6 +1322,21 @@ body.sa-page {
   height: 100%;
   object-fit: contain;
   object-position: center;
+}
+
+.sa-pipeline-img-stage--moga-flow {
+  height: auto;
+  min-height: 420px;
+  max-height: 560px;
+  padding: 0.75rem 1rem 1rem;
+}
+
+.sa-pipeline-img-stage--moga-flow img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 520px;
+  margin: 0 auto;
 }
 
 .sa-pipeline-img-stage--crop-start img,
