@@ -3926,6 +3926,15 @@ body, input, select, textarea {
   letter-spacing: 0.02em;
 }
 
+#intro .hero-role {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+  margin: 0.35rem 0 1rem;
+}
+
 #intro .punch-line {
   font-size: 1.2rem;
   font-weight: 500;
@@ -5039,6 +5048,11 @@ html {
   background-color: #38bdf8;
 }
 
+#intro .hero-role {
+  color: #7dd3fc;
+  margin-bottom: 0.75em;
+}
+
 #intro.wrapper.style1 p {
   font-size: 1.05rem;
   line-height: 1.75;
@@ -5132,6 +5146,14 @@ html {
   font-weight: 700;
   color: #0f172a;
   letter-spacing: -0.02em;
+}
+
+.section-lead {
+  max-width: 42rem;
+  margin: -0.5rem 0 1.5rem 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #475569;
 }
 
 #one > .inner:first-of-type {
