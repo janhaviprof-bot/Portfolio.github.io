@@ -99,7 +99,7 @@
 													<li>Developed a POC ML system for electric UAM route optimization, enabling early-stage studies projected to reduce fuel consumption by ~10%. </li>
 													<li>Created a POC ML model to predict gas turbine surge and stall, contributing to operability risk assessment for next-generation propulsion systems. </li>
 												</ul>`
-											); return false;">Learn more</a>
+											, this); return false;">View highlights</a>
 										</li>
 									</ul>
 								</div>
@@ -135,7 +135,7 @@
 													<li>Resolved complex CFD challenges for strategic clients, providing simulation best practices and shortcuts, model setup guidance, and validation support, resulting in ~20% faster model turnaround and higher confidence in simulation results. </li>
 													<li>Enhanced visibility and promoted adoption by delivering a keynote at ICPHD’23 (IIT Guwahati), showcasing applications of ANSYS simulation tools for green energy and sustainability-focused engineering challenges, reaching 100+ attendees. </li>
 												</ul>`
-											); return false;">Learn more</a>
+											, this); return false;">View highlights</a>
 										</li>
 									</ul>
 								</div>
@@ -170,7 +170,7 @@
 													<li>Enabled comparative aerodynamic analysis by performing CFD simulations of aircraft and airfoil geometries using ANSYS and CFD++, supporting design validation and performance assessment. </li>
 													<li>Promoted IPR knowledge and compliance by conducting a lecture on IPR awareness as a faculty at HAL, supporting the organization’s innovation and research initiatives. </li>
 												</ul>`
-											); return false;">Learn more</a>
+											, this); return false;">View highlights</a>
 										</li>
 									</ul>
 								</div>
@@ -456,16 +456,22 @@
 
             
 
-<!-- Reusable Modal -->
-<div id="experienceModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('experienceModal')" aria-label="Close modal" role="button" tabindex="0">&times;</span>
-    <div class="modal-body">
-      <h2 id="modalTitle">Title Here</h2>
-      <div id="modalText">
-        <p>Description goes here...</p>
+<!-- Experience detail modal -->
+<div id="experienceModal" class="exp-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="exp-modal__backdrop" data-close-modal aria-hidden="true"></div>
+  <div class="exp-modal__panel" role="document">
+    <header class="exp-modal__header">
+      <div class="exp-modal__header-text">
+        <p class="exp-modal__eyebrow">Role highlights</p>
+        <h2 id="modalTitle">Company</h2>
+        <p id="modalSubtitle" class="exp-modal__subtitle"></p>
       </div>
-    </div>
+      <button type="button" class="exp-modal__close" onclick="closeExperienceModal()" aria-label="Close">&times;</button>
+    </header>
+    <div class="exp-modal__body" id="modalText"></div>
+    <footer class="exp-modal__footer">
+      <span>Press <kbd>Esc</kbd> or click outside to close</span>
+    </footer>
   </div>
 </div>
 
@@ -479,46 +485,56 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
             <script>
-				function openExperienceModal(title, htmlContent) {
-				document.getElementById('modalTitle').innerText = title;
-				document.getElementById('modalText').innerHTML = htmlContent; // supports multiple paragraphs
-				document.getElementById('experienceModal').style.display = 'block';
-				document.body.style.overflow = 'hidden'; // disable background scrolling
-				}
-
-				function closeModal(modalId) {
-				document.getElementById(modalId).style.display = 'none';
-				document.body.style.overflow = 'auto'; // enable scrolling back
-				}
-
-				// Close modal if clicked outside content
-				window.onclick = function(event) {
+				(function () {
 					var modal = document.getElementById('experienceModal');
-					if (event.target == modal) {
-						closeModal('experienceModal');
-					}
-				};
+					var modalTitle = document.getElementById('modalTitle');
+					var modalSubtitle = document.getElementById('modalSubtitle');
+					var modalText = document.getElementById('modalText');
+					var lastFocus = null;
 
-				// Close modal on Escape key
-				document.addEventListener('keydown', function(event) {
-					if (event.key === 'Escape') {
-						var modal = document.getElementById('experienceModal');
-						if (modal && modal.style.display === 'block') {
-							closeModal('experienceModal');
+					window.openExperienceModal = function (title, htmlContent, triggerEl) {
+						lastFocus = triggerEl || document.activeElement;
+						modalTitle.textContent = title;
+
+						var role = '';
+						var team = '';
+						if (triggerEl) {
+							var summary = triggerEl.closest('section') && triggerEl.closest('section').querySelector('.experience-summary');
+							if (summary) {
+								var roleEl = summary.querySelector('.role');
+								var teamEl = summary.querySelector('.team');
+								role = roleEl ? roleEl.textContent.trim() : '';
+								team = teamEl ? teamEl.textContent.trim() : '';
+							}
 						}
-					}
-				});
+						modalSubtitle.textContent = team ? team.replace(/\s+/g, ' ') : (role || '');
+						modalSubtitle.style.display = modalSubtitle.textContent ? 'block' : 'none';
 
-				// Close button: keyboard support
-				var closeBtn = document.querySelector('.modal .close');
-				if (closeBtn) {
-					closeBtn.addEventListener('keydown', function(event) {
-						if (event.key === 'Enter' || event.key === ' ') {
-							event.preventDefault();
-							closeModal('experienceModal');
+						modalText.innerHTML = htmlContent;
+						var list = modalText.querySelector('ul');
+						if (list) list.classList.add('exp-modal__achievements');
+
+						modal.classList.add('is-open');
+						modal.setAttribute('aria-hidden', 'false');
+						document.body.classList.add('exp-modal-open');
+						modal.querySelector('.exp-modal__close').focus();
+					};
+
+					window.closeExperienceModal = function () {
+						modal.classList.remove('is-open');
+						modal.setAttribute('aria-hidden', 'true');
+						document.body.classList.remove('exp-modal-open');
+						if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+					};
+
+					modal.querySelector('.exp-modal__backdrop').addEventListener('click', closeExperienceModal);
+
+					document.addEventListener('keydown', function (event) {
+						if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+							closeExperienceModal();
 						}
 					});
-				}
+				})();
 			</script>
 			<script>
 				const filterBtns = document.querySelectorAll('.filter-link');
