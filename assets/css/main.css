@@ -3943,8 +3943,8 @@ body, input, select, textarea {
 #intro p:last-of-type {
   color: #cbd5e1;
   font-style: italic;
-  border-left: 3px solid #475569;
-  padding-left: 1rem;
+  border-left: none;
+  padding-left: 0;
   margin-top: 1.25rem;
 }
 
@@ -4009,29 +4009,29 @@ h3, .project-item h3 {
 /* Modular text colors - distinct hierarchy per section */
 
 /* Experience section — soft slate, matches Projects palette */
-#one.spotlights > section {
+#one .spotlights > section {
   align-items: stretch;
   background: transparent;
 }
 
-#one.spotlights > section:nth-child(1) {
+#one .spotlights > section:nth-child(1) {
   background-color: #eef2f6;
 }
 
-#one.spotlights > section:nth-child(2) {
+#one .spotlights > section:nth-child(2) {
   background-color: #f4f6f8;
 }
 
-#one.spotlights > section:nth-child(3) {
+#one .spotlights > section:nth-child(3) {
   background-color: #f8fafc;
 }
 
-#one.spotlights > section:not(:last-child) {
+#one .spotlights > section:not(:last-child) {
   border-bottom: 1px solid #cbd5e1;
   box-shadow: none;
 }
 
-#one.spotlights > section > .content {
+#one .spotlights > section > .content {
   background-color: transparent;
 }
 
@@ -4085,19 +4085,19 @@ h3, .project-item h3 {
 }
 
 /* Logo panels — neutral cool gray, subtle step per row */
-#one.spotlights > section:nth-child(1) > .image.image--company-logo {
+#one .spotlights > section:nth-child(1) > .image.image--company-logo {
   background: #e2e8f0;
 }
 
-#one.spotlights > section:nth-child(2) > .image.image--company-logo {
+#one .spotlights > section:nth-child(2) > .image.image--company-logo {
   background: #eceff3;
 }
 
-#one.spotlights > section:nth-child(3) > .image.image--company-logo {
+#one .spotlights > section:nth-child(3) > .image.image--company-logo {
   background: #f1f5f9;
 }
 
-#one.spotlights > section > .image.image--company-logo {
+#one .spotlights > section > .image.image--company-logo {
   background-image: none !important;
   display: flex;
   align-items: center;
@@ -4112,11 +4112,11 @@ h3, .project-item h3 {
   border-right: 1px solid #cbd5e1;
 }
 
-#one.spotlights > section > .image.image--company-logo:before {
+#one .spotlights > section > .image.image--company-logo:before {
   background: rgba(15, 23, 42, 0.04);
 }
 
-#one.spotlights > section > .image.image--company-logo .company-logo-frame {
+#one .spotlights > section > .image.image--company-logo .company-logo-frame {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4127,7 +4127,7 @@ h3, .project-item h3 {
   overflow: hidden;
 }
 
-#one.spotlights > section > .image.image--company-logo img.company-logo {
+#one .spotlights > section > .image.image--company-logo img.company-logo {
   display: block !important;
   visibility: visible !important;
   width: auto !important;
@@ -4140,7 +4140,7 @@ h3, .project-item h3 {
 }
 
 @media screen and (max-width: 980px) {
-  #one.spotlights > section > .image.image--company-logo {
+  #one .spotlights > section > .image.image--company-logo {
     width: 100%;
     min-height: 10em;
     max-height: 12em;
@@ -4149,22 +4149,16 @@ h3, .project-item h3 {
     border-bottom: 1px solid #cbd5e1;
   }
 
-  #one.spotlights > section > .image.image--company-logo .company-logo-frame {
+  #one .spotlights > section > .image.image--company-logo .company-logo-frame {
     padding: 1.75em 1.5em;
   }
 
-  #one.spotlights > section > .image.image--company-logo img.company-logo {
+  #one .spotlights > section > .image.image--company-logo img.company-logo {
     max-height: 6em !important;
   }
 }
 
-/* Projects section */
-#two h2 {
-  color: #0f172a;
-  border-bottom: 3px solid #475569;
-  padding-bottom: 0.5rem;
-  display: inline-block;
-}
+/* Projects section — section title uses .section-title (see recruiter block) */
 #two .project-item h3 {
   color: #1e293b;
   transition: color 0.2s ease;
@@ -4184,12 +4178,7 @@ h3, .project-item h3 {
   font-weight: 600;
 }
 
-/* Contact section */
-#three h2 {
-  color: #0f172a;
-  border-left: 4px solid #475569;
-  padding-left: 0.75rem;
-}
+/* Contact section — section title uses .section-title (see recruiter block) */
 #three .contact-icons li {
   color: #334155;
 }
@@ -4681,10 +4670,195 @@ h3, .project-item h3 {
 
 #intro .punch-line {
   margin-bottom: 1em;
-  max-width: 700px;
   text-align: left;
 }
 
 #footer .inner {
   text-align: center;
+}
+
+/* ==========================================================================
+   Recruiter-friendly home (structure + colour; copy unchanged)
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Hero: no stretched intro.svg, readable layout --- */
+#intro.wrapper.style1 {
+  background-color: #0f172a !important;
+  background-image: none !important;
+  background-attachment: scroll;
+}
+
+#intro.wrapper.style1 > .inner {
+  text-align: left;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#intro h1 {
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4em;
+  padding-bottom: 0.35em;
+}
+
+#intro h1::after {
+  left: 0;
+  transform: none;
+  width: 100%;
+  height: 3px;
+  background-color: #38bdf8;
+}
+
+#intro.wrapper.style1 p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #cbd5e1;
+  max-width: 52em;
+  margin: 0 0 1em;
+}
+
+#intro .punch-line {
+  font-size: 1.2rem !important;
+  color: #94a3b8;
+  margin-bottom: 1.25em;
+}
+
+#intro .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.5em 0.75em;
+  margin-top: 0.75em;
+}
+
+/* USP boxes — full width of hero area */
+.hero-usp {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75em;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.hero-usp li {
+  text-align: center;
+  padding: 0.85rem 0.5rem;
+  background: rgba(248, 250, 252, 0.07);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+}
+
+.hero-usp strong {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.hero-usp span {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+#intro .button.primary {
+  background-color: #0ea5e9 !important;
+  border-color: #0ea5e9 !important;
+  color: #f8fafc !important;
+}
+
+#intro .button.primary:hover {
+  background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+@media screen and (max-width: 980px) {
+  .hero-usp {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 736px) {
+  .hero-usp {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Section titles (left-aligned, same style as Let's connect) --- */
+.section-title {
+  text-align: left;
+  display: block;
+  margin: 0 0 1.25rem;
+  padding: 0 0 0 0.75rem;
+  border: none;
+  border-left: 4px solid #475569;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+#one > .inner:first-of-type {
+  padding-bottom: 1.5em;
+}
+
+/* --- Background flow: intro → experience → projects → contact --- */
+#one.wrapper.style2 {
+  background: linear-gradient(180deg, #e8edf2 0%, #f1f5f9 55%, #f8fafc 100%) !important;
+}
+
+#two {
+  background-color: #f8fafc;
+}
+
+#three {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e8edf2 100%);
+}
+
+/* --- Projects: filter pills --- */
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.filter-link {
+  padding: 0.4em 1em;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  opacity: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.filter-link.active {
+  background: #1e293b;
+  border-color: #1e293b;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+/* --- Contact panel --- */
+.contact-panel {
+  margin-top: 0.5rem;
+  padding: 2rem 2rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
 }
