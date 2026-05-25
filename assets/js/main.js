@@ -155,6 +155,10 @@
 					$img = $image.find('img'),
 					x;
 
+				// Company logos: keep <img> visible (background cover crops wordmarks).
+				if ($image.hasClass('image--company-logo'))
+					return;
+
 				// Assign image.
 					$image.css('background-image', 'url(' + $img.attr('src') + ')');
 
@@ -186,5 +190,58 @@
 
 				}
 			});
+
+	// #region agent log
+	function debugCompanyLogoLayout(runId) {
+		var endpoint = 'http://127.0.0.1:7729/ingest/987e6ed5-80bb-44e5-8954-77221eb154b6';
+		$('#one .image.image--company-logo').each(function(i) {
+			var panel = this;
+			var frame = panel.querySelector('.company-logo-frame');
+			var img = panel.querySelector('img.company-logo');
+			if (!img) return;
+			var panelRect = panel.getBoundingClientRect();
+			var imgRect = img.getBoundingClientRect();
+			var csPanel = window.getComputedStyle(panel);
+			var csImg = window.getComputedStyle(img);
+			var payload = {
+				sessionId: '41d7ab',
+				runId: runId || 'pre-fix',
+				hypothesisId: 'A-B-C-D-E',
+				location: 'main.js:debugCompanyLogoLayout',
+				message: 'company logo layout metrics',
+				data: {
+					index: i,
+					alt: img.alt || '',
+					panel: { w: panelRect.width, h: panelRect.height, scrollH: panel.scrollHeight, overflow: csPanel.overflow },
+					frame: frame ? { w: frame.getBoundingClientRect().width, h: frame.getBoundingClientRect().height } : null,
+					img: {
+						w: imgRect.width,
+						h: imgRect.height,
+						naturalW: img.naturalWidth,
+						naturalH: img.naturalHeight,
+						display: csImg.display,
+						width: csImg.width,
+						maxHeight: csImg.maxHeight,
+						visible: img.offsetParent !== null && csImg.visibility !== 'hidden' && csImg.display !== 'none'
+					},
+					overflowsPanel: imgRect.height > panelRect.height + 2 || imgRect.width > panelRect.width + 2,
+					imgExceedsFrame: frame ? (imgRect.height > frame.getBoundingClientRect().height + 2) : null,
+					bgImage: csPanel.backgroundImage,
+					imgHidden: img.style.display === 'none' || csImg.display === 'none',
+					cssApplied: csPanel.overflow === 'hidden' && csImg.maxWidth === '100%' && csImg.maxHeight !== 'none'
+				},
+				timestamp: Date.now()
+			};
+			fetch(endpoint, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': '41d7ab' },
+				body: JSON.stringify(payload)
+			}).catch(function() {});
+		});
+	}
+	$window.on('load', function() {
+		window.setTimeout(function() { debugCompanyLogoLayout('post-fix'); }, 400);
+	});
+	// #endregion
 
 })(jQuery);
