@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Gas Turbine Health Monitoring — Extended Kalman Filter</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Reduced-order nonlinear gas turbine model with Extended Kalman Filter for thermodynamic state and efficiency estimation under noisy cruise measurements." />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body class="mbe-page">
+
+	<header class="mbe-topbar">
+		<div class="mbe-topbar-inner">
+			<a href="../../index.html" class="mbe-brand">
+				<img src="images/me.jpg" alt="" />
+				<span class="mbe-brand-text">
+					<strong>Janhavi Gaikwad</strong>
+					<span>Systems Engineer</span>
+				</span>
+			</a>
+			<nav class="mbe-nav-wrap" aria-label="Page sections">
+				<ul class="mbe-nav">
+					<li><a href="#top">Overview</a></li>
+					<li><a href="#problem">Problem</a></li>
+					<li><a href="#approach">Approach</a></li>
+					<li><a href="#nonlinear-model">Engine model</a></li>
+					<li><a href="#results">Results</a></li>
+					<li><a href="#learnings">Learnings</a></li>
+					<li><a href="#downloads">Downloads</a></li>
+				</ul>
+			</nav>
+			<ul class="mbe-social">
+				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+			</ul>
+		</div>
+	</header>
+
+	<div class="mbe-hero-shell" id="top">
+		<section class="mbe-hero mbe-hero--solo">
+			<div class="mbe-hero-inner">
+					<p class="mbe-hero-eyebrow">Model-based estimation · MAE 6760</p>
+					<h1>Extended Kalman Filter Based Gas Turbine Health Monitoring</h1>
+					<ul class="mbe-metrics" aria-label="Project scope">
+						<li class="mbe-metric">
+							<span class="mbe-metric-value">7</span>
+							<span class="mbe-metric-label">Nonlinear states</span>
+						</li>
+						<li class="mbe-metric">
+							<span class="mbe-metric-value">4</span>
+							<span class="mbe-metric-label">Noisy measurements</span>
+						</li>
+						<li class="mbe-metric">
+							<span class="mbe-metric-value">EKF</span>
+							<span class="mbe-metric-label">Analytical Jacobians</span>
+						</li>
+						<li class="mbe-metric">
+							<span class="mbe-metric-value">MATLAB</span>
+							<span class="mbe-metric-label">Simulation</span>
+						</li>
+					</ul>
+					<p class="mbe-hero-lead">Developed a reduced-order nonlinear gas turbine model integrated with an Extended Kalman Filter (EKF) to estimate thermodynamic states from noisy cruise measurements and track slowly varying compressor, burner, and turbine efficiencies which can act as health indicators when direct efficiency sensing is unavailable.</p>
+					<div class="mbe-tag-row" aria-label="Skills demonstrated">
+						<span class="mbe-tag">MATLAB</span>
+						<span class="mbe-tag">Extended Kalman Filter</span>
+						<span class="mbe-tag">State Estimation</span>
+						<span class="mbe-tag">Observability</span>
+						<span class="mbe-tag">Gas Turbine</span>
+					</div>
+					<div class="mbe-hero-cta">
+						<a href="ProjectReport.docx" class="mbe-btn mbe-btn-primary" download><i class="fas fa-file-alt" aria-hidden="true"></i> Project report</a>
+						<a href="ekf5.m" class="mbe-btn mbe-btn-matlab" target="_blank" rel="noopener noreferrer"><i class="fas fa-code" aria-hidden="true"></i> MATLAB code (ekf5.m)</a>
+						<a href="../../index.html#two" class="mbe-btn mbe-btn-ghost">Back to Portfolio</a>
+					</div>
+					<blockquote class="mbe-sedemo" aria-label="Control system skill demonstration">
+						<span class="mbe-sedemo-label">Control System Skill</span>
+						<p class="mbe-sedemo-text">Reliable estimation of non-measurable states from limited, noisy measurements—so feedback control can act on a complete state picture when direct sensing of every variable is not practical.</p>
+					</blockquote>
+			</div>
+		</section>
+	</div>
+
+	<main class="mbe-main">
+
+		<section class="mbe-section" id="problem">
+			<div class="mbe-section-head">
+				<h2>Problem</h2>
+				<p class="mbe-phase-lead">Gas turbines operate under highly nonlinear thermodynamic conditions and degrade gradually from wear, thermal stress, and fouling. Health monitoring requires tracking temperatures, shaft dynamics, and component efficiencies—but efficiencies are not directly measured and sensors are noisy.</p>
+			</div>
+			<ul class="mbe-goals">
+				<li class="mbe-goal">
+					<span class="mbe-goal-icon" aria-hidden="true">T</span>
+					<p>Estimate thermodynamic states—compressor, combustor, and turbine temperatures plus shaft speed.</p>
+				</li>
+				<li class="mbe-goal">
+					<span class="mbe-goal-icon" aria-hidden="true">η</span>
+					<p>Track slowly varying compressor, burner, and turbine efficiencies which can act as health indicators.</p>
+				</li>
+				<li class="mbe-goal">
+					<span class="mbe-goal-icon" aria-hidden="true">u</span>
+					<p>Operate under realistic cruise inputs with stochastic perturbations and measurement noise.</p>
+				</li>
+				<li class="mbe-goal">
+					<span class="mbe-goal-icon" aria-hidden="true">σ</span>
+					<p>Validate estimator consistency using ±2σ covariance bounds and observability analysis.</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="mbe-section" id="approach">
+			<div class="mbe-section-head">
+				<h2>Approach</h2>
+				<p class="mbe-phase-lead">A seven-state reduced-order thermodynamic model feeds a discrete-time EKF with manually derived Jacobians. Cruise operation uses small stochastic perturbations around nominal fuel and airflow rather than large sinusoidal forcing.</p>
+			</div>
+
+			<h3>State, input, and measurement</h3>
+			<div class="mbe-state-panel">
+				<div class="mbe-state-panel-head">Signal definition</div>
+				<div class="mbe-state-block">
+					<strong>State</strong> x = [T₂, T₃, T₄, η<sub>c</sub>, η<sub>b</sub>, η<sub>t</sub>, N]<sup>T</sup><br />
+					<strong>Input</strong> u = [T₁, m<sub>f</sub>, m<sub>a</sub>]<sup>T</sup><br />
+					<strong>Measurement</strong> z = [T₂, T₃, T₅, N]<sup>T</sup>
+				</div>
+			</div>
+			<p>Compressor, burner, and turbine efficiencies are modeled as slowly varying states (random walk) so the EKF can track gradual degradation and use them as health indicators. Exhaust temperature T₅ is computed from turbine outlet conditions via a nozzle relation; T₄ is not measured directly and is inferred through model coupling.</p>
+			<p>Nominal cruise: T₁ ≈ 490 K, m<sub>a</sub> ≈ 25 kg/s, m<sub>f</sub> ≈ 0.09 kg/s · R = diag([1.5², 2.5², 4², 100²]).</p>
+
+			<h3 id="nonlinear-model">Nonlinear engine model</h3>
+			<p class="mbe-phase-lead">The gas path is represented with simplified nonlinear thermodynamic equations—a reduced-order cruise model coupling compressor map physics, burner heat release, turbine work, shaft dynamics, and a nozzle-based exhaust temperature for measurement.</p>
+
+			<div class="mbe-engine-flow" aria-label="Gas turbine signal flow">
+				<div class="mbe-flow-inputs">
+					<span class="mbe-flow-node mbe-flow-node--in">T₁ inlet</span>
+					<span class="mbe-flow-node mbe-flow-node--in">m<sub>f</sub> fuel</span>
+					<span class="mbe-flow-node mbe-flow-node--in">m<sub>a</sub> airflow</span>
+				</div>
+				<div class="mbe-flow-stages">
+					<div class="mbe-flow-stage">
+						<span class="mbe-flow-stage-label">Compressor</span>
+						<span class="mbe-flow-state">T₂ · η<sub>c</sub></span>
+						<span class="mbe-flow-eq">PR<sub>c</sub>(N, T₁)</span>
+					</div>
+					<span class="mbe-flow-arrow" aria-hidden="true">→</span>
+					<div class="mbe-flow-stage">
+						<span class="mbe-flow-stage-label">Burner</span>
+						<span class="mbe-flow-state">T₃ · η<sub>b</sub></span>
+					</div>
+					<span class="mbe-flow-arrow" aria-hidden="true">→</span>
+					<div class="mbe-flow-stage">
+						<span class="mbe-flow-stage-label">Turbine</span>
+						<span class="mbe-flow-state">T₄ · η<sub>t</sub></span>
+						<span class="mbe-flow-eq">W<sub>sh</sub>(N, T₁)</span>
+					</div>
+					<span class="mbe-flow-arrow" aria-hidden="true">→</span>
+					<div class="mbe-flow-stage">
+						<span class="mbe-flow-stage-label">Nozzle</span>
+						<span class="mbe-flow-state">T₅ (measured)</span>
+					</div>
+				</div>
+				<div class="mbe-flow-shaft">
+					<span class="mbe-flow-shaft-label">Shaft</span>
+					<span class="mbe-flow-state">N (measured)</span>
+				</div>
+			</div>
+
+			<h4 class="mbe-h4">Map relations (nonlinear in N and T₁)</h4>
+			<div class="mbe-equation-grid mbe-equation-grid--duo">
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Compressor pressure ratio</span>
+					<p class="mbe-equation">PR<sub>c</sub> = 1 + p<sub>c</sub> · N² / T₁</p>
+				</div>
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Shaft work</span>
+					<p class="mbe-equation">W<sub>sh</sub> = w<sub>c</sub> · N² / T₁</p>
+				</div>
+			</div>
+
+			<h4 class="mbe-h4">Continuous-time state dynamics</h4>
+			<p class="mbe-card-note" style="margin-top:0;margin-bottom:1rem;">Discrete simulation uses Euler integration (Δt = 0.1 s). Efficiencies η<sub>c</sub>, η<sub>b</sub>, η<sub>t</sub> follow a slow random walk between steps to represent gradual degradation.</p>
+			<div class="mbe-equation-grid">
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Compressor outlet temperature</span>
+					<p class="mbe-equation">Ṫ₂ = ( T₁(1 + (PR<sub>c</sub><sup>(γ−1)/γ</sup> − 1) / η<sub>c</sub>) − T₂ ) / τ<sub>c</sub></p>
+				</div>
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Combustor outlet temperature</span>
+					<p class="mbe-equation">Ṫ₃ = ( T₂ + m<sub>f</sub>·LHV·η<sub>b</sub> / (c<sub>p</sub>·m<sub>a</sub>) − T₃ ) / τ<sub>b</sub></p>
+				</div>
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Turbine outlet temperature</span>
+					<p class="mbe-equation">Ṫ₄ = ( T₃ − W<sub>sh</sub> / (m<sub>a</sub>·c<sub>p</sub>·η<sub>t</sub>) − T₄ ) / τ<sub>t</sub></p>
+				</div>
+				<div class="mbe-equation-card">
+					<span class="mbe-equation-label">Shaft speed</span>
+					<p class="mbe-equation">Ṅ = n<sub>c</sub>·m<sub>a</sub>·c<sub>p</sub>·(T₃ − T₄ − T₂ + T₁)</p>
+				</div>
+				<div class="mbe-equation-card mbe-equation-card--wide">
+					<span class="mbe-equation-label">Health states (slow drift)</span>
+					<p class="mbe-equation">η̇<sub>c</sub>, η̇<sub>b</sub>, η̇<sub>t</sub> ≈ random walk (σ<sub>eff</sub> = 10<sup>−4</sup> per step in simulation)</p>
+				</div>
+			</div>
+
+			<h4 class="mbe-h4">Measurement model (nonlinear nozzle)</h4>
+			<div class="mbe-equation-card mbe-equation-card--highlight">
+				<span class="mbe-equation-label">Exhaust temperature (not a state—computed from T₄)</span>
+				<p class="mbe-equation">T₅ = T₄ · ( 1 − η<sub>n</sub> · ( 1 − PR<sub>n</sub><sup>(γ−1)/γ</sup> ) )</p>
+				<p class="mbe-card-note" style="margin:0.75rem 0 0;">Sensors: z = [T₂, T₃, T₅, N]<sup>T</sup> with R = diag([1.5², 2², 4², 100²]). T₄ is inferred by the EKF because it is not directly measured.</p>
+			</div>
+
+			<div class="mbe-param-table-wrap">
+				<table class="mbe-param-table">
+					<caption>Representative model constants (SI units, cruise tuning)</caption>
+					<thead>
+						<tr><th>Symbol</th><th>Meaning</th><th>Value</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>γ</td><td>Ratio of specific heats</td><td>1.4</td></tr>
+						<tr><td>c<sub>p</sub></td><td>Specific heat</td><td>1005 J/(kg·K)</td></tr>
+						<tr><td>LHV</td><td>Fuel lower heating value</td><td>43×10⁶ J/kg</td></tr>
+						<tr><td>τ<sub>c</sub>, τ<sub>b</sub>, τ<sub>t</sub></td><td>Compressor / burner / turbine lags</td><td>0.3 · 0.8 · 0.5 s</td></tr>
+						<tr><td>p<sub>c</sub>, w<sub>c</sub>, n<sub>c</sub></td><td>Map &amp; shaft coupling constants</td><td>Tuned in <code>ekf5.m</code></td></tr>
+					</tbody>
+				</table>
+			</div>
+			<p class="mbe-card-note">The model stays reduced-order for computational tractability and EKF Jacobian derivation while retaining the nonlinear coupling between temperatures, shaft speed, and efficiency health states.</p>
+
+			<h3>EKF and observability</h3>
+			<ul class="mbe-pipeline mbe-pipeline--ekf">
+				<li class="mbe-pipeline-step">
+					<strong>Prediction</strong>
+					<p>x̂<sub>k+1|k</sub> = f(x̂<sub>k|k</sub>, u<sub>k</sub>) · P<sub>k+1|k</sub> = F<sub>k</sub>P<sub>k|k</sub>F<sub>k</sub><sup>T</sup> + Q</p>
+				</li>
+				<li class="mbe-pipeline-step">
+					<strong>Update</strong>
+					<p>Kalman gain from H<sub>k</sub>; Joseph-form covariance update for numerical stability.</p>
+				</li>
+				<li class="mbe-pipeline-step">
+					<strong>Jacobians</strong>
+					<p>F<sub>k</sub> and H<sub>k</sub> derived analytically—not finite differences.</p>
+				</li>
+				<li class="mbe-pipeline-step">
+					<strong>Observability</strong>
+					<p>Local observability rank checked during simulation; full local observability achieved for all seven states.</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="mbe-section" id="results">
+			<div class="mbe-section-head">
+				<h2>Results</h2>
+			</div>
+			<div class="mbe-results-intro">
+				<div class="mbe-card mbe-results-callout">
+					<span class="mbe-results-badge">Estimator consistent</span>
+					<p class="mbe-phase-lead">The EKF tracked states and efficiencies under noisy cruise conditions and a moderately harsh initial guess. Estimation errors settle within ±2σ bounds after brief transients—the purple error curves stay inside the blue confidence bands.</p>
+				</div>
+			</div>
+
+			<h3>Temperature and shaft speed</h3>
+			<div class="mbe-demo-grid mbe-demo-grid--duo">
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>T₂ error</em></div>
+						<img src="images/estimation-t2.png" alt="T2 estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">T₂ — fast convergence, error within ±2σ</p>
+				</figure>
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>T₃ error</em></div>
+						<img src="images/estimation-t3.png" alt="T3 estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">T₃ — large initial transient, then tight tracking</p>
+				</figure>
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>T₄ error</em></div>
+						<img src="images/estimation-t4.png" alt="T4 estimation error (unmeasured)" loading="lazy" />
+					</div>
+					<p class="mbe-caption">T₄ — inferred without direct measurement</p>
+				</figure>
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Shaft speed N</em></div>
+						<img src="images/estimation-shaft-speed.png" alt="Shaft speed estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">N — filter reduces ±100 RPM measurement scatter</p>
+				</figure>
+			</div>
+
+			<h3>Component efficiencies (health indicators)</h3>
+			<div class="mbe-demo-grid mbe-demo-grid--duo">
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>η<sub>c</sub></em></div>
+						<img src="images/estimation-compressor-efficiency.png" alt="Compressor efficiency estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">Compressor η<sub>c</sub> — rapid convergence, tight uncertainty</p>
+				</figure>
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>η<sub>b</sub></em></div>
+						<img src="images/estimation-burner-efficiency.png" alt="Burner efficiency estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">Burner η<sub>b</sub> — slower uncertainty reduction</p>
+				</figure>
+				<figure class="mbe-figure">
+					<div class="mbe-demo-frame">
+						<div class="mbe-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>η<sub>t</sub></em></div>
+						<img src="images/estimation-turbine-efficiency.png" alt="Turbine efficiency estimation error" loading="lazy" />
+					</div>
+					<p class="mbe-caption">Turbine η<sub>t</sub> — near-zero error, wider ±2σ band</p>
+				</figure>
+			</div>
+		</section>
+
+		<section class="mbe-section" id="learnings">
+			<div class="mbe-section-head">
+				<h2>Key learnings</h2>
+			</div>
+			<ul class="mbe-learning-grid">
+				<li class="mbe-learning-card">
+					<strong>Observability is design-dependent</strong>
+					<p>States in the vector are not automatically observable—coupling and measurement choice determine what can be recovered (e.g. T₄ only through model dynamics).</p>
+				</li>
+				<li class="mbe-learning-card">
+					<strong>Modeling choices matter</strong>
+					<p>Unlike textbook problems with fixed states and sensors, this project required defining states, inputs, measurements, noise levels, and time constants explicitly.</p>
+				</li>
+				<li class="mbe-learning-card">
+					<strong>Scaling and units</strong>
+					<p>Inconsistent SI scaling (especially RPM and temperature) caused early numerical issues; careful bookkeeping was part of making the EKF reliable.</p>
+				</li>
+				<li class="mbe-learning-card">
+					<strong>Model + tuning + honesty</strong>
+					<p>A usable estimator sits at the intersection of correct physics, consistent Jacobians, and realistic noise assumptions—not filter equations alone.</p>
+				</li>
+			</ul>
+			<p class="mbe-course-note">MAE 6760 Model Based Estimation, Cornell University · Full MATLAB implementation and references in the project report.</p>
+		</section>
+
+		<section class="mbe-section" id="downloads">
+			<div class="mbe-section-head">
+				<h2>Downloads</h2>
+			</div>
+			<div class="mbe-download-panel">
+				<p>Project report (full write-up) and MATLAB source for the 7-state EKF simulation.</p>
+				<div class="mbe-download-grid">
+					<a href="ProjectReport.docx" class="mbe-download-card" download>
+						<span class="mbe-download-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></span>
+						<span class="mbe-download-title">Project report</span>
+						<span class="mbe-download-desc">Model, EKF formulation, results, and appendix</span>
+					</a>
+					<a href="ekf5.m" class="mbe-download-card" target="_blank" rel="noopener noreferrer">
+						<span class="mbe-download-icon mbe-download-icon--code" aria-hidden="true"><i class="fas fa-code"></i></span>
+						<span class="mbe-download-title">MATLAB code</span>
+						<span class="mbe-download-desc">ekf5.m — plant model, EKF, and plots</span>
+					</a>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="mbe-footer">
+		<p>Model-Based Estimation · Gas Turbine Health Monitoring</p>
+		<p><a href="../../index.html#two">← Back to portfolio</a></p>
+	</footer>
+
+	<script>
+	(function () {
+		var navLinks = document.querySelectorAll('.mbe-nav a[href^="#"]');
+		var sections = [];
+		navLinks.forEach(function (link) {
+			var href = link.getAttribute('href');
+			if (href && href.length > 1) {
+				var el = document.getElementById(href.slice(1));
+				if (el) sections.push({ id: href.slice(1), el: el });
+			}
+		});
+		if (sections.length && 'IntersectionObserver' in window) {
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+			var observer = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) setActive(entry.target.id);
+				});
+			}, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
+			sections.forEach(function (s) { observer.observe(s.el); });
+			setActive(sections[0].id);
+		}
+	})();
+	</script>
+</body>
+</html>
