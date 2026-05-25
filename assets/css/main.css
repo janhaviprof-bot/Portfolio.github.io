@@ -3988,14 +3988,13 @@ h3, .project-item h3 {
 #intro {
   background-color: #0f172a;
 }
-#one {
-  background-color: #ffffff;
-}
-#one .spotlights > section:nth-child(2) {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-#one .spotlights > section:nth-child(3) {
-  background-color: rgba(0, 0, 0, 0.04);
+#one.wrapper.style2 {
+  background: linear-gradient(
+    180deg,
+    #e8edf2 0%,
+    #f1f5f9 50%,
+    #f8fafc 100%
+  ) !important;
 }
 #two {
   background-color: #f8fafc;
@@ -4009,41 +4008,97 @@ h3, .project-item h3 {
 
 /* Modular text colors - distinct hierarchy per section */
 
-/* Experience section */
+/* Experience section — soft slate, matches Projects palette */
+#one.spotlights > section {
+  align-items: stretch;
+  background: transparent;
+}
+
+#one.spotlights > section:nth-child(1) {
+  background-color: #eef2f6;
+}
+
+#one.spotlights > section:nth-child(2) {
+  background-color: #f4f6f8;
+}
+
+#one.spotlights > section:nth-child(3) {
+  background-color: #f8fafc;
+}
+
+#one.spotlights > section:not(:last-child) {
+  border-bottom: 1px solid #cbd5e1;
+  box-shadow: none;
+}
+
+#one.spotlights > section > .content {
+  background-color: transparent;
+}
+
 #one h2 {
   color: #0f172a;
   font-weight: 700;
   border-left: 4px solid #475569;
   padding-left: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.65rem;
 }
+
+#one .experience-summary {
+  padding: 0.85em 0 0.5em 1em;
+  margin-top: 0.15em;
+  border-left: 2px solid #cbd5e1;
+}
+
 #one .experience-summary .role {
-  color: #0f172a;
+  color: #1e293b;
   font-weight: 600;
   font-size: 1.05em;
 }
+
 #one .experience-summary .team {
   color: #64748b;
   font-size: 0.95em;
 }
-#one .experience-summary .skills {
-  color: #475569;
-  font-size: 0.9em;
-  font-weight: 500;
-}
-#one .experience-summary p {
+
+#one .experience-summary .experience-tech {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.25rem 0;
+  font-size: 0.82em;
+  margin-top: 0.75em;
+  line-height: 1.45;
   color: #334155;
 }
 
-/* Company logos in experience spotlights */
-#one.spotlights > section {
-  align-items: stretch;
+#one .experience-summary .experience-tech span {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+#one .experience-summary .experience-tech span:not(:last-child)::after {
+  content: "|";
+  margin: 0 0.35em;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* Logo panels — neutral cool gray, subtle step per row */
+#one.spotlights > section:nth-child(1) > .image.image--company-logo {
+  background: #e2e8f0;
+}
+
+#one.spotlights > section:nth-child(2) > .image.image--company-logo {
+  background: #eceff3;
+}
+
+#one.spotlights > section:nth-child(3) > .image.image--company-logo {
+  background: #f1f5f9;
 }
 
 #one.spotlights > section > .image.image--company-logo {
-  background-color: #ffffff;
   background-image: none !important;
-  background-size: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4054,6 +4109,11 @@ h3, .project-item h3 {
   overflow: hidden;
   padding: 0;
   box-sizing: border-box;
+  border-right: 1px solid #cbd5e1;
+}
+
+#one.spotlights > section > .image.image--company-logo:before {
+  background: rgba(15, 23, 42, 0.04);
 }
 
 #one.spotlights > section > .image.image--company-logo .company-logo-frame {
@@ -4062,7 +4122,6 @@ h3, .project-item h3 {
   justify-content: center;
   width: 100%;
   height: 100%;
-  max-height: 100%;
   padding: 2em 1.5em;
   box-sizing: border-box;
   overflow: hidden;
@@ -4086,6 +4145,8 @@ h3, .project-item h3 {
     min-height: 10em;
     max-height: 12em;
     height: auto !important;
+    border-right: none;
+    border-bottom: 1px solid #cbd5e1;
   }
 
   #one.spotlights > section > .image.image--company-logo .company-logo-frame {
@@ -4166,12 +4227,20 @@ h3, .project-item h3 {
   border-color: #f8fafc !important;
   color: #ffffff !important;
 }
-#one .button,
+#one .button {
+  border-color: rgba(71, 85, 105, 0.45) !important;
+  color: #334155 !important;
+  box-shadow: none;
+}
+#one .button:hover {
+  border-color: #475569 !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
 #three .button {
   border-color: rgba(71, 85, 105, 0.5) !important;
   color: #334155 !important;
 }
-#one .button:hover,
 #three .button:hover {
   border-color: #475569 !important;
   color: #1e293b !important;
