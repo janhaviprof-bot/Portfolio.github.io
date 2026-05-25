@@ -1,0 +1,16 @@
+term,factor,coef,odds_ratio,ci_lower_95,ci_upper_95,p_value,reference
+"C(phase, Treatment(reference=""Landing""))[T.Maneuvering]",Phase: Maneuvering,2.9663016034677603,19.419963890574543,17.646746667132298,21.371361227372674,0.0,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Other/Rare]",Phase: Other/Rare,2.5933914723732836,13.375055902149303,8.641326881162998,20.701927244018638,2.7085238329564436e-31,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Climb]",Phase: Climb,2.406136264341885,11.091025461851764,9.709031953093003,12.669733335902414,4.6053562467145074e-275,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Descent]",Phase: Descent,1.99224928080845,7.332006971496143,6.378404920812655,8.428177090898588,8.092521457384718e-173,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Cruise]",Phase: Cruise,1.9737523499783411,7.197633921343573,6.567886327299362,7.887763503205704,0.0,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Unknown/Missing]",Phase: Unknown/Missing,1.9569216477467402,7.077506438707755,6.3025560735393125,7.9477432339321,6.981915608153526e-240,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Go-around]",Phase: Go-around,1.9296653212901997,6.887204854985909,5.888839015782456,8.054828903866532,7.433642872050553e-129,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Approach]",Phase: Approach,1.8548883370221998,6.390984574407382,5.7885968084830965,7.056059556688396,3.1426190568948936e-295,Reference: Landing
+"C(weather, Treatment(reference=""VMC""))[T.IMC]",Weather: IMC,1.7336742641223786,5.6614172824116915,5.275646345658971,6.075396936332408,0.0,Reference: VMC
+"C(phase, Treatment(reference=""Landing""))[T.Takeoff]",Phase: Takeoff,1.724998677890637,5.612513609331459,5.129910553808131,6.140518179512299,1.894256309442993e-309,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Standing]",Phase: Standing,1.4501421591973203,4.263720599185566,3.455270598271704,5.261328405657275,1.2101681459037532e-41,Reference: Landing
+"C(weather, Treatment(reference=""VMC""))[T.Unknown/Missing]",Weather: Unknown/Missing,0.9262075715411328,2.5249154361709487,2.214822308432839,2.878424122576806,1.2071602160550725e-43,Reference: VMC
+"C(amateur, Treatment(reference=""No""))[T.Yes]",Amateur-built: Yes,0.6019484242983133,1.8256725218899965,1.7207078077010265,1.93704017745894,2.48371299628115e-88,Reference: Non-amateur-built / No
+"C(phase, Treatment(reference=""Landing""))[T.Taxi]",Phase: Taxi,-0.3085024344514686,0.7345461639800058,0.5659115586010047,0.9534317842024436,0.020431738910138466,Reference: Landing
+"C(amateur, Treatment(reference=""No""))[T.Unknown/Missing]",Amateur-built: Unknown/Missing,-19.215290688523698,4.517574109917405e-09,0.0,inf,0.9991352926731075,Reference: Non-amateur-built / No

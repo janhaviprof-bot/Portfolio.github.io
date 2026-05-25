@@ -1,0 +1,9 @@
+metric,value
+Number of observations,67128.0
+Severe accident share,0.2612173757597426
+Train size,50346.0
+Test size,16782.0
+Test AUC,0.7540635325128965
+Test accuracy at 0.50 threshold,0.6770349183649148
+5-fold CV AUC mean,0.7534876528169935
+5-fold CV AUC std,0.004613102818886983

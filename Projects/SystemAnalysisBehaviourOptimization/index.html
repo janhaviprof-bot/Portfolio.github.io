@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Airport Preboarding Queue Simulation</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Discrete-event simulation of airport check-in and security screening with Monte Carlo replications, Little's Law verification, and security staffing optimization (SYSEN 5200)." />
+	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body class="sab-page">
+
+	<header class="sab-topbar">
+		<div class="sab-topbar-inner">
+			<a href="../../index.html" class="sab-brand">
+				<img src="images/me.jpg" alt="" />
+				<span class="sab-brand-text">
+					<strong>Janhavi Gaikwad</strong>
+					<span>Systems Engineer</span>
+				</span>
+			</a>
+			<nav class="sab-nav-wrap" aria-label="Page sections">
+				<ul class="sab-nav">
+					<li><a href="#top">Overview</a></li>
+					<li><a href="#problem">Problem</a></li>
+					<li><a href="#approach">Model</a></li>
+					<li><a href="#task1">Task 1</a></li>
+					<li><a href="#task2">Task 2</a></li>
+					<li><a href="#results">Results</a></li>
+					<li><a href="#downloads">Downloads</a></li>
+				</ul>
+			</nav>
+			<ul class="sab-social">
+				<li><a href="https://www.linkedin.com/in/janhavi-gaikwad-a200a0125/" class="fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"></a></li>
+				<li><a href="https://janhaviprof-bot.github.io/Portfolio.github.io/" class="fas fa-folder-open" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"></a></li>
+				<li><a href="#" class="fas fa-envelope" aria-label="Email" onclick="navigator.clipboard.writeText('janhavi.prof@gmail.com').then(()=>alert('Email copied!')); return false;"></a></li>
+			</ul>
+		</div>
+	</header>
+
+	<div class="sab-hero-shell" id="top">
+		<section class="sab-hero">
+			<div class="sab-hero-grid">
+				<div class="sab-hero-copy">
+					<p class="sab-hero-eyebrow"><i class="fas fa-plane-departure" aria-hidden="true"></i> SYSEN 5200 · Operations simulation</p>
+					<h1>Airport Preboarding: Check-in, Security, and Queue Dynamics</h1>
+					<ul class="sab-metrics" aria-label="Project scope">
+						<li class="sab-metric">
+							<span class="sab-metric-icon" aria-hidden="true"><i class="fas fa-route"></i></span>
+							<span class="sab-metric-body">
+								<span class="sab-metric-value">3-stage</span>
+								<span class="sab-metric-label">Terminal flow</span>
+							</span>
+						</li>
+						<li class="sab-metric">
+							<span class="sab-metric-icon" aria-hidden="true"><i class="fas fa-redo"></i></span>
+							<span class="sab-metric-body">
+								<span class="sab-metric-value">50</span>
+								<span class="sab-metric-label">MC replications</span>
+							</span>
+						</li>
+						<li class="sab-metric">
+							<span class="sab-metric-icon" aria-hidden="true"><i class="fas fa-clock"></i></span>
+							<span class="sab-metric-body">
+								<span class="sab-metric-value">DES</span>
+								<span class="sab-metric-label">Next-event clock</span>
+							</span>
+						</li>
+						<li class="sab-metric">
+							<span class="sab-metric-icon" aria-hidden="true"><i class="fab fa-python"></i></span>
+							<span class="sab-metric-body">
+								<span class="sab-metric-value">Python</span>
+								<span class="sab-metric-label">NumPy · pandas</span>
+							</span>
+						</li>
+					</ul>
+					<p class="sab-hero-lead">Discrete-event model of passenger flow through check-in counters, transit to security, and screening lanes. Used to test stability vs. arrival rate, verify Little's Law, and find the minimum-cost security staffing level.</p>
+					<p class="sab-team-note"><strong>Team project (SYSEN 5200).</strong> Janhavi Gaikwad, Philip Gu, Sachelle Nazon, Nawal Bhatti, Shenghua Wu. <strong>This page covers Problem 2 only</strong> (simulation and analysis). Other problems are in the team report.</p>
+					<div class="sab-tag-row" aria-label="Skills demonstrated">
+						<span class="sab-tag">Queuing</span>
+						<span class="sab-tag">DES</span>
+						<span class="sab-tag">Monte Carlo</span>
+						<span class="sab-tag">Capacity planning</span>
+					</div>
+					<div class="sab-hero-cta">
+						<a href="Problem2.ipynb" class="sab-btn sab-btn-code" download><i class="fas fa-code" aria-hidden="true"></i> Jupyter notebook</a>
+						<a href="TeamReport.docx" class="sab-btn sab-btn-primary" download><i class="fas fa-file-alt" aria-hidden="true"></i> Team report</a>
+						<a href="../../index.html#two" class="sab-btn sab-btn-ghost">Portfolio</a>
+					</div>
+					<blockquote class="sab-sedemo" aria-label="Systems engineering demonstration">
+						<span class="sab-sedemo-label">Systems Engineering Skill</span>
+						<p class="sab-sedemo-text">Simulation-based operational analysis with replicated experiments, confidence intervals, and a capacity trade study when closed-form queuing models do not match the real process structure.</p>
+					</blockquote>
+				</div>
+				<aside class="sab-pipeline-panel" aria-label="Preboarding system schematic">
+					<p class="sab-pipeline-title">System under study</p>
+					<div class="sab-pipeline">
+						<div class="sab-pipeline-stage sab-pipeline-stage--checkin">
+							<span class="sab-pipeline-icon" aria-hidden="true"><i class="fas fa-ticket-alt"></i></span>
+							<span class="sab-pipeline-label">Check-in<span>Multi-server · n1 = 25</span></span>
+							<span class="sab-pipeline-queue" aria-hidden="true"><span></span></span>
+						</div>
+						<div class="sab-pipeline-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
+						<div class="sab-pipeline-stage sab-pipeline-stage--commute">
+							<span class="sab-pipeline-icon" aria-hidden="true"><i class="fas fa-walking"></i></span>
+							<span class="sab-pipeline-label">Commute<span>Travel delay · μ2, σ2</span></span>
+							<span class="sab-pipeline-queue" aria-hidden="true"><span></span></span>
+						</div>
+						<div class="sab-pipeline-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
+						<div class="sab-pipeline-stage sab-pipeline-stage--security">
+							<span class="sab-pipeline-icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></span>
+							<span class="sab-pipeline-label">Security<span>Screening · n3 (decision)</span></span>
+							<span class="sab-pipeline-queue" aria-hidden="true"><span></span></span>
+						</div>
+						<div class="sab-pipeline-arrow" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
+						<div class="sab-pipeline-stage sab-pipeline-stage--board">
+							<span class="sab-pipeline-icon" aria-hidden="true"><i class="fas fa-plane"></i></span>
+							<span class="sab-pipeline-label">Ready to board<span>Throughput S</span></span>
+							<span class="sab-pipeline-queue" aria-hidden="true"><span></span></span>
+						</div>
+					</div>
+					<p class="sab-pipeline-footer">λ arrivals/min · 3600–5000 min horizon · stability when S ≥ λ</p>
+				</aside>
+			</div>
+		</section>
+	</div>
+
+	<main class="sab-main">
+
+		<section class="sab-section" id="problem">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">1</span>
+				<div class="sab-section-head-text">
+					<h2>Operational problem</h2>
+				</div>
+			</div>
+			<p class="sab-phase-lead">Before boarding, passengers compete for finite check-in desks and security lanes. Operators need estimates of average queue length, time in system, and whether the pipeline can keep up with peak arrival rates.</p>
+			<div class="sab-kpi-strip" aria-label="Performance measures">
+				<div class="sab-kpi">
+					<span class="sab-kpi-symbol">L</span>
+					<span class="sab-kpi-name">Avg. in system</span>
+					<span class="sab-kpi-desc">Mean passengers across check-in, commute, and security</span>
+				</div>
+				<div class="sab-kpi">
+					<span class="sab-kpi-symbol">W</span>
+					<span class="sab-kpi-name">Avg. time (min)</span>
+					<span class="sab-kpi-desc">End-to-end preboarding duration per passenger</span>
+				</div>
+				<div class="sab-kpi">
+					<span class="sab-kpi-symbol">S</span>
+					<span class="sab-kpi-name">Throughput</span>
+					<span class="sab-kpi-desc">Completed security departures per minute</span>
+				</div>
+			</div>
+			<ul class="sab-goals">
+				<li class="sab-goal">
+					<span class="sab-goal-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+					<p><strong>Task 1:</strong> Sweep arrival rate λ and check stability; confirm Little's Law (L ≈ λW) where the system is stable.</p>
+				</li>
+				<li class="sab-goal">
+					<span class="sab-goal-icon" aria-hidden="true"><i class="fas fa-users-cog"></i></span>
+					<p><strong>Task 2:</strong> Optimize security stations n3 using cost = L − S + 10·n3 among stable configurations.</p>
+				</li>
+			</ul>
+		</section>
+
+		<section class="sab-section" id="approach">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">2</span>
+				<div class="sab-section-head-text">
+					<h2>Simulation model</h2>
+				</div>
+			</div>
+			<p class="sab-phase-lead">Custom next-event simulator: a future event list (<code>PriorityQueue</code>) advances time; each event updates queues, servers, and time-weighted occupancy statistics.</p>
+			<div class="sab-terminal-flow" aria-label="Terminal zones in the model">
+				<div class="sab-terminal-flow-inner">
+					<div class="sab-tf-zone">
+						<div class="sab-tf-icon" aria-hidden="true"><i class="fas fa-suitcase-rolling"></i></div>
+						<span class="sab-tf-name">Arrivals</span>
+						<span class="sab-tf-param">Exp(λ)</span>
+					</div>
+					<div class="sab-tf-zone">
+						<div class="sab-tf-icon" aria-hidden="true"><i class="fas fa-desktop"></i></div>
+						<span class="sab-tf-name">Check-in</span>
+						<span class="sab-tf-param">Lognormal service</span>
+						<span class="sab-tf-servers">n1 = 25</span>
+					</div>
+					<div class="sab-tf-zone">
+						<div class="sab-tf-icon" aria-hidden="true"><i class="fas fa-arrows-alt-h"></i></div>
+						<span class="sab-tf-name">Commute</span>
+						<span class="sab-tf-param">Normal travel</span>
+					</div>
+					<div class="sab-tf-zone">
+						<div class="sab-tf-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
+						<span class="sab-tf-name">Security</span>
+						<span class="sab-tf-param">Exp service</span>
+						<span class="sab-tf-servers">n3 variable</span>
+					</div>
+					<div class="sab-tf-zone">
+						<div class="sab-tf-icon" aria-hidden="true"><i class="fas fa-check-circle"></i></div>
+						<span class="sab-tf-name">Boarding</span>
+						<span class="sab-tf-param">Departures S</span>
+					</div>
+				</div>
+			</div>
+			<div class="sab-card-grid sab-card-grid--duo">
+				<div class="sab-card">
+					<div class="sab-card-head"><i class="fas fa-database" aria-hidden="true"></i><strong>State variables</strong></div>
+					<p><em>Nq</em>, <em>Nc</em>, <em>Ns</em> queue lengths; <em>Sq</em>, <em>Ss</em> free servers; clock <em>t</em>; cumulative occupancy <em>o</em>.</p>
+				</div>
+				<div class="sab-card sab-card--events">
+					<div class="sab-card-head"><i class="fas fa-bolt" aria-hidden="true"></i><strong>Event types</strong></div>
+					<p>AC/DC (check-in), AS/DS (security), E (end). Each event updates stats then schedules successors.</p>
+				</div>
+				<div class="sab-card sab-card--dist">
+					<div class="sab-card-head"><i class="fas fa-random" aria-hidden="true"></i><strong>Random inputs</strong></div>
+					<p>Exponential arrivals and security service; lognormal check-in; truncated normal commute.</p>
+				</div>
+				<div class="sab-card sab-card--out">
+					<div class="sab-card-head"><i class="fas fa-calculator" aria-hidden="true"></i><strong>Estimation</strong></div>
+					<p>20–50 replications; 95% CIs on L, W, S; unstable if L explodes or S &lt; λ.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="sab-section" id="task1">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">3</span>
+				<div class="sab-section-head-text">
+					<h2>Task 1: Arrival rate and Little's Law</h2>
+				</div>
+			</div>
+			<p class="sab-phase-lead">λ swept from 5 to 20 pax/min (n1=25, n3=10). Ratio L/W compared to λ; divergence at λ=20 indicates queue instability.</p>
+			<div class="sab-task-block">
+				<span class="sab-task-badge">Simulation output</span>
+				<figure class="sab-figure">
+					<div class="sab-chart-frame">
+						<div class="sab-chart-header"><i class="fas fa-chart-line" aria-hidden="true"></i> L/W vs λ · Little's Law check</div>
+						<img src="images/littles-law.png" alt="Plot of L/W versus arrival rate lambda compared to reference line y equals lambda" loading="lazy" />
+					</div>
+					<p class="sab-caption">Stable points lie on the λ reference line; at λ=20 the system cannot sustain S ≥ λ and L/W diverges.</p>
+				</figure>
+				<div class="sab-table-wrap">
+					<table class="sab-table">
+						<caption>Selected runs · 30 replications · 3600 min</caption>
+						<thead>
+							<tr><th>λ</th><th>L</th><th>W (min)</th><th>S</th><th>Status</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>10</td><td>77.6</td><td>7.77</td><td>9.97</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+							<tr><td>15</td><td>117.0</td><td>7.80</td><td>14.97</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+							<tr><td>18</td><td>145.0</td><td>8.06</td><td>17.94</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+							<tr><td>20</td><td>364.5</td><td>18.22</td><td>19.88</td><td><span class="sab-status sab-status--unstable">Unstable</span></td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="sab-section" id="task2">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">4</span>
+				<div class="sab-section-head-text">
+					<h2>Task 2: Security staffing</h2>
+				</div>
+			</div>
+			<p class="sab-phase-lead">At λ=10, n1=25, evaluate n3 = 1…20. Configurations with L &gt; 1000 are unstable. Minimize cost = L − S + 10·n3 over stable designs.</p>
+			<div class="sab-task-block">
+				<span class="sab-task-badge">Staffing trade study</span>
+				<figure class="sab-figure">
+					<div class="sab-chart-frame">
+						<div class="sab-chart-header"><i class="fas fa-chart-area" aria-hidden="true"></i> Cost vs security stations (n3)</div>
+						<img src="images/task2-cost-vs-n3.png" alt="Staffing cost versus number of security stations with minimum at n3 equals 6" loading="lazy" />
+					</div>
+					<p class="sab-caption">Optimal staffing at 6 lanes; extra servers add cost faster than they reduce congestion.</p>
+				</figure>
+				<div class="sab-table-wrap">
+					<table class="sab-table">
+						<caption>Stable configurations · λ=10 · 5000 min horizon</caption>
+						<thead>
+							<tr><th>n3</th><th>L</th><th>W (min)</th><th>S</th><th>Cost</th><th>Status</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>5</td><td>258.5</td><td>19.7</td><td>9.97</td><td>288.91</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+							<tr class="sab-highlight-row"><td>6</td><td>79.0</td><td>8.09</td><td>9.96</td><td>130.74</td><td><span class="sab-status sab-status--optimal">Optimal</span></td></tr>
+							<tr><td>10</td><td>77.9</td><td>7.81</td><td>9.95</td><td>167.79</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+							<tr><td>20</td><td>76.2</td><td>7.64</td><td>9.99</td><td>266.91</td><td><span class="sab-status sab-status--stable">Stable</span></td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="sab-section" id="results">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">5</span>
+				<div class="sab-section-head-text">
+					<h2>Operational takeaway</h2>
+				</div>
+			</div>
+			<div class="sab-results-board">
+				<div class="sab-result-card">
+					<h3>Baseline (n3 = 10)</h3>
+					<p>L ≈ <strong>77.8</strong> pax in system · W ≈ <strong>7.8</strong> min · S ≈ <strong>10.0</strong>/min at λ=10.</p>
+				</div>
+				<div class="sab-result-card sab-result-card--rec">
+					<h3>Recommendation</h3>
+					<p>Staff <span class="sab-result-highlight">6</span> security stations to minimize cost (<strong>130.74</strong>) while keeping S ≈ λ. Fewer lanes are unstable; more lanes overspend on staffing.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="sab-section" id="downloads">
+			<div class="sab-section-head">
+				<span class="sab-section-num" aria-hidden="true">6</span>
+				<div class="sab-section-head-text">
+					<h2>Downloads</h2>
+				</div>
+			</div>
+			<div class="sab-download-panel">
+				<p>Simulation notebook (Problem 2) and full SYSEN 5200 team report.</p>
+				<div class="sab-download-grid">
+					<a href="Problem2.ipynb" class="sab-download-card" download>
+						<span class="sab-download-title"><i class="fas fa-code" aria-hidden="true"></i> Problem2.ipynb</span>
+						<span class="sab-download-desc">DES engine, Tasks 1 and 2, replication loops</span>
+					</a>
+					<a href="TeamReport.docx" class="sab-download-card" download>
+						<span class="sab-download-title"><i class="fas fa-file-alt" aria-hidden="true"></i> Full team report</span>
+						<span class="sab-download-desc">All four course problems (DOCX)</span>
+					</a>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="sab-footer">
+		<p><i class="fas fa-plane-departure" aria-hidden="true"></i> SYSEN 5200 · Airport preboarding discrete-event simulation</p>
+		<p><a href="../../index.html#two">← Back to portfolio</a></p>
+	</footer>
+
+	<script>
+	(function () {
+		var navLinks = document.querySelectorAll('.sab-nav a[href^="#"]');
+		var sections = [];
+		navLinks.forEach(function (link) {
+			var href = link.getAttribute('href');
+			if (href && href.length > 1) {
+				var el = document.getElementById(href.slice(1));
+				if (el) sections.push({ id: href.slice(1), el: el });
+			}
+		});
+		if (sections.length && 'IntersectionObserver' in window) {
+			function setActive(id) {
+				navLinks.forEach(function (l) {
+					var on = l.getAttribute('href') === '#' + id;
+					l.classList.toggle('is-active', on);
+					if (on) l.setAttribute('aria-current', 'location');
+					else l.removeAttribute('aria-current');
+				});
+			}
+			var observer = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) setActive(entry.target.id);
+				});
+			}, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
+			sections.forEach(function (s) { observer.observe(s.el); });
+			setActive(sections[0].id);
+		}
+	})();
+	</script>
+</body>
+</html>

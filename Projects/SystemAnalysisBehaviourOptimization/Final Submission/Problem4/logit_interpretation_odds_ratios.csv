@@ -1,0 +1,33 @@
+term,factor,coef,odds_ratio,ci_lower_95,ci_upper_95,p_value,reference
+Intercept,Intercept,58.79790402900668,3.432458279917017e+25,4.84221715081338e+22,2.4331353750609524e+28,5.207508488696856e-69,
+"C(weather, Treatment(reference=""VMC""))[T.IMC]",Weather: IMC,1.7336742641223786,5.6614172824116915,5.275646345658971,6.075396936332408,0.0,Reference: VMC
+"C(weather, Treatment(reference=""VMC""))[T.Unknown/Missing]",Weather: Unknown/Missing,0.9262075715411328,2.5249154361709487,2.214822308432839,2.878424122576806,1.2071602160550725e-43,Reference: VMC
+"C(phase, Treatment(reference=""Landing""))[T.Takeoff]",Phase: Takeoff,1.724998677890637,5.612513609331459,5.129910553808131,6.140518179512299,1.894256309442993e-309,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Approach]",Phase: Approach,1.8548883370221998,6.390984574407382,5.7885968084830965,7.056059556688396,3.1426190568948936e-295,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Cruise]",Phase: Cruise,1.9737523499783411,7.197633921343573,6.567886327299362,7.887763503205704,0.0,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Maneuvering]",Phase: Maneuvering,2.9663016034677603,19.419963890574543,17.646746667132298,21.371361227372674,0.0,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Climb]",Phase: Climb,2.406136264341885,11.091025461851764,9.709031953093003,12.669733335902414,4.6053562467145074e-275,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Descent]",Phase: Descent,1.99224928080845,7.332006971496143,6.378404920812655,8.428177090898588,8.092521457384718e-173,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Taxi]",Phase: Taxi,-0.3085024344514686,0.7345461639800058,0.5659115586010047,0.9534317842024436,0.020431738910138466,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Go-around]",Phase: Go-around,1.9296653212901997,6.887204854985909,5.888839015782456,8.054828903866532,7.433642872050553e-129,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Standing]",Phase: Standing,1.4501421591973203,4.263720599185566,3.455270598271704,5.261328405657275,1.2101681459037532e-41,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Unknown/Missing]",Phase: Unknown/Missing,1.9569216477467402,7.077506438707755,6.3025560735393125,7.9477432339321,6.981915608153526e-240,Reference: Landing
+"C(phase, Treatment(reference=""Landing""))[T.Other/Rare]",Phase: Other/Rare,2.5933914723732836,13.375055902149303,8.641326881162998,20.701927244018638,2.7085238329564436e-31,Reference: Landing
+"C(amateur, Treatment(reference=""No""))[T.Yes]",Amateur-built: Yes,0.6019484242983133,1.8256725218899965,1.7207078077010265,1.93704017745894,2.48371299628115e-88,Reference: Non-amateur-built / No
+"C(amateur, Treatment(reference=""No""))[T.Unknown/Missing]",Amateur-built: Unknown/Missing,-19.215290688523698,4.517574109917405e-09,0.0,inf,0.9991352926731075,Reference: Non-amateur-built / No
+"C(purpose, Treatment(reference=""Personal""))[T.Aerial Application]",Purpose: Aerial Application,-0.5230935031885969,0.5926842385383236,0.5437042477403249,0.6460766272687326,1.399193178852112e-32,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Aerial Observation]",Purpose: Aerial Observation,0.15999469577955172,1.1735046464479602,0.9745731694635522,1.4130423434424895,0.09137278210175452,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Business]",Purpose: Business,-0.004485909056743963,0.995524137604871,0.9121080457747336,1.0865689795687754,0.9199712124737438,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Ferry]",Purpose: Ferry,-0.15608425068750822,0.8554871119573964,0.7097981481504513,1.0310793295702985,0.10128696443128783,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Instructional]",Purpose: Instructional,-0.5459737582482836,0.5792774324358869,0.5402843401463515,0.6210847118734124,3.2351843988475504e-53,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Other Work Use]",Purpose: Other Work Use,-0.3027834360016798,0.7387590676653346,0.6273285582910431,0.8699826476009914,0.00028386166315387665,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Other/Rare]",Purpose: Other/Rare,0.03430917237900362,1.034904521164066,0.9178441461295449,1.1668945892853788,0.5753424674346546,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Positioning]",Purpose: Positioning,-0.04994645725179844,0.9512803573018008,0.8197736056886,1.1038832086184427,0.510557066215429,Reference: Personal
+"C(purpose, Treatment(reference=""Personal""))[T.Unknown/Missing]",Purpose: Unknown/Missing,-0.23917882615256064,0.7872740845883425,0.7295583746152478,0.8495557118253644,7.409924522226579e-10,Reference: Personal
+"C(engine, Treatment(reference=""Reciprocating""))[T.Other/Rare]",Engine: Other/Rare,0.06049674324783372,1.0623641377079842,0.8193474658799493,1.377459024512799,0.6480348828244487,Reference: Reciprocating
+"C(engine, Treatment(reference=""Reciprocating""))[T.Turbo Fan]",Engine: Turbo Fan,-1.1140052714613988,0.32824162787316236,0.2653897990276024,0.4059785517890896,9.380271061486748e-25,Reference: Reciprocating
+"C(engine, Treatment(reference=""Reciprocating""))[T.Turbo Prop]",Engine: Turbo Prop,0.214955924685853,1.239807250867735,1.1092978280292758,1.3856711700544717,0.00015202113745142203,Reference: Reciprocating
+"C(engine, Treatment(reference=""Reciprocating""))[T.Turbo Shaft]",Engine: Turbo Shaft,0.06747015836290308,1.0697983345878894,0.9665197024229992,1.1841129299464017,0.1927307414869236,Reference: Reciprocating
+"C(engine, Treatment(reference=""Reciprocating""))[T.Unknown/Missing]",Engine: Unknown/Missing,0.2535754870160797,1.2886246502435994,1.1809532457495406,1.4061128119949406,1.2262894159786929e-08,Reference: Reciprocating
+year_clean,Event year,-0.031154934561183033,0.9693253794389268,0.966130720741283,0.9725306017631848,2.1792854212216298e-76,
+engines_num,Number of engines,0.40069763699882727,1.4928658128641332,1.4088335135675893,1.581910363258525,7.33831822331686e-42,Reference: Reciprocating
