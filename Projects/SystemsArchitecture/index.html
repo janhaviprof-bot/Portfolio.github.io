@@ -43,7 +43,14 @@
 
 		<section class="sa-hero" id="top">
 			<div class="sa-hero-inner">
+				<p class="sa-hero-eyebrow">General aviation · hybrid-electric architecture</p>
 				<h1>Systems Architecture for General Aviation Aircraft System</h1>
+				<ul class="sa-hero-kpis" aria-label="Study scope">
+					<li class="sa-kpi"><span class="sa-kpi-dot sa-kpi-dot--scope" aria-hidden="true"></span>184,212 feasible architectures</li>
+					<li class="sa-kpi sa-kpi--cost"><span class="sa-kpi-dot" aria-hidden="true"></span>4 evaluation metrics</li>
+					<li class="sa-kpi sa-kpi--cert"><span class="sa-kpi-dot" aria-hidden="true"></span>Tradespace &amp; Pareto analysis</li>
+					<li class="sa-kpi sa-kpi--rel"><span class="sa-kpi-dot" aria-hidden="true"></span>NSGA-II down-selection</li>
+				</ul>
 				<div class="sa-hero-column">
 					<p class="sa-hero-lead">This project develops a systems architecture for a next-generation family of general aviation aircraft. The work applies systems architecture philosophies from stakeholder and goal analysis through functional, operational, and physical architecture, to enumerate and evaluate hybrid-electric design alternatives, visualize multi-objective tradespace, and down-select Pareto-efficient architectures using a genetic algorithm. The work compares how propulsion, energy storage, avionics, redundancy, and subsystem integration choices affect operating cost, certification schedule, reliability, and durability across more than 184,000 feasible architectures, supporting evidence-based architecture decisions before detailed design.</p>
 					<div class="sa-hero-meta">
@@ -180,31 +187,35 @@
 
 				<h3>Physical architecture</h3>
 				<p>Five physical subsystems structure the implementation: propulsion, electric and energy, flight and control, safety and support, and airframe. Level-1 physical BDD and IBD define component hierarchy and cross-subsystem interfaces (power, control signals, sensor feedback, fault alerts). Level-2 allocated architecture maps 22 sub-functions onto physical components; a design structure matrix (DSM) captures mechanical, electrical, informational, and fluid coupling across 19 components.</p>
-				<div class="sa-demo-grid sa-demo-grid--duo">
-					<figure class="sa-demo-block">
-						<div class="sa-demo-frame">
-							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Physical BDD</em></div>
-							<img src="images/physical-bdd.png" alt="Physical block definition diagram hierarchy for general aircraft" loading="lazy" />
-						</div>
-						<figcaption class="sa-caption">Physical BDD — five primary subsystems and components</figcaption>
-					</figure>
-					<figure class="sa-demo-block">
-						<div class="sa-demo-frame">
-							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>System IBD</em></div>
-							<img src="images/system-ibd.png" alt="Internal block diagram showing interfaces between aircraft subsystems" loading="lazy" />
-						</div>
-						<figcaption class="sa-caption">Level-1 IBD — physical and informational interfaces</figcaption>
-					</figure>
+				<div class="sa-demo-split sa-demo-split--phys">
+					<div class="sa-demo-split-col sa-demo-split-col--stack">
+						<figure class="sa-demo-block">
+							<div class="sa-demo-frame">
+								<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Physical BDD</em></div>
+								<img src="images/physical-bdd.png" alt="Physical block definition diagram hierarchy for general aircraft" loading="lazy" />
+							</div>
+							<figcaption class="sa-caption">Physical BDD — five primary subsystems and components</figcaption>
+						</figure>
+						<figure class="sa-demo-block">
+							<div class="sa-demo-frame">
+								<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>System IBD</em></div>
+								<img src="images/system-ibd.png" alt="Internal block diagram showing interfaces between aircraft subsystems" loading="lazy" />
+							</div>
+							<figcaption class="sa-caption">Level-1 IBD — physical and informational interfaces</figcaption>
+						</figure>
+					</div>
+					<div class="sa-demo-split-col sa-demo-split-col--side">
+						<figure class="sa-demo-block">
+							<div class="sa-demo-frame">
+								<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Allocated architecture</em></div>
+								<img src="images/hw2-allocated-architecture.png" alt="Level-1 allocated architecture mapping functions to physical subsystems" loading="lazy" />
+							</div>
+							<figcaption class="sa-caption">Level-1 allocated architecture — functions hosted by subsystems</figcaption>
+						</figure>
+					</div>
 				</div>
 
 				<div class="sa-demo-grid sa-demo-grid--duo">
-					<figure class="sa-demo-block">
-						<div class="sa-demo-frame">
-							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Allocated architecture</em></div>
-							<img src="images/hw2-allocated-architecture.png" alt="Level-1 allocated architecture mapping functions to physical subsystems" loading="lazy" />
-						</div>
-						<figcaption class="sa-caption">Level-1 allocated architecture — functions hosted by subsystems</figcaption>
-					</figure>
 					<figure class="sa-demo-block">
 						<div class="sa-demo-frame">
 							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Function–component DMM</em></div>
@@ -212,15 +223,14 @@
 						</div>
 						<figcaption class="sa-caption">Level-2 DMM — 22 sub-functions allocated to components</figcaption>
 					</figure>
+					<figure class="sa-demo-block">
+						<div class="sa-demo-frame">
+							<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Component DSM</em></div>
+							<img src="images/hw2-dsm.png" alt="Design structure matrix showing coupling between physical components" loading="lazy" />
+						</div>
+						<figcaption class="sa-caption">Design structure matrix — mechanical, electrical, informational, and fluid coupling</figcaption>
+					</figure>
 				</div>
-
-				<figure class="sa-demo-block">
-					<div class="sa-demo-frame">
-						<div class="sa-demo-chrome" aria-hidden="true"><span></span><span></span><span></span><em>Component DSM</em></div>
-						<img src="images/hw2-dsm.png" alt="Design structure matrix showing coupling between physical components" loading="lazy" />
-					</div>
-					<figcaption class="sa-caption">Design structure matrix — mechanical, electrical, informational, and fluid coupling</figcaption>
-				</figure>
 				<p class="sa-footnote" style="text-align:left;">Physical decomposition and DSM connectivity inform later LRU partitioning (D7) and integration constraints used in architecture enumeration.</p>			</div>
 		</section>
 
@@ -299,20 +309,20 @@
 
 				<div class="sa-subsection">
 					<h3>Evaluation metrics</h3>
-					<div class="sa-feature-grid">
-						<article class="sa-feature-card">
+					<div class="sa-feature-grid sa-feature-grid--metrics">
+						<article class="sa-feature-card sa-feature-card--metric-cost">
 							<h3>Operating cost ($/hr)</h3>
 							<p>Additive subsystem costs. Traces to G6, G10 — operators and airlines need predictable hourly economics.</p>
 						</article>
-						<article class="sa-feature-card">
+						<article class="sa-feature-card sa-feature-card--metric-cert">
 							<h3>Certification schedule (years)</h3>
 							<p>Hybrid series–parallel critical path across propulsion, control, and avionics. Traces to G2, G20 — regulators and program managers need feasible certification timelines.</p>
 						</article>
-						<article class="sa-feature-card sa-feature-card--agent">
+						<article class="sa-feature-card sa-feature-card--metric-rel">
 							<h3>Propulsion reliability</h3>
 							<p>Series–parallel reliability block diagram. Traces to G1, G14, G18 — safety-critical redundancy and fault tolerance.</p>
 						</article>
-						<article class="sa-feature-card">
+						<article class="sa-feature-card sa-feature-card--metric-dur">
 							<h3>System durability (years)</h3>
 							<p>Min–max and redundancy-aware lifetimes. Traces to G4, G8 — maintenance teams and owners need component longevity.</p>
 						</article>
@@ -553,7 +563,7 @@
 
 	<footer class="sa-footer">
 		<div class="sa-footer-inner">
-			<p>SYSEN 5400 · Systems Architecture for General Aviation Aircraft System · Cornell</p>
+			<p>Systems Architecture for General Aviation Aircraft System · MBSE tradespace study</p>
 			<p><a href="../../index.html#two">← Back to portfolio</a></p>
 		</div>
 	</footer>
