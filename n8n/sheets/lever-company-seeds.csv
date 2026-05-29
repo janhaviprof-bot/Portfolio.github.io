@@ -1,0 +1,20 @@
+company,career_page_url,ats_type,slug,enabled,keyword_filter,department_filter,tier,last_fetch_status
+Shield AI,https://jobs.lever.co/shieldai,lever,shieldai,TRUE,,,1,verified
+Zoox,https://jobs.lever.co/zoox,lever,zoox,TRUE,,,1,verified
+Hermeus,https://jobs.lever.co/hermeus,lever,hermeus,TRUE,,,1,verified
+Waabi,https://jobs.lever.co/waabi,lever,waabi,TRUE,,,1,verified
+Loft Orbital,https://jobs.lever.co/loftorbital,lever,loftorbital,TRUE,,,1,verified
+Bright Machines,https://jobs.lever.co/brightmachines,lever,brightmachines,TRUE,,,1,verified
+Cyngn,https://jobs.lever.co/cyngn,lever,cyngn,TRUE,,,1,verified
+Elroy Air,https://jobs.lever.co/elroyair,lever,elroyair,TRUE,,,1,verified
+Skyways,https://jobs.lever.co/skyways,lever,skyways,TRUE,,,1,verified
+Teleo,https://jobs.lever.co/teleo,lever,teleo,TRUE,,,1,verified
+NextDecade,https://jobs.lever.co/next-decade,lever,next-decade,TRUE,,,1,verified
+Saronic,https://jobs.lever.co/saronic,lever,saronic,TRUE,,,1,verified_empty
+Dexterity,https://jobs.lever.co/dexterity,lever,dexterity,TRUE,,,1,verified
+Intersect,https://jobs.lever.co/intersect,lever,intersect,TRUE,,,1,verified
+Mainspring Energy,https://jobs.lever.co/mainspringenergy,lever,mainspringenergy,TRUE,,,1,verified
+Plaid,https://jobs.lever.co/plaid,lever,plaid,TRUE,,,2,verified_empty
+Lever,https://jobs.lever.co/lever,lever,lever,TRUE,,,2,verified_empty
+Blue Origin,https://jobs.lever.co/blueorigin,lever,blueorigin,TRUE,,,1,verified_empty
+Forterra,https://jobs.lever.co/forterra,lever,forterra,TRUE,,,1,verified_empty

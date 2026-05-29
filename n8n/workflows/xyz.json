@@ -1,0 +1,272 @@
+{
+  "name": "shared-dedupe-append-nodes",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "jobs",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "f7ed6fd0-3c0d-44fa-9ed8-c5e5f2475d01",
+      "name": "Read existing jobs tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        980,
+        -760
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "function clean(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction normalizeUrl(value) {\n  return clean(value)\n    .toLowerCase()\n    .replace(/^https?:\\/\\//, '')\n    .replace(/^www\\./, '')\n    .replace(/[?#].*$/, '')\n    .replace(/\\/+$/, '');\n}\n\nfunction normalizeText(value) {\n  return clean(value)\n    .toLowerCase()\n    .replace(/[^a-z0-9]+/g, ' ')\n    .trim();\n}\n\nfunction makeCompanyTitleKey(row) {\n  const company = normalizeText(row.company);\n  const title = normalizeText(row.title);\n  return company && title ? `${company}|${title}` : '';\n}\n\nconst newJobs = $input.all();\n\nlet existingRows = [];\ntry {\n  existingRows = $('Read existing jobs tab').all();\n} catch (error) {\n  existingRows = [];\n}\n\nconst seenUrls = new Set();\nconst seenCompanyTitle = new Set();\n\nfor (const item of existingRows) {\n  const row = item.json || {};\n\n  const existingUrl = normalizeUrl(row.discovery_url || row.apply_url);\n  if (existingUrl) seenUrls.add(existingUrl);\n\n  const existingCompanyTitle = makeCompanyTitleKey(row);\n  if (existingCompanyTitle) seenCompanyTitle.add(existingCompanyTitle);\n}\n\nconst out = [];\n\nfor (const item of newJobs) {\n  const job = item.json || {};\n\n  const jobUrl = normalizeUrl(job.discovery_url || job.apply_url);\n  const jobCompanyTitle = makeCompanyTitleKey(job);\n\n  if (jobUrl && seenUrls.has(jobUrl)) continue;\n  if (jobCompanyTitle && seenCompanyTitle.has(jobCompanyTitle)) continue;\n\n  if (jobUrl) seenUrls.add(jobUrl);\n  if (jobCompanyTitle) seenCompanyTitle.add(jobCompanyTitle);\n\n  out.push(item);\n}\n\nreturn out;"
+      },
+      "id": "04fd9f0a-f3fa-4d47-93b4-aa5fc975971c",
+      "name": "Filter duplicate jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        -760
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "jobs",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}",
+            "found_at": "={{ $json.found_at || $now }}",
+            "status": "={{ $json.status || \"ready\" }}",
+            "source": "={{ $json.source || \"\" }}",
+            "title": "={{ $json.title || \"\" }}",
+            "company": "={{ $json.company || \"\" }}",
+            "location": "={{ $json.location || \"\" }}",
+            "apply_url": "={{ $json.apply_url || \"\" }}",
+            "discovery_url": "={{ $json.discovery_url || \"\" }}",
+            "posted_at": "={{ $json.posted_at || \"\" }}",
+            "needs_manual_jd": "={{ $json.needs_manual_jd ?? false }}",
+            "full_jd": "={{ $json.full_jd || \"\" }}",
+            "bucket_selected": "={{ $json.bucket_selected || \"\" }}",
+            "score": "={{ $json.score || \"\" }}",
+            "rank_reason": "={{ $json.rank_reason || \"\" }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "found_at",
+              "displayName": "found_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "apply_url",
+              "displayName": "apply_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "discovery_url",
+              "displayName": "discovery_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "posted_at",
+              "displayName": "posted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "needs_manual_jd",
+              "displayName": "needs_manual_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "full_jd",
+              "displayName": "full_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bucket_selected",
+              "displayName": "bucket_selected",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "rank_reason",
+              "displayName": "rank_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "b54cb2a7-2e14-4be5-9854-3becb16938ce",
+      "name": "Append unique jobs to jobs tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1500,
+        -760
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Filter duplicate jobs": {
+      "main": [
+        [
+          {
+            "node": "Append unique jobs to jobs tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

@@ -1,0 +1,379 @@
+{
+  "name": "ats-greenhouse",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef001",
+      "name": "When you click Execute",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        760,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "spreadsheetId",
+              "value": "={{ $env.SPREADSHEET_ID }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef002",
+      "name": "Set Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "config",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef003",
+      "name": "Read config tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1200,
+        460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "companies",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef004",
+      "name": "Read companies tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1420,
+        460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const DAY_MS = 24 * 60 * 60 * 1000;\nconst cutoff = Date.now() - DAY_MS;\n\nfunction clean(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction stripHtml(html) {\n  return clean(String(html || '').replace(/<[^>]+>/g, ' '));\n}\n\nfunction isEnabled(value) {\n  return value === true || value === 1 || ['true', '1', 'yes', 'y'].includes(clean(value).toLowerCase());\n}\n\nfunction getConfigValue(rows, key) {\n  const row = rows.find((item) => clean(item.json.key).toLowerCase() === key);\n  return clean(row?.json.value || '');\n}\n\nfunction splitTerms(value) {\n  return clean(value)\n    .split(/[,;|\\n]/)\n    .map((term) => clean(term).toLowerCase())\n    .filter(Boolean);\n}\n\nfunction deriveGreenhouseSlug(row) {\n  if (clean(row.slug)) return clean(row.slug);\n\n  const url = clean(row.career_page_url || row.endpoint);\n  if (!url) return '';\n\n  try {\n    const parsed = new URL(url);\n    const parts = parsed.pathname.split('/').filter(Boolean);\n\n    if (parsed.hostname.includes('boards-api.greenhouse.io')) {\n      return parts[1] || parts[0] || '';\n    }\n\n    return parts[0] || '';\n  } catch (error) {\n    return '';\n  }\n}\n\nfunction isGreenhouseRow(row) {\n  const atsType = clean(row.ats_type).toLowerCase();\n  const url = clean(row.career_page_url || row.endpoint).toLowerCase();\n  return atsType === 'greenhouse' || url.includes('greenhouse.io');\n}\n\nfunction matchesRole(title, terms) {\n  const normalizedTitle = clean(title).toLowerCase();\n  return terms.some((term) => normalizedTitle.includes(term));\n}\n\nfunction getJobUrl(job) {\n  return clean(job.absolute_url || job.url || '');\n}\n\nconst configRows = $('Read config tab').all();\nconst companies = $input.all().map((item) => item.json);\n\nconst roleTerms = [\n  ...splitTerms(getConfigValue(configRows, 'systems_title_references')),\n  ...splitTerms(getConfigValue(configRows, 'mechanical_title_references')),\n  ...splitTerms(getConfigValue(configRows, 'controls_title_references')),\n];\n\nconst terms = roleTerms.length\n  ? [...new Set(roleTerms)]\n  : ['systems engineer', 'system engineer', 'mechanical engineer', 'controls engineer', 'control systems engineer'];\n\nconst out = [];\n\nfor (const companyRow of companies) {\n  if (!isEnabled(companyRow.enabled)) continue;\n  if (!isGreenhouseRow(companyRow)) continue;\n\n  const slug = deriveGreenhouseSlug(companyRow);\n  if (!slug) continue;\n\n  const company = clean(companyRow.company) || slug;\n  const apiUrl = `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(slug)}/jobs?content=true`;\n\n  let response;\n  try {\n    response = await $helpers.httpRequest({ method: 'GET', url: apiUrl, json: true });\n  } catch (error) {\n    out.push({\n      json: {\n        title: `Greenhouse fetch failed: ${company}`,\n        company,\n        location: '',\n        apply_url: '',\n        discovery_url: apiUrl,\n        posted_at: '',\n        needs_manual_jd: true,\n        full_jd: clean(error.message || error),\n        status: 'fetch_error',\n        source: 'greenhouse',\n        bucket_selected: '',\n        score: '',\n        rank_reason: '',\n      },\n    });\n    continue;\n  }\n\n  const jobs = Array.isArray(response.jobs) ? response.jobs : [];\n\n  for (const job of jobs) {\n    const updatedAt = job.updated_at ? new Date(job.updated_at).getTime() : 0;\n    if (!updatedAt || updatedAt < cutoff) continue;\n    if (!matchesRole(job.title, terms)) continue;\n\n    const fullJd = stripHtml(job.content || '');\n    const url = getJobUrl(job);\n\n    out.push({\n      json: {\n        title: clean(job.title),\n        company,\n        location: clean(job.location?.name),\n        apply_url: url,\n        discovery_url: url,\n        posted_at: clean(job.updated_at),\n        needs_manual_jd: !fullJd,\n        full_jd: fullJd,\n        status: fullJd ? 'ready' : 'needs_jd',\n        source: 'greenhouse',\n        bucket_selected: '',\n        score: '',\n        rank_reason: '',\n      },\n    });\n  }\n}\n\nreturn out;"
+      },
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef005",
+      "name": "Fetch Greenhouse jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1640,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "jobs",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}",
+            "found_at": "={{ $json.found_at || $now }}",
+            "status": "={{ $json.status || \"ready\" }}",
+            "source": "={{ $json.source || \"greenhouse\" }}",
+            "title": "={{ $json.title || \"\" }}",
+            "company": "={{ $json.company || \"\" }}",
+            "location": "={{ $json.location || \"\" }}",
+            "apply_url": "={{ $json.apply_url || \"\" }}",
+            "discovery_url": "={{ $json.discovery_url || \"\" }}",
+            "posted_at": "={{ $json.posted_at || \"\" }}",
+            "needs_manual_jd": "={{ $json.needs_manual_jd ?? false }}",
+            "full_jd": "={{ $json.full_jd || \"\" }}",
+            "bucket_selected": "={{ $json.bucket_selected || \"\" }}",
+            "score": "={{ $json.score || \"\" }}",
+            "rank_reason": "={{ $json.rank_reason || \"\" }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "found_at",
+              "displayName": "found_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "apply_url",
+              "displayName": "apply_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "discovery_url",
+              "displayName": "discovery_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "posted_at",
+              "displayName": "posted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "needs_manual_jd",
+              "displayName": "needs_manual_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "full_jd",
+              "displayName": "full_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bucket_selected",
+              "displayName": "bucket_selected",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "rank_reason",
+              "displayName": "rank_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "3e2d1b8d-ec17-4f1b-9ed1-8b5c0b2ef006",
+      "name": "Append to jobs tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1860,
+        460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When you click Execute": {
+      "main": [
+        [
+          {
+            "node": "Set Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Config": {
+      "main": [
+        [
+          {
+            "node": "Read config tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read config tab": {
+      "main": [
+        [
+          {
+            "node": "Read companies tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read companies tab": {
+      "main": [
+        [
+          {
+            "node": "Fetch Greenhouse jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Greenhouse jobs": {
+      "main": [
+        [
+          {
+            "node": "Append to jobs tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}

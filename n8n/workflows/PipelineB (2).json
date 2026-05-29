@@ -1,0 +1,1913 @@
+{
+  "name": "PipelineB",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "spreadsheetId",
+              "value": "={{ $env.SPREADSHEET_ID }}",
+              "type": "string"
+            },
+            {
+              "name": "reminderEmail",
+              "value": "={{ $env.REMINDER_EMAIL }}",
+              "type": "string"
+            },
+            {
+              "name": "sheetUrl",
+              "value": "={{ $env.SHEET_URL }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "92aad0c8-1c90-4291-86f6-9e4a7166519b",
+      "name": "Set Config B",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1400,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Parse config tab once and store for all parallel ranking branches.\r\n * Wire: Read config tab B -> Store ranking config -> Read unique_jobs tab\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction getConfigValue(rows, key) {\r\n  const row = rows.find((item) => clean(item.json.key).toLowerCase() === key);\r\n  return clean(row?.json.value || '');\r\n}\r\n\r\nconst rows = $input.all();\r\nconst staticData = $getWorkflowStaticData('global');\r\n\r\nstaticData.rankingConfig = {\r\n  openai_api_key: getConfigValue(rows, 'openai_api_key'),\r\n  openai_model: getConfigValue(rows, 'openai_model') || 'gpt-4o-mini',\r\n  llm_rank_prompt: getConfigValue(rows, 'llm_rank_prompt'),\r\n  systems_rank_prompt: getConfigValue(rows, 'systems_rank_prompt'),\r\n  mechanical_rank_prompt: getConfigValue(rows, 'mechanical_rank_prompt'),\r\n  controls_rank_prompt: getConfigValue(rows, 'controls_rank_prompt'),\r\n  systems_resume_text: getConfigValue(rows, 'systems_resume_text'),\r\n  mechanical_resume_text: getConfigValue(rows, 'mechanical_resume_text'),\r\n  controls_resume_text: getConfigValue(rows, 'controls_resume_text'),\r\n  blocklist: getConfigValue(rows, 'blocklist'),\r\n};\r\n\r\nreturn [{\r\n  json: {\r\n    config_loaded: true,\r\n    config_rows: rows.length,\r\n  },\r\n}];\r\n"
+      },
+      "id": "b30af8b6-983f-4502-8378-1d42bf95dc8e",
+      "name": "Store ranking config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1080,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "unique_jobs",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "545b006d-05ed-49a9-8113-c0c18af6df5c",
+      "name": "Read unique_jobs tab",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -920,
+        320
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Remove jobs whose title/JD matches config blocklist (ITAR, citizenship, etc.)\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction splitTerms(value) {\r\n  return clean(value)\r\n    .split(/[,;|\\n]/)\r\n    .map((term) => clean(term).toLowerCase())\r\n    .filter(Boolean);\r\n}\r\n\r\nconst defaultBlocklist = [\r\n  'itar',\r\n  'export control',\r\n  'u.s. citizen',\r\n  'us citizen',\r\n  'united states citizen',\r\n  'citizenship required',\r\n  'must be a citizen',\r\n  'must be a u.s. citizen',\r\n  'active secret clearance',\r\n  'secret clearance',\r\n  'top secret clearance',\r\n  'ability to obtain clearance',\r\n];\r\n\r\nconst staticData = $getWorkflowStaticData('global');\r\nconst configured = splitTerms(staticData.rankingConfig?.blocklist || '');\r\nconst blocklist = configured.length ? configured : defaultBlocklist;\r\n\r\nfunction isRestricted(job) {\r\n  const haystack = clean([\r\n    job.title,\r\n    job.full_jd,\r\n    job.location,\r\n    job.company,\r\n  ].join(' ')).toLowerCase();\r\n\r\n  return blocklist.some((term) => haystack.includes(term));\r\n}\r\n\r\nconst out = [];\r\n\r\nfor (const item of $input.all()) {\r\n  const job = item.json || {};\r\n  if (isRestricted(job)) continue;\r\n  out.push(item);\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "4143ea8f-5d49-4071-a4d2-d29700bd6947",
+      "name": "Filter restricted jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -740,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_systems",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "3d040d28-37dc-4c57-9484-8fe3c333e22d",
+      "name": "Clear ranked_systems",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1260,
+        1040
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_mechanical",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "c1c1fd69-be69-4e54-831b-3d44a6499af1",
+      "name": "Clear ranked_mechanical",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1240,
+        860
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_controls",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "dca5fa4a-3d64-4582-91b5-9254ce69b693",
+      "name": "Clear ranked_controls",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1220,
+        680
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'systems';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "33028423-2fd6-420a-97ff-4eecb39e8857",
+      "name": "Filter systems bucket",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "765ed581-79ad-4102-a190-81516cb92b14",
+      "name": "Sort systems jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_systems",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "rank",
+              "displayName": "rank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rank_reason",
+              "displayName": "rank_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "discovery_url",
+              "displayName": "discovery_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "apply_url",
+              "displayName": "apply_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "posted_at",
+              "displayName": "posted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "full_jd",
+              "displayName": "full_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bucket_selected",
+              "displayName": "bucket_selected",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "55b09e5b-b852-48b5-aaf3-4b60288412f6",
+      "name": "Write ranked_systems",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        540,
+        20
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'mechanical';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "4b831ae8-38de-4997-b837-5b2a79302c09",
+      "name": "Filter mechanical bucket",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'mechanical';\r\nconst RESUME_CONFIG_KEY = 'mechanical_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "28c1b474-5689-4d04-bbe8-73ff2d42a848",
+      "name": "Rank mechanical jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        60,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "96f50bef-85bc-4c6c-a95d-e68d9b2bc3db",
+      "name": "Sort mechanical jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_mechanical",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "96ef26c6-b58c-44ae-895d-64d34206272f",
+      "name": "Write ranked_mechanical",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        540,
+        320
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'controls';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "8b13b3c6-01fe-4962-ae92-b1090519c4d7",
+      "name": "Filter controls bucket",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        620
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'controls';\r\nconst RESUME_CONFIG_KEY = 'controls_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "36911381-ac45-4976-964f-e907ea53449b",
+      "name": "Rank controls jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        60,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "2d016805-ffd1-4491-8919-173234b26d1c",
+      "name": "Sort controls jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_controls",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "7ce41064-6a7b-434a-8b69-967c2c9c1afb",
+      "name": "Write ranked_controls",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        540,
+        620
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "518c2134-38d7-41a0-99cf-662ede40a428",
+      "name": "Merge pipelines done",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * One summary email after all 3 ranking pipelines finish.\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction getRows(nodeName) {\r\n  try {\r\n    return $(nodeName).all();\r\n  } catch (error) {\r\n    return [];\r\n  }\r\n}\r\n\r\nfunction topLines(rows, limit) {\r\n  return rows\r\n    .slice(0, limit)\r\n    .map((item, index) => {\r\n      const job = item.json || {};\r\n      return `${index + 1}. [${Number(job.score) || 0}] ${clean(job.title)} @ ${clean(job.company)}`;\r\n    })\r\n    .join('\\n');\r\n}\r\n\r\nconst config = $('Set Config B').first().json;\r\nconst systemsRows = getRows('Sort systems jobs');\r\nconst mechanicalRows = getRows('Sort mechanical jobs');\r\nconst controlsRows = getRows('Sort controls jobs');\r\n\r\nconst body = [\r\n  'Your ranked apply lists are ready.',\r\n  '',\r\n  `Systems jobs ranked: ${systemsRows.length}`,\r\n  topLines(systemsRows, 5) || '- none',\r\n  '',\r\n  `Mechanical jobs ranked: ${mechanicalRows.length}`,\r\n  topLines(mechanicalRows, 5) || '- none',\r\n  '',\r\n  `Controls jobs ranked: ${controlsRows.length}`,\r\n  topLines(controlsRows, 5) || '- none',\r\n  '',\r\n  'Open these tabs in your sheet:',\r\n  '- ranked_systems',\r\n  '- ranked_mechanical',\r\n  '- ranked_controls',\r\n  '',\r\n  `Sheet: ${clean(config.sheetUrl)}`,\r\n  '',\r\n  'You can apply now.',\r\n].join('\\n');\r\n\r\nreturn [{\r\n  json: {\r\n    to: clean(config.reminderEmail),\r\n    subject: 'Ranked jobs ready — you can apply now',\r\n    message: body,\r\n  },\r\n}];\r\n"
+      },
+      "id": "fbf047d7-aeb7-43dd-b6fa-170de0ed205f",
+      "name": "Build apply now email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "fcefcf89-632d-4b46-a8a9-c3370be1588b",
+      "name": "Send apply now email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1220,
+        320
+      ],
+      "executeOnce": true,
+      "webhookId": "26b4a165-3fcd-4409-bde1-7ddd0c322a45",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IS6FuPHVZoQYUNSp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "config",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "499f4f03-94db-4b9c-bbbe-5d928cae7455",
+      "name": "Read config tab B1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1240,
+        320
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'systems';\r\nconst RESUME_CONFIG_KEY = 'systems_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "d9e08cda-937e-48f8-801f-8e128d925727",
+      "name": "Rank systems jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        60,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "temp",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "found_at": "={{ $json.found_at }}",
+            "status": "={{ $json.status }}",
+            "source": "={{ $json.source }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "score": "={{ $json.score }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "needs_manual_jd": "={{ $json.needs_manual_jd }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "location": "={{ $json.location }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "company": "={{ $json.company }}",
+            "title": "={{ $json.title }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "found_at",
+              "displayName": "found_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "apply_url",
+              "displayName": "apply_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "discovery_url",
+              "displayName": "discovery_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "posted_at",
+              "displayName": "posted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "needs_manual_jd",
+              "displayName": "needs_manual_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "full_jd",
+              "displayName": "full_jd",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bucket_selected",
+              "displayName": "bucket_selected",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "rank_reason",
+              "displayName": "rank_reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "4cac319b-c4a2-483d-924d-575cc71224b8",
+      "name": "Filtered Jobs",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -580,
+        600
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {},
+      "id": "fd90ed0e-8ddd-42e7-93bc-b7f6f3c12950",
+      "name": "Start Workflow B",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1260,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "config",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "09a55d16-d52a-4d46-8124-30b4188c0bc6",
+      "name": "Read config tab B",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -860,
+        1340
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "name": "spreadsheetId",
+              "value": "={{ $env.SPREADSHEET_ID }}",
+              "type": "string"
+            },
+            {
+              "name": "reminderEmail",
+              "value": "={{ $env.REMINDER_EMAIL }}",
+              "type": "string"
+            },
+            {
+              "name": "sheetUrl",
+              "value": "={{ $env.SHEET_URL }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "467a0bb4-a518-4c24-92c8-995c21697f2b",
+      "name": "Set Config B1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Code node — Workflow B\n * Parse config tab once and store for all parallel ranking branches.\n * Wire: Read config tab B -> Store ranking config -> Read unique_jobs tab\n */\n\nfunction clean(value) {\n  return String(value || '').replace(/\\s+/g, ' ').trim();\n}\n\nfunction rowKey(row) {\n  const json = row.json || {};\n  return clean(\n    json.key ||\n    json.Key ||\n    json.KEY ||\n    json.A ||\n    json['Column A'] ||\n    ''\n  ).toLowerCase();\n}\n\nfunction rowValue(row) {\n  const json = row.json || {};\n  return clean(\n    json.value ||\n    json.Value ||\n    json.VALUE ||\n    json.B ||\n    json['Column B'] ||\n    ''\n  );\n}\n\nfunction getConfigValue(rows, key) {\n  const wanted = clean(key).toLowerCase();\n  const row = rows.find((item) => rowKey(item) === wanted);\n  return row ? rowValue(row) : '';\n}\n\nfunction getConfigValueAny(rows, keys) {\n  for (const key of keys) {\n    const value = getConfigValue(rows, key);\n    if (value) return value;\n  }\n  return '';\n}\n\nconst rows = $input.all();\nconst staticData = $getWorkflowStaticData('global');\n\nstaticData.rankingConfig = {\n  openai_api_key: getConfigValueAny(rows, ['openai_api_key']),\n  openai_model: getConfigValueAny(rows, ['openai_model']) || 'gpt-4o-mini',\n  llm_rank_prompt: getConfigValueAny(rows, ['llm_rank_prompt']),\n  systems_rank_prompt: getConfigValueAny(rows, ['systems_rank_prompt']),\n  mechanical_rank_prompt: getConfigValueAny(rows, ['mechanical_rank_prompt']),\n  controls_rank_prompt: getConfigValueAny(rows, ['controls_rank_prompt']),\n  systems_resume_text: getConfigValueAny(rows, [\n    'systems_resume_text',\n    'systems_resume',\n    'system_resume_text',\n  ]),\n  mechanical_resume_text: getConfigValueAny(rows, [\n    'mechanical_resume_text',\n    'mechanical_resume',\n    'mech_resume_text',\n  ]),\n  controls_resume_text: getConfigValueAny(rows, [\n    'controls_resume_text',\n    'controls_resume',\n    'control_resume_text',\n  ]),\n  blocklist: getConfigValueAny(rows, ['blocklist']),\n};\n\nconst loadedKeys = rows.map((row) => rowKey(row)).filter(Boolean);\n\nreturn [{\n  json: {\n    config_loaded: true,\n    config_rows: rows.length,\n    has_systems_resume: Boolean(staticData.rankingConfig.systems_resume_text),\n    has_mechanical_resume: Boolean(staticData.rankingConfig.mechanical_resume_text),\n    has_controls_resume: Boolean(staticData.rankingConfig.controls_resume_text),\n    config_keys_seen: loadedKeys.slice(0, 30).join(', '),\n  },\n}];\n"
+      },
+      "id": "5c117899-45ef-4cf7-96f6-65413a2587a7",
+      "name": "Store ranking config1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        1380
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "unique_jobs",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "5dd23770-d4d7-498d-9eb5-634699c43062",
+      "name": "Read unique_jobs tab1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -440,
+        1420
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Remove jobs whose title/JD matches config blocklist (ITAR, citizenship, etc.)\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction splitTerms(value) {\r\n  return clean(value)\r\n    .split(/[,;|\\n]/)\r\n    .map((term) => clean(term).toLowerCase())\r\n    .filter(Boolean);\r\n}\r\n\r\nconst defaultBlocklist = [\r\n  'itar',\r\n  'export control',\r\n  'u.s. citizen',\r\n  'us citizen',\r\n  'united states citizen',\r\n  'citizenship required',\r\n  'must be a citizen',\r\n  'must be a u.s. citizen',\r\n  'active secret clearance',\r\n  'secret clearance',\r\n  'top secret clearance',\r\n  'ability to obtain clearance',\r\n];\r\n\r\nconst staticData = $getWorkflowStaticData('global');\r\nconst configured = splitTerms(staticData.rankingConfig?.blocklist || '');\r\nconst blocklist = configured.length ? configured : defaultBlocklist;\r\n\r\nfunction isRestricted(job) {\r\n  const haystack = clean([\r\n    job.title,\r\n    job.full_jd,\r\n    job.location,\r\n    job.company,\r\n  ].join(' ')).toLowerCase();\r\n\r\n  return blocklist.some((term) => haystack.includes(term));\r\n}\r\n\r\nconst out = [];\r\n\r\nfor (const item of $input.all()) {\r\n  const job = item.json || {};\r\n  if (isRestricted(job)) continue;\r\n  out.push(item);\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "a52d6de4-4634-4303-8afa-3290a024fda4",
+      "name": "Filter restricted jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -280,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_systems",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "711aae33-bc12-4331-a59f-188d00a0a608",
+      "name": "Clear ranked_systems1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1020,
+        2100
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_mechanical",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "58910854-4ac4-475b-b507-a9622da330a8",
+      "name": "Clear ranked_mechanical1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1040,
+        2300
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_controls",
+          "mode": "name"
+        },
+        "keepFirstRow": true
+      },
+      "id": "cf3d7145-3739-4768-bd86-8ec626aca117",
+      "name": "Clear ranked_controls1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1020,
+        2480
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'systems';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "1bbdcd31-5610-4e89-90b4-77956aa2ffbb",
+      "name": "Filter systems bucket1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        1460
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'systems';\r\nconst RESUME_CONFIG_KEY = 'systems_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "5a37a892-63a4-4361-a514-2be9e04d2a46",
+      "name": "Rank systems jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        1460
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "b05ca1e2-3550-4387-9231-fc6ac352b0ba",
+      "name": "Sort systems jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_systems",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "7a435ea7-fd63-4e30-a927-b608908bb2ce",
+      "name": "Write ranked_systems1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        900,
+        1460
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'mechanical';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "ede93314-0071-45b1-847d-e6565201db94",
+      "name": "Filter mechanical bucket1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'mechanical';\r\nconst RESUME_CONFIG_KEY = 'mechanical_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "bcec9451-6a86-4d1a-8c8f-dc89021723ef",
+      "name": "Rank mechanical jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "0528114d-05d2-4a4b-bd9a-6cca9069333e",
+      "name": "Sort mechanical jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_mechanical",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "13460ce3-dddd-4176-8f95-0dfd68d3cfdb",
+      "name": "Write ranked_mechanical1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        900,
+        1760
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Set BUCKET below to: systems | mechanical | controls\r\n */\r\n\r\nconst BUCKET = 'controls';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nreturn $input.all().filter((item) => {\r\n  const bucket = clean(item.json?.bucket_selected).toLowerCase();\r\n  return bucket === BUCKET;\r\n});\r\n"
+      },
+      "id": "7a3da081-a81e-4290-9187-43db8ce38efe",
+      "name": "Filter controls bucket1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        2060
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Rank jobs in one bucket against the matching resume using OpenAI.\r\n *\r\n * Set BUCKET + RESUME_CONFIG_KEY for each pipeline copy:\r\n *   systems   -> systems_resume_text\r\n *   mechanical -> mechanical_resume_text\r\n *   controls  -> controls_resume_text\r\n */\r\n\r\nconst BUCKET = 'controls';\r\nconst RESUME_CONFIG_KEY = 'controls_resume_text';\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction truncate(text, maxLen) {\r\n  const value = clean(text);\r\n  if (value.length <= maxLen) return value;\r\n  return `${value.slice(0, maxLen)}…`;\r\n}\r\n\r\nfunction parseJsonObject(raw) {\r\n  const text = clean(raw);\r\n  if (!text) return null;\r\n\r\n  try {\r\n    return JSON.parse(text);\r\n  } catch (error) {}\r\n\r\n  const match = text.match(/\\{[\\s\\S]*\\}/);\r\n  if (!match) return null;\r\n\r\n  try {\r\n    return JSON.parse(match[0]);\r\n  } catch (error) {\r\n    return null;\r\n  }\r\n}\r\n\r\nfunction buildPrompt(template, vars) {\r\n  let prompt = template || '';\r\n\r\n  for (const [key, value] of Object.entries(vars)) {\r\n    prompt = prompt.split(`{{${key}}}`).join(String(value ?? ''));\r\n  }\r\n\r\n  return prompt;\r\n}\r\n\r\nconst defaultPrompt = `You are a hiring match evaluator.\r\n\r\nCompare the candidate resume to the job posting.\r\nReturn ONLY valid JSON with this shape:\r\n{\r\n  \"score\": 0,\r\n  \"rank_reason\": \"short explanation\"\r\n}\r\n\r\nRules:\r\n- score is an integer from 0 to 100 (100 = excellent match)\r\n- rank_reason is 1-3 sentences, concrete and specific\r\n- penalize missing must-have skills in the JD\r\n- ignore citizenship / clearance / ITAR requirements in scoring\r\n\r\nBucket: {{bucket}}\r\nJob title: {{title}}\r\nCompany: {{company}}\r\nLocation: {{location}}\r\n\r\nJob description:\r\n{{full_jd}}\r\n\r\nCandidate resume:\r\n{{resume}}`;\r\n\r\nfunction getRankingConfig() {\r\n  const staticData = $getWorkflowStaticData('global');\r\n  return staticData.rankingConfig || {};\r\n}\r\n\r\nconst cfg = getRankingConfig();\r\nconst apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);\r\nconst model = clean(cfg.openai_model) || 'gpt-4o-mini';\r\nconst resume = clean(cfg[RESUME_CONFIG_KEY]);\r\nconst promptTemplate =\r\n  clean(cfg[`${BUCKET}_rank_prompt`]) ||\r\n  clean(cfg.llm_rank_prompt) ||\r\n  defaultPrompt;\r\n\r\nif (!apiKey) {\r\n  throw new Error('Missing OPENAI_API_KEY in n8n env or config tab.');\r\n}\r\n\r\nif (!resume) {\r\n  throw new Error(`Missing ${RESUME_CONFIG_KEY} in config tab.`);\r\n}\r\n\r\nconst jobs = $input.all();\r\nconst out = [];\r\n\r\nfor (const item of jobs) {\r\n  const job = { ...(item.json || {}) };\r\n  const title = clean(job.title);\r\n  const company = clean(job.company);\r\n  const location = clean(job.location);\r\n  const fullJd = truncate(job.full_jd || job.description || '', 12000);\r\n\r\n  const userPrompt = buildPrompt(promptTemplate, {\r\n    bucket: BUCKET,\r\n    title,\r\n    company,\r\n    location,\r\n    full_jd: fullJd || '(no job description provided)',\r\n    resume: truncate(resume, 12000),\r\n  });\r\n\r\n  let parsed = null;\r\n  let rankError = '';\r\n\r\n  try {\r\n    const response = await this.helpers.httpRequest({\r\n      method: 'POST',\r\n      url: 'https://api.openai.com/v1/chat/completions',\r\n      headers: {\r\n        Authorization: `Bearer ${apiKey}`,\r\n        'Content-Type': 'application/json',\r\n      },\r\n      body: {\r\n        model,\r\n        temperature: 0.2,\r\n        response_format: { type: 'json_object' },\r\n        messages: [\r\n          {\r\n            role: 'system',\r\n            content: 'You score resume-to-job fit. Respond with JSON only.',\r\n          },\r\n          {\r\n            role: 'user',\r\n            content: userPrompt,\r\n          },\r\n        ],\r\n      },\r\n      json: true,\r\n      timeout: 120000,\r\n    });\r\n\r\n    const content = response?.choices?.[0]?.message?.content || '';\r\n    parsed = parseJsonObject(content);\r\n  } catch (error) {\r\n    rankError = clean(error.message || error);\r\n  }\r\n\r\n  let score = Number(parsed?.score);\r\n  if (!Number.isFinite(score)) score = 0;\r\n  score = Math.max(0, Math.min(100, Math.round(score)));\r\n\r\n  const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');\r\n\r\n  out.push({\r\n    json: {\r\n      ...job,\r\n      bucket_selected: BUCKET,\r\n      score,\r\n      rank_reason: rankReason,\r\n      status: rankError ? 'rank_error' : 'ranked',\r\n      ranked_at: new Date().toISOString(),\r\n    },\r\n  });\r\n}\r\n\r\nreturn out;\r\n"
+      },
+      "id": "5adc1602-6310-4dab-8410-7379ae7f003b",
+      "name": "Rank controls jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        2060
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * Sort ranked jobs by score descending (highest first).\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nconst rows = $input.all();\r\n\r\nrows.sort((a, b) => {\r\n  const scoreA = Number(a.json?.score) || 0;\r\n  const scoreB = Number(b.json?.score) || 0;\r\n  return scoreB - scoreA;\r\n});\r\n\r\nreturn rows.map((item, index) => ({\r\n  json: {\r\n    ...(item.json || {}),\r\n    rank: index + 1,\r\n  },\r\n}));\r\n"
+      },
+      "id": "a516c68b-87c9-4679-adfd-73a3c13ab2b5",
+      "name": "Sort controls jobs1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        2060
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Set Config B1').first().json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "ranked_controls",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rank": "={{ $json.rank }}",
+            "score": "={{ $json.score }}",
+            "rank_reason": "={{ $json.rank_reason }}",
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company }}",
+            "location": "={{ $json.location }}",
+            "source": "={{ $json.source }}",
+            "discovery_url": "={{ $json.discovery_url }}",
+            "apply_url": "={{ $json.apply_url }}",
+            "posted_at": "={{ $json.posted_at }}",
+            "full_jd": "={{ $json.full_jd }}",
+            "bucket_selected": "={{ $json.bucket_selected }}",
+            "status": "={{ $json.status }}",
+            "id": "={{ $json.id || $now.toMillis().toString() + \"-\" + $itemIndex }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "e4648004-62c0-4809-a884-449ddec59d66",
+      "name": "Write ranked_controls1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        900,
+        2060
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "47TfMO6C0R1sbaT0",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "fa6981cd-41c1-4f1c-ac97-c1b39543c8f0",
+      "name": "Merge pipelines done1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1140,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\r\n * n8n Code node — Workflow B\r\n * One summary email after all 3 ranking pipelines finish.\r\n */\r\n\r\nfunction clean(value) {\r\n  return String(value || '').replace(/\\s+/g, ' ').trim();\r\n}\r\n\r\nfunction getRows(nodeName) {\r\n  try {\r\n    return $(nodeName).all();\r\n  } catch (error) {\r\n    return [];\r\n  }\r\n}\r\n\r\nfunction topLines(rows, limit) {\r\n  return rows\r\n    .slice(0, limit)\r\n    .map((item, index) => {\r\n      const job = item.json || {};\r\n      return `${index + 1}. [${Number(job.score) || 0}] ${clean(job.title)} @ ${clean(job.company)}`;\r\n    })\r\n    .join('\\n');\r\n}\r\n\r\nconst config = $('Set Config B1').first().json;\r\nconst systemsRows = getRows('Sort systems jobs');\r\nconst mechanicalRows = getRows('Sort mechanical jobs');\r\nconst controlsRows = getRows('Sort controls jobs');\r\n\r\nconst body = [\r\n  'Your ranked apply lists are ready.',\r\n  '',\r\n  `Systems jobs ranked: ${systemsRows.length}`,\r\n  topLines(systemsRows, 5) || '- none',\r\n  '',\r\n  `Mechanical jobs ranked: ${mechanicalRows.length}`,\r\n  topLines(mechanicalRows, 5) || '- none',\r\n  '',\r\n  `Controls jobs ranked: ${controlsRows.length}`,\r\n  topLines(controlsRows, 5) || '- none',\r\n  '',\r\n  'Open these tabs in your sheet:',\r\n  '- ranked_systems',\r\n  '- ranked_mechanical',\r\n  '- ranked_controls',\r\n  '',\r\n  `Sheet: ${clean(config.sheetUrl)}`,\r\n  '',\r\n  'You can apply now.',\r\n].join('\\n');\r\n\r\nreturn [{\r\n  json: {\r\n    to: clean(config.reminderEmail),\r\n    subject: 'Ranked jobs ready — you can apply now',\r\n    message: body,\r\n  },\r\n}];\r\n"
+      },
+      "id": "5e12085d-ed28-4d27-9388-558e1479bec9",
+      "name": "Build apply now email1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1360,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.message }}",
+        "options": {}
+      },
+      "id": "f3bf44f0-3461-422c-899c-3e2711589f99",
+      "name": "Send apply now email1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1580,
+        1760
+      ],
+      "executeOnce": true,
+      "webhookId": "5e16b091-75d5-4ab3-94d5-2b9f963decb5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IS6FuPHVZoQYUNSp",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Set Config B": {
+      "main": [
+        [
+          {
+            "node": "Read config tab B1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_systems",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_mechanical",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_controls",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store ranking config": {
+      "main": [
+        [
+          {
+            "node": "Read unique_jobs tab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read unique_jobs tab": {
+      "main": [
+        [
+          {
+            "node": "Filter restricted jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter restricted jobs": {
+      "main": [
+        [
+          {
+            "node": "Filter systems bucket",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter mechanical bucket",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter controls bucket",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filtered Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter systems bucket": {
+      "main": [
+        [
+          {
+            "node": "Rank systems jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort systems jobs": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_systems",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_systems": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter mechanical bucket": {
+      "main": [
+        [
+          {
+            "node": "Rank mechanical jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank mechanical jobs": {
+      "main": [
+        [
+          {
+            "node": "Sort mechanical jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort mechanical jobs": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_mechanical",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_mechanical": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Filter controls bucket": {
+      "main": [
+        [
+          {
+            "node": "Rank controls jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank controls jobs": {
+      "main": [
+        [
+          {
+            "node": "Sort controls jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort controls jobs": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_controls",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_controls": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge pipelines done": {
+      "main": [
+        [
+          {
+            "node": "Build apply now email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build apply now email": {
+      "main": [
+        [
+          {
+            "node": "Send apply now email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read config tab B1": {
+      "main": [
+        [
+          {
+            "node": "Store ranking config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank systems jobs": {
+      "main": [
+        [
+          {
+            "node": "Sort systems jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Workflow B": {
+      "main": [
+        [
+          {
+            "node": "Set Config B1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read config tab B": {
+      "main": [
+        [
+          {
+            "node": "Store ranking config1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Config B1": {
+      "main": [
+        [
+          {
+            "node": "Read config tab B",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_systems1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_mechanical1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clear ranked_controls1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store ranking config1": {
+      "main": [
+        [
+          {
+            "node": "Read unique_jobs tab1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read unique_jobs tab1": {
+      "main": [
+        [
+          {
+            "node": "Filter restricted jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter restricted jobs1": {
+      "main": [
+        [
+          {
+            "node": "Filter systems bucket1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter mechanical bucket1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter controls bucket1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter systems bucket1": {
+      "main": [
+        [
+          {
+            "node": "Rank systems jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank systems jobs1": {
+      "main": [
+        [
+          {
+            "node": "Sort systems jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort systems jobs1": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_systems1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_systems1": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter mechanical bucket1": {
+      "main": [
+        [
+          {
+            "node": "Rank mechanical jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank mechanical jobs1": {
+      "main": [
+        [
+          {
+            "node": "Sort mechanical jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort mechanical jobs1": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_mechanical1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_mechanical1": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Filter controls bucket1": {
+      "main": [
+        [
+          {
+            "node": "Rank controls jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rank controls jobs1": {
+      "main": [
+        [
+          {
+            "node": "Sort controls jobs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort controls jobs1": {
+      "main": [
+        [
+          {
+            "node": "Write ranked_controls1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write ranked_controls1": {
+      "main": [
+        [
+          {
+            "node": "Merge pipelines done1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge pipelines done1": {
+      "main": [
+        [
+          {
+            "node": "Build apply now email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build apply now email1": {
+      "main": [
+        [
+          {
+            "node": "Send apply now email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a757c636-e4a2-4fbf-981a-16e62e33b974",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2cce54f0f835f301f4efa6f487709cae26524e33b568caae79f171052ad558d7"
+  },
+  "id": "RJR9rs0z6FMbZLFC",
+  "tags": []
+}

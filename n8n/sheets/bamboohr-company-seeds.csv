@@ -1,0 +1,7 @@
+company,career_page_url,ats_type,slug,enabled,keyword_filter,department_filter,tier,last_fetch_status
+AES Engineering,https://aesengineering.bamboohr.com/careers,bamboohr,aesengineering,TRUE,,,1,verified
+ZTR Control Systems,https://ztr.bamboohr.com/careers,bamboohr,ztr,TRUE,,,1,verified
+First Manufacturing,https://firstmanufacturing.bamboohr.com/careers,bamboohr,firstmanufacturing,TRUE,,,1,verified
+Studco Systems,https://studcosystems.bamboohr.com/careers,bamboohr,studcosystems,TRUE,,,2,verified
+Nomad GCS,https://nomadgcs.bamboohr.com/careers,bamboohr,nomadgcs,TRUE,,,1,verified
+Centum Engineering,https://centumengineering.bamboohr.com/careers,bamboohr,centumengineering,TRUE,,,2,verified
