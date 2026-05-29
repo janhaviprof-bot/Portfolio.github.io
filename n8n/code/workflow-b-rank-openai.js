@@ -15,6 +15,10 @@ function clean(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
+function cleanResume(value) {
+  return String(value ?? '').trim();
+}
+
 function truncate(text, maxLen) {
   const value = clean(text);
   if (value.length <= maxLen) return value;
@@ -59,10 +63,10 @@ Return ONLY valid JSON with this shape:
 }
 
 Rules:
-- score is an integer from 0 to 100 (100 = excellent match)
+- score is a number from 0 to 10 (one decimal allowed, e.g. 7.8)
 - rank_reason is 1-3 sentences, concrete and specific
 - penalize missing must-have skills in the JD
-- ignore citizenship / clearance / ITAR requirements in scoring
+- if citizenship/clearance/ITAR blocks international candidates, score must be 0
 
 Bucket: {{bucket}}
 Job title: {{title}}
@@ -92,9 +96,10 @@ const apiKey = clean($env.OPENAI_API_KEY || cfg.openai_api_key);
 const model = clean(sample._openai_model || cfg.openai_model) || 'gpt-4o-mini';
 const resume = clean(sample._pipeline_resume || cfg[RESUME_CONFIG_KEY]);
 const promptTemplate =
-  clean(sample._pipeline_rank_prompt) ||
-  clean(cfg[`${BUCKET}_rank_prompt`]) ||
-  clean(cfg.llm_rank_prompt) ||
+  cleanResume(sample._pipeline_rank_prompt) ||
+  cleanResume(cfg.jd_score_prompt) ||
+  cleanResume(cfg.llm_rank_prompt) ||
+  cleanResume(cfg[`${BUCKET}_rank_prompt`]) ||
   defaultPrompt;
 
 if (!apiKey) {
@@ -164,7 +169,9 @@ for (const item of jobs) {
 
   let score = Number(parsed?.score);
   if (!Number.isFinite(score)) score = 0;
-  score = Math.max(0, Math.min(100, Math.round(score)));
+  // Accept 0-10; if model returns 0-100 by mistake, scale down
+  if (score > 10) score = score / 10;
+  score = Math.max(0, Math.min(10, Math.round(score * 10) / 10));
 
   const rankReason = clean(parsed?.rank_reason || rankError || 'No rank reason returned');
 

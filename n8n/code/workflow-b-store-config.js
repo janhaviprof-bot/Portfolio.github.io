@@ -154,7 +154,8 @@ const staticData = $getWorkflowStaticData('global');
 staticData.rankingConfig = {
   openai_api_key: pick(map, ['openai_api_key']),
   openai_model: pick(map, ['openai_model']) || 'gpt-4o-mini',
-  llm_rank_prompt: pick(map, ['llm_rank_prompt']),
+  jd_score_prompt: pick(map, ['jd_score_prompt', 'llm_rank_prompt']),
+  llm_rank_prompt: pick(map, ['llm_rank_prompt', 'jd_score_prompt']),
   systems_rank_prompt: pick(map, ['systems_rank_prompt']),
   mechanical_rank_prompt: pick(map, ['mechanical_rank_prompt']),
   controls_rank_prompt: pick(map, ['controls_rank_prompt']),

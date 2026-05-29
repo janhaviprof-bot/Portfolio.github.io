@@ -3315,6 +3315,31 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "sendTo": "janhavi.prof@gmail.com",
+        "subject": "Good Morning Gorgeous!",
+        "emailType": "text",
+        "message": "Your Job list is ready! Wake up!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2260,
+        -940
+      ],
+      "id": "94f55519-8bf3-4859-88fa-5ea2e0c08142",
+      "name": "Gmail",
+      "webhookId": "25183b12-e929-47f5-9024-10cd28c72ff8",
+      "executeOnce": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IS6FuPHVZoQYUNSp",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -3801,13 +3826,24 @@
           }
         ]
       ]
+    },
+    "Append unique jobs to jobs tab": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "fd0eed8d-9c8d-42a4-867a-626e9dfd3980",
+  "versionId": "31bae7ad-13ef-4902-99da-e5b65e05bea8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "2cce54f0f835f301f4efa6f487709cae26524e33b568caae79f171052ad558d7"

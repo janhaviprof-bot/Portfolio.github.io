@@ -57,12 +57,12 @@ OUTPUT FORMAT (required ):
 Return ONLY valid JSON with exactly these two fields:
 
 {
-  "score": 78,
+  "score": 7.8,
   "rank_reason": "MATCH: Strong overlap in systems engineering, aerospace simulation, and C++. | STRENGTHS: CFD; C++ software; ML exposure. | GAPS: No ROS2; limited embedded Linux. | INTL: eligible"
 }
 
 Field rules:
-- score: integer 0–10 
+- score: number 0–10 (not 0–100)
 - rank_reason: one string; include brief match summary plus optional STRENGTHS / GAPS / INTL / RESTRICTION tags as shown above
 - If citizenship/clearance blocked: score must be 0 and rank_reason must include RESTRICTION: <reason>
 
